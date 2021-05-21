@@ -31,7 +31,7 @@
                         <input type="password" placeholder="Confirm Password" v-model="confirmPassword">
                     </div>
                     <div class="signup-actions">
-                        <h4>Enter Your Location <i class="fas fa fa-map-marker-alt"></i></h4>
+                        <h4 @click="openMapBody()">Enter Your Location <i class="fas fa fa-map-marker-alt"></i></h4>
                         <div>
                             <input type="checkbox" name="privacy" id="">
                             <label for="privacy"><span>I Accept</span>Privacy Policy</label>
@@ -47,7 +47,8 @@
                 </form>
             </div>
         </div>
-        <div class="map">
+        <div class="map" v-if="mapContainer">
+            <i @click="mapContainer=!mapContainer" class="fas fa fa-times"></i>
             <GoogleMap/>
         </div>
     </div>
@@ -67,10 +68,14 @@ export default class Signup extends Vue {
     phone:any = '';
     password:any = '';
     confirmPassword:any = '';
+    mapContainer:Boolean = false;
 
     pushToSignin(){
         this.$router.push('/login');
-    }
+    };
+    openMapBody(){
+        this.mapContainer = true;
+    };
 }
 </script>
 
@@ -202,5 +207,22 @@ export default class Signup extends Vue {
     color: var(--main-green);
     margin-right: 5px;
     margin-left: 10px;
+}
+.map{
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    background: #95cfae;
+    padding: 150px 100px;
+}
+.map i{
+    float: right;
+    font-size: 25px;
+    color: var(--font-navy);
+    cursor: pointer;
 }
 </style>
