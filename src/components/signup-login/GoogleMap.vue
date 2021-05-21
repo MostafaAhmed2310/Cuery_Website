@@ -20,7 +20,8 @@
                     :clickable="true"
                     :draggable="true"
                     @drag="updateCoordinates"
-                    :icon="{ url: require('../../assets/icons/marker.png')}" 
+                    :icon="{ url: require('../../assets/icons/marker.png')}"
+                    :title="'Drag Me'" 
                 >
                 </gmap-marker>
             </gmap-map>// 
