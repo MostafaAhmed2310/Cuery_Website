@@ -3,6 +3,7 @@ import StaticHome from '@/views/StaticHome.vue'
 import MedicalTeam from '@/views/MedicalTeam.vue'
 import HospitalHome from '@/views/HospitalHome.vue'
 import Signup from '@/components/signup-login/Signup.vue'
+import Profile from '@/components/user/Profile.vue'
 const routes = [
     {
         path: '/',
@@ -33,6 +34,11 @@ const routes = [
         path: '/signup',
         name: 'signup',
         component: Signup
+    },
+     {
+        path: '/profile',
+        name: 'profile',
+        component: Profile
     },
 ]
 

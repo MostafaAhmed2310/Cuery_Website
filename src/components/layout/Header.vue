@@ -11,11 +11,26 @@
                 <li>عربي</li>
                 <li class="login-btn"><router-link to="/login">Sign in</router-link></li>
             </ul>
-            <ul class="nav-bar-list" v-if="auth_state == true">
-                <li><router-link to="/home" active-class="active">Home</router-link></li>
+            <ul class="nav-bar-list-hospital" v-if="auth_state == true">
+                <li><router-link to="/hospital_home" active-class="active">Home</router-link></li>
                 <li><router-link to="/medical_team" active-class="active">Contact Us</router-link></li>
                 <li>Last Reservations</li>
-                <li>عربي</li>
+                <li>
+                    <router-link to="/profile" active-class="active">
+                        <i class="profile-icon far fa fa-user-circle"></i>
+                        <span>Profile</span>
+                    </router-link>
+                </li>
+                <li class="global-li">
+                    <i class="fas fa fa-globe"></i>
+                </li>
+                <li>
+                    <i class="fas fa fa-bell"></i>
+                </li>
+                <li>
+                    <i class="profile-icon fas fa fa-ellipsis-v"></i>
+                    <span>More</span>
+                </li>
             </ul>
         </div>
     </div>
@@ -64,12 +79,19 @@ export default class Header extends Vue {
     float: right;
     line-height: 3;
 }
-ul li:nth-of-type(5){
+.nav-bar-list-hospital{
+    float: right;
+    line-height: 3;
+}
+.login-btn{
     background: #fff;
     color: var(--main-green);
     padding: 0px 20px;
     border-radius: var(--sm-radius);
     line-height: 2;
+}
+.global-li{
+   margin-right: 30px !important;
 }
 ul li{
     list-style: none;
@@ -77,7 +99,8 @@ ul li{
     margin-right: 55px;
     cursor: pointer;
 }
-.nav-bar-list li a{
+.nav-bar-list li a,
+.nav-bar-list-hospital li a{
     color: #fff !important;
 }
 .active{
@@ -87,5 +110,8 @@ ul li{
 }
 .nav-bar-list .login-btn a{
     color: var(--main-green) !important;
+}
+.profile-icon{
+    margin-right: 10px;
 }
 </style>
