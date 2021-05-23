@@ -8,27 +8,24 @@
             <div class="profile-inputs-body">
                 <div class="profile-img-panal">
                     <div class="profile-img">
-                        <i class="fas fa fa-user-circle"></i>
-                        <img src="" alt="">
+                        <i v-if="!profileObj.image_path" class="fas fa fa-user-circle"></i>
+                        <img v-if="profileObj.image_path" :src="BaseUrl + profileObj.image_path" alt="">
                     </div>
                     <p>Change Your Profile Picture</p>
                 </div>
                 <div class="inputs-container">
                     <form>
                         <div class="input-field">
-                            <input type="text" placeholder="User Name">
+                            <input type="text" placeholder="User Name" v-model="username">
                         </div>
                         <div class="input-field">
-                            <input type="text" placeholder="Phone">
+                            <input type="email" placeholder="Email" v-model="email">
+                        </div>
+                        <div class="input-field" v-for="num in phone" :key="num">
+                            <input type="text" placeholder="Phone" v-model="num.number">
                         </div>
                         <div class="input-field">
-                            <input type="email" placeholder="Email">
-                        </div>
-                        <div class="input-field">
-                            <textarea class="brief"  placeholder="Brief About Your Hospital"></textarea>
-                        </div>
-                        <div class="input-field">
-                            <textarea class="currLocation" placeholder="Current Location"></textarea>
+                            <textarea class="currLocation" placeholder="Current Location" v-model="address"></textarea>
                         </div>
                         <div class="profile-actions">
                             <h4 @click="openMapBody()">Add Another Location <i class="fas fa fa-map-marker-alt"></i></h4>
@@ -40,7 +37,7 @@
                 </div>
                 <div class="map" v-if="mapContainer">
                     <i @click="mapContainer=!mapContainer" class="fas fa fa-times"></i>
-                    <GoogleMap/>
+                    <GoogleMap :latlngObj="latlngObj"/>
                 </div>
             </div>
         </div>
@@ -48,9 +45,10 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
+import { Component, Vue} from 'vue-property-decorator';
 import GoogleMap from '@/components/signup-login/GoogleMap.vue';
-
+import {getUserInfo} from '@/endpoints/user';
+import {BaseUrl} from '@/app.config';
 @Component({
     components: {
         GoogleMap
@@ -58,10 +56,31 @@ import GoogleMap from '@/components/signup-login/GoogleMap.vue';
 })
 export default class Profile extends Vue {
     mapContainer:Boolean = false;
-
+    username:String = '';
+    email:String = '';
+    phone:any[] = [];
+    address:String = '';
+    profileObj:any = {};
+    BaseUrl:any = BaseUrl;
+    latlngObj:any = {};
     openMapBody(){
         this.mapContainer = true;
     };
+    async getProfile(){
+        this.profileObj = await getUserInfo();
+        this.username = this.profileObj.name;
+        this.email = this.profileObj.email;
+        this.phone = this.profileObj.sp_numbers
+        this.address = this.profileObj.address;
+        this.latlngObj = {
+            lat: this.profileObj.lat,
+            lng: this.profileObj.long,
+        }
+    }
+
+    mounted(){
+        this.getProfile();
+    }
 }
 </script>
 
@@ -104,6 +123,8 @@ export default class Profile extends Vue {
 .profile-img{
     width: 135px;
     height: 135px;
+    position: relative;
+    overflow: hidden;
     margin: auto;
     background: #fff;
     color: var(--main-green);
@@ -112,6 +133,10 @@ export default class Profile extends Vue {
     font-size: 80px;
     text-align: center;
     line-height: 1.7;
+}
+.profile-img img{
+    width: 100%;
+    height: 100%;
 }
 .inputs-container{
     width: 65%;
@@ -142,18 +167,17 @@ export default class Profile extends Vue {
     border: 1px solid var(--main-green);
     outline: none;
     resize: none;
+    height: auto;
+    min-height: 76px;
 }
 .brief{
     height: 100px;
 }
-.currLocation{
-    min-height: 45px;
-}
-.input-field:nth-of-type(2){
+.input-field:nth-of-type(1){
     width: 49%;
     float: left;
 }
-.input-field:nth-of-type(3){
+.input-field:nth-of-type(2){
     width: 49%;
     float: right;
 }

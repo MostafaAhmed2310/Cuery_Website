@@ -51,6 +51,9 @@ export default {
             address: '',
         }
     },
+    props: {
+      latlngObj: Object,
+    },
     computed: {
         google: VueGoogleMaps.gmapApi,
     },
