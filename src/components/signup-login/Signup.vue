@@ -20,9 +20,12 @@
         <form>
           <div class="input-field">
             <input type="text" placeholder="User Name" v-model="username" />
+            <span v-if="usernameMsg"> Username is required </span>
           </div>
           <div class="input-field">
-            <input type="email" placeholder="Email" v-model="email" />
+            <input type="text" placeholder="Email" v-model="email" />
+            <span v-if="emailMsg"> Email is required </span>
+            <span v-if="validEmailMsg"> Email is not valid </span>
           </div>
           <div class="input-field">
             <button type="button" @click="num1 = !num1" v-if="!num1">
@@ -30,10 +33,11 @@
             </button>
             <button type="button" @click="num1 = !num1" v-if="num1">min</button>
             <input
-              type="text"
+              type="number"
               placeholder="First Number Phone"
               v-model="phone[0]"
             />
+            <span v-if="phoneMsg"> At least one phone number is required </span>
           </div>
           <div class="input-field" v-if="num1">
             <button type="button" @click="num2 = !num2" v-if="!num2">
@@ -41,7 +45,7 @@
             </button>
             <button type="button" @click="num2 = !num2" v-if="num2">min</button>
             <input
-              type="text"
+              type="number"
               placeholder="Second Number Phone"
               v-model="phone[1]"
             />
@@ -52,7 +56,7 @@
             </button>
             <button type="button" @click="num3 = !num3" v-if="num3">min</button>
             <input
-              type="text"
+              type="number"
               placeholder="Third Number Phone"
               v-model="phone[2]"
             />
@@ -63,20 +67,25 @@
             </button>
             <button type="button" @click="num4 = !num4" v-if="num4">min</button>
             <input
-              type="text"
+              type="number"
               placeholder="Fourth Number Phone"
               v-model="phone[3]"
             />
           </div>
           <div class="input-field" v-if="num4">
             <input
-              type="text"
+              type="number"
               placeholder="Fifth Number Phone"
               v-model="phone[4]"
             />
           </div>
           <div class="input-field">
             <input type="password" placeholder="Password" v-model="password" />
+            <span v-if="passwordMsg"> Password is required </span>
+            <span v-if="validPasswordMsg">
+              Minimum eight characters, at least one letter, one number and one
+              special character(@ $ ! % * # ? &)
+            </span>
           </div>
           <div class="input-field">
             <input
@@ -84,6 +93,10 @@
               placeholder="Confirm Password"
               v-model="confirmPassword"
             />
+            <span v-if="confirmPasswordMsg"> Confirm password is required</span>
+            <span v-if="machingMsg">
+              Confirm password does not match the password</span
+            >
           </div>
           <div class="signup-actions">
             <h4 @click="openMapBody()">
@@ -99,7 +112,7 @@
             </div>
           </div>
           <div class="login-btn">
-            <button type="button">Sign Up</button>
+            <button type="button" @click="signupFun()">Sign Up</button>
           </div>
         </form>
       </div>
@@ -130,6 +143,14 @@ export default class Signup extends Vue {
   num2: boolean = false;
   num3: boolean = false;
   num4: boolean = false;
+  usernameMsg: Boolean = false;
+  passwordMsg: Boolean = false;
+  phoneMsg: Boolean = false;
+  emailMsg: Boolean = false;
+  validEmailMsg: boolean = false;
+  confirmPasswordMsg: boolean = false;
+  validPasswordMsg: boolean = false;
+  machingMsg: boolean = false;
 
   pushToSignin() {
     this.$router.push("/login");
@@ -143,6 +164,78 @@ export default class Signup extends Vue {
   getLocation(address: any, location: any, latLng: any) {
     this.getData(location, address, latLng);
     this.closeModel();
+  }
+  async signupFun(e: any) {
+    if (!this.username) {
+      this.usernameMsg = true;
+    } else {
+      this.usernameMsg = false;
+    }
+    if (!this.email) {
+      this.emailMsg = true;
+    } else {
+      this.emailMsg = false;
+    }
+    if (!this.validEmail(this.email) && this.email) {
+      this.validEmailMsg = true;
+    } else {
+      this.validEmailMsg = false;
+    }
+    if (this.phone.length < 1) {
+      this.phoneMsg = true;
+    } else {
+      this.phoneMsg = false;
+    }
+    if (!this.password) {
+      this.passwordMsg = true;
+    } else {
+      this.passwordMsg = false;
+    }
+    if (!this.confirmPassword) {
+      this.confirmPasswordMsg = true;
+    } else {
+      this.confirmPasswordMsg = false;
+    }
+    if (this.password !== this.confirmPassword && this.confirmPassword) {
+      this.machingMsg = true;
+    } else {
+      this.machingMsg = false;
+    }
+    if (!this.validPassword(this.password) && this.password) {
+      this.validPasswordMsg = true;
+    } else {
+      this.validPasswordMsg = false;
+    }
+    if (
+      this.usernameMsg == false &&
+      this.passwordMsg == false &&
+      this.phoneMsg == false &&
+      this.emailMsg == false &&
+      this.validEmailMsg == false &&
+      this.confirmPasswordMsg == false &&
+      this.validPasswordMsg == false &&
+      this.machingMsg == false
+    ) {
+      try {
+        // await login(this.username,this.password)
+        // this.$fire({
+        //     title: "SUCCESS!",
+        //     text: "WELCOME !",
+        //     type: "success",
+        //     timer: 2000
+        // })
+        // this.$router.push('/hospital_home')
+        // window.location.reload()
+      } catch (err) {}
+    }
+  }
+  validEmail(email: any) {
+    var re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(email);
+  }
+  validPassword(password: any) {
+    var re = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
+    return re.test(password);
   }
   getData(location: any, address: any, lating: any) {
     let data = {
