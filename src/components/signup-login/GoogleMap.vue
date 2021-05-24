@@ -64,11 +64,11 @@ export default {
     },
     methods: {
         createMarker: function (latlng) {
-        this.marker = new window.google.maps.Marker({
-            setMap: this.map,
-            position: latlng,
-            animation: window.google.maps.Animation.DROP
-        })
+            this.marker = new window.google.maps.Marker({
+                setMap: this.map,
+                position: latlng,
+                animation: window.google.maps.Animation.DROP
+            })
         },
         updateCoordinates(location) {
             this.center = {
@@ -80,10 +80,18 @@ export default {
         geolocate: function () {
             let This = this
             navigator.geolocation.getCurrentPosition(position => {
-                let latlng = new window.google.maps.LatLng(
-                    parseFloat(position.coords.latitude),
-                    parseFloat(position.coords.longitude)
-                )
+                var latlng
+                if(this.$router.currentRoute.name == 'profile'){
+                    latlng = new window.google.maps.LatLng(
+                        parseFloat(This.latlngObj.lat),
+                        parseFloat(This.latlngObj.lng)
+                    )
+                }else{
+                    latlng = new window.google.maps.LatLng(
+                        parseFloat(position.coords.latitude),
+                        parseFloat(position.coords.longitude)
+                    )
+                }
                 This.center = {
                     lat: position.coords.latitude,
                     lng: position.coords.longitude
