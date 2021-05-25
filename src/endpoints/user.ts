@@ -6,3 +6,10 @@ export async function getUserInfo(){
     if (res) return res.data
     else return false
 }
+
+export async function signup(data:any){
+    let res = await api
+    .post('api/register', data);
+    if (res) return res.data
+    else return false
+}
