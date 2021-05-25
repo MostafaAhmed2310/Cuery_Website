@@ -11,7 +11,10 @@
                         <i v-if="!profileObj.image_path" class="fas fa fa-user-circle"></i>
                         <img v-if="profileObj.image_path" :src="BaseUrl + profileObj.image_path" alt="">
                     </div>
-                    <p>Change Your Profile Picture</p>
+                    <label>
+                        Change Your Profile Picture
+                        <input class="loadedFiles" @change="uploadFileFun($event)" type="file" accept="image/*">
+                    </label>
                 </div>
                 <div class="inputs-container">
                     <form>
@@ -32,12 +35,12 @@
                         </div>
                     </form>
                     <div class="btn-body">
-                        <button>Save</button>
+                        <button @click="submitEditProfile()">Save</button>
                     </div>
                 </div>
                 <div class="map" v-if="mapContainer">
                     <i @click="mapContainer=!mapContainer" class="fas fa fa-times"></i>
-                    <GoogleMap :latlngObj="latlngObj"/>
+                    <GoogleMap :latlngObj="latlngObj"  @getLocation="getLocation"/>
                 </div>
             </div>
         </div>
@@ -49,6 +52,8 @@ import { Component, Vue} from 'vue-property-decorator';
 import GoogleMap from '@/components/signup-login/GoogleMap.vue';
 import {getUserInfo} from '@/endpoints/user';
 import {BaseUrl} from '@/app.config';
+import {editProfile} from '@/endpoints/user';
+
 @Component({
     components: {
         GoogleMap
@@ -63,21 +68,111 @@ export default class Profile extends Vue {
     profileObj:any = {};
     BaseUrl:any = BaseUrl;
     latlngObj:any = {};
+    city:any = '';
+    district:any = '';
+    country:any = '';
+    lat:any = '';
+    lng:any = '';
+    imagePath:any = '';
+    extension:any = '';
+    spNumbers:any[] = [];
+    uploadFile:any = '';
+    fileData:any = '';
+    fileFile:any = '';
     openMapBody(){
         this.mapContainer = true;
+    };
+    closeModel() {
+        this.mapContainer = false;
     };
     async getProfile(){
         this.profileObj = await getUserInfo();
         this.username = this.profileObj.name;
         this.email = this.profileObj.email;
-        this.phone = this.profileObj.sp_numbers
+        this.phone = this.profileObj.sp_numbers;
         this.address = this.profileObj.address;
         this.latlngObj = {
             lat: this.profileObj.lat,
             lng: this.profileObj.long,
         }
+        this.city = this.profileObj.city_title;
+        this.district = this.profileObj.district_title;
+        this.lat = this.profileObj.lat;
+        this.lng = this.profileObj.long;
     }
 
+    uploadFileFun(){
+        this.uploadFile = (<any>event).target;
+        if (this.uploadFile.files && this.uploadFile.files[0]) {
+            var reader = new FileReader();
+            reader.onload = (e) => {
+                this.fileData = (<any>e.target).result;
+                this.extension = this.fileData.split(";")[0].split("/")[1]
+                this.imagePath = this.fileData.split(",")[1]
+                console.log('base64', this.imagePath)
+                console.log('ex.', this.extension)
+            }
+            reader.readAsDataURL(this.uploadFile.files[0]);
+            this.fileFile = this.uploadFile.files[0];
+        }
+    }
+
+    getLocation(address: any, location: any, latLng: any) {
+        this.getData(location, address, latLng);
+        this.closeModel();
+    }
+    getData(location: any, address: any, lating: any) {
+        let This = this
+        this.address = address
+        this.lat = lating.lat
+        this.lng = lating.lng
+        for (var ac = 0; ac < location.address_components.length; ac++) {
+            var component = location.address_components[ac];
+            if (
+                component.types.includes("sublocality") ||
+                component.types.includes("administrative_area_level_1")
+            ) {
+                This.city = component.long_name;
+            } else if (component.types.includes("administrative_area_level_3")) {
+                This.district = component.short_name;
+            } else if (component.types.includes("country")) {
+                This.country = component.long_name;
+            }
+        }
+    }
+    getNumbersArr(){
+        this.spNumbers = this.profileObj.sp_numbers.map(function(numberObj:any){
+            return numberObj.number
+        })
+    }
+    async submitEditProfile(){
+        this.getNumbersArr();
+        let data = {
+            address: this.address,
+            district_title: this.district,
+            city_title: this.city,
+            country_title: this.country,
+            lat: this.lat,
+            long: this.lng,
+            name: this.username,
+            email: this.email,
+            sp_numbers: this.spNumbers,
+            image_string: this.imagePath,
+            ext: this.extension,
+        };
+        try{
+            await editProfile(this.profileObj.id, data)
+            this.$fire({
+                title: "SUCCESS!",
+                text: "Profile edited successfully",
+                type: "success",
+                timer: 2000
+            });
+            this.getProfile();
+        }catch(err){
+
+        }
+    }
     mounted(){
         this.getProfile();
     }
@@ -111,13 +206,15 @@ export default class Profile extends Vue {
     padding-top: 10%;
     border-radius: var(--md-radius);
 }
-.profile-img-panal p{
+.profile-img-panal label{
     color: #fff;
     cursor: pointer;
     text-align: center;
     font-size: 15px;
+    display: block;
+    margin-top: 10px;
 }
-.profile-img-panal p:hover{
+.profile-img-panal label:hover{
     text-decoration: underline;
 }
 .profile-img{
@@ -230,5 +327,8 @@ export default class Profile extends Vue {
 }
 .btn-body button:hover{
     opacity: 0.8;
+}
+input[type=file]{ 
+    display: none !important;
 }
 </style>

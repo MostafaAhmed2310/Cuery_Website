@@ -33,7 +33,7 @@
                         <i class="fas fa fa-minus" @click="num1 = !num1" v-if="num1"></i>
                         <input
                             type="number"
-                            placeholder="First Number Phone"
+                            placeholder="First Number Phone (Required)"
                             v-model="phone[0]"
                         />
                         <span v-if="phoneMsg"> At least one phone number is required </span>
@@ -43,7 +43,7 @@
                         <i class="fas fa fa-minus" @click="num2 = !num2" v-if="num2"></i>
                         <input
                             type="number"
-                            placeholder="Second Number Phone"
+                            placeholder="Second Number Phone (Optional)"
                             v-model="phone[1]"
                         />
                     </div>
@@ -52,7 +52,7 @@
                         <i class="fas fa fa-minus" @click="num3 = !num3" v-if="num3"></i>
                         <input
                             type="number"
-                            placeholder="Third Number Phone"
+                            placeholder="Third Number Phone (Optional)"
                             v-model="phone[2]"
                         />
                     </div>
@@ -61,19 +61,21 @@
                         <i class="fas fa fa-minus" @click="num4 = !num4" v-if="num4"></i>
                         <input
                             type="number"
-                            placeholder="Fourth Number Phone"
+                            placeholder="Fourth Number Phone (Optional)"
                             v-model="phone[3]"
                         />
                     </div>
                     <div class="input-field" v-if="num4">
                         <input
                             type="number"
-                            placeholder="Fifth Number Phone"
+                            placeholder="Fifth Number Phone (Optional)"
                             v-model="phone[4]"
                         />
                     </div>
                     <div class="input-field">
-                        <input type="password" placeholder="Password" v-model="password" />
+                        <input :type="passType" placeholder="Password" v-model="password" />
+                        <i class="fas fa fa-eye" @click="showPassword()" v-if="passType == 'password' && password"></i>
+                        <i class="fas fa fa-eye-slash" @click="hidePassword()" v-if="passType == 'text' && password"></i>
                         <span v-if="passwordMsg"> Password is required </span>
                         <span v-if="validPasswordMsg">
                             Minimum eight characters, at least one letter, one number and one
@@ -82,10 +84,12 @@
                     </div>
                     <div class="input-field">
                         <input
-                            type="password"
+                            :type="c_passType"
                             placeholder="Confirm Password"
                             v-model="confirmPassword"
                         />
+                        <i class="fas fa fa-eye" @click="showConfirmPass()" v-if="c_passType == 'password' && confirmPassword "></i>
+                        <i class="fas fa fa-eye-slash" @click="hideConfirmPass()" v-if="c_passType == 'text' && confirmPassword "></i>
                         <span v-if="confirmPasswordMsg"> Confirm password is required</span>
                         <span v-if="machingMsg">Confirm password does not match the password</span>
                     </div>
@@ -164,6 +168,8 @@ export default class Signup extends Vue {
   uploadFile: any = "";
   fileData: any = "";
   fileFile: any = "";
+  passType: any = 'password';
+  c_passType: any = 'password';
 
 
   pushToSignin() {
@@ -178,6 +184,21 @@ export default class Signup extends Vue {
   getLocation(address: any, location: any, latLng: any) {
     this.getData(location, address, latLng);
     this.closeModel();
+  }
+  showPassword(){
+    this.passType = 'text'
+  }
+
+  hidePassword(){
+    this.passType = 'password'
+  }
+
+  showConfirmPass(){
+    this.c_passType = 'text'
+  }
+
+  hideConfirmPass(){
+    this.c_passType = 'password'
   }
     uploadFileFun(){
         this.uploadFile = (<any>event).target;
@@ -535,5 +556,14 @@ export default class Signup extends Vue {
 }
 input[type=file]{ 
     display: none !important;
+}
+.fa-eye,
+.fa-eye-slash{
+    position: absolute;
+    right: 15px;
+    top: 15px;
+    font-size: 14px;
+    color: var(--active-green);
+    cursor: pointer;
 }
 </style>

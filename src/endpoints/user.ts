@@ -13,3 +13,10 @@ export async function signup(data:any){
     if (res) return res.data
     else return false
 }
+
+export async function editProfile(user_id:any, data:any){
+    let res = await api
+    .put('api/edit_profile/'+user_id, data);
+    if (res) return res.data
+    else return false
+}
