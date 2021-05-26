@@ -99,6 +99,24 @@ a{
 .carousel-3d-controls a.next:hover{
     box-shadow: -2px -3px 5px 1px #ddd !important;
 }
+.loader-container{
+    text-align: center;
+    position: fixed;
+    display: block;
+    width: 100%;
+    height: 100%;
+    line-height: 40;
+    z-index: 9999;
+    background: rgba(0,0,0,0.2);
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+.spinner--double-bounce{
+    width: 65px !important;
+    height: 65px !important;
+}
 </style>
 
 

@@ -1,5 +1,8 @@
 <template>
     <div class="login-container">
+        <div class="loader-container" v-if="loaderFlag">
+            <DoubleBounce></DoubleBounce>
+        </div>
         <div class="login-body">
             <div class="login-img">
                 <img src="@/assets/images/login/login-img.png" alt="" />
@@ -123,54 +126,56 @@
     </div>
 </template>
 
-<script lang="ts">
+<script>
 import { Component, Vue } from "vue-property-decorator";
 import GoogleMap from "@/components/signup-login/GoogleMap.vue";
 import {signup} from "@/endpoints/user";
+import {DoubleBounce} from 'vue-loading-spinner';
 
 @Component({
   components: {
     GoogleMap,
+    DoubleBounce,
   },
 })
 export default class Signup extends Vue {
-  username: any = "";
-  email: any = "";
-  phone: Array<any> = [];
-  password: any = "";
-  confirmPassword: any = "";
-  mapContainer: Boolean = false;
-  num1: boolean = false;
-  num2: boolean = false;
-  num3: boolean = false;
-  num4: boolean = false;
-  usernameMsg: Boolean = false;
-  passwordMsg: Boolean = false;
-  phoneMsg: Boolean = false;
-  emailMsg: Boolean = false;
-  validEmailMsg: boolean = false;
-  confirmPasswordMsg: boolean = false;
-  validPasswordMsg: boolean = false;
-  machingMsg: boolean = false;
-  address: any = "";
-  district:any = "";
-  city: any = "";
-  country: any = "";
-  lat: any = "";
-  lng: any = "";
-  privacy : Boolean = false;
-  terms : Boolean = false;
-  locationMsg: Boolean = false;
-  privacyMsg: Boolean = false;
-  termsMsg: Boolean = false;
-  imagePath: any = "";
-  extension: any = "";
-  uploadFile: any = "";
-  fileData: any = "";
-  fileFile: any = "";
-  passType: any = 'password';
-  c_passType: any = 'password';
-
+  username = "";
+  email = "";
+  phone = [];
+  password = "";
+  confirmPassword = "";
+  mapContainer = false;
+  num1 = false;
+  num2 = false;
+  num3 = false;
+  num4 = false;
+  usernameMsg = false;
+  passwordMsg = false;
+  phoneMsg = false;
+  emailMsg = false;
+  validEmailMsg = false;
+  confirmPasswordMsg = false;
+  validPasswordMsg = false;
+  machingMsg = false;
+  address = "";
+  district = "";
+  city = "";
+  country = "";
+  lat = "";
+  lng = "";
+  privacy = false;
+  terms = false;
+  locationMsg = false;
+  privacyMsg = false;
+  termsMsg = false;
+  imagePath = "";
+  extension = "";
+  uploadFile = "";
+  fileData = "";
+  fileFile = "";
+  passType = 'password';
+  c_passType = 'password';
+  loaderFlag = false;
 
   pushToSignin() {
     this.$router.push("/login");
@@ -181,7 +186,7 @@ export default class Signup extends Vue {
   closeModel() {
     this.mapContainer = false;
   }
-  getLocation(address: any, location: any, latLng: any) {
+  getLocation(address , location , latLng ) {
     this.getData(location, address, latLng);
     this.closeModel();
   }
@@ -201,11 +206,11 @@ export default class Signup extends Vue {
     this.c_passType = 'password'
   }
     uploadFileFun(){
-        this.uploadFile = (<any>event).target;
+        this.uploadFile = (event).target;
         if (this.uploadFile.files && this.uploadFile.files[0]) {
             var reader = new FileReader();
             reader.onload = (e) => {
-                this.fileData = (<any>e.target).result;
+                this.fileData = (e.target).result;
                 this.extension = this.fileData.split(";")[0].split("/")[1]
                 this.imagePath = this.fileData.split(",")[1]
                 console.log('base64', this.imagePath)
@@ -215,7 +220,7 @@ export default class Signup extends Vue {
             this.fileFile = this.uploadFile.files[0];
         }
     }
-  async signupFun(e: any) {
+  async signupFun(e ) {
     if (!this.username) {
       this.usernameMsg = true;
     } else {
@@ -300,7 +305,9 @@ export default class Signup extends Vue {
             image_string: this.imagePath,
             ext: this.extension,
         };
+        this.loaderFlag = true;
         await signup(data);
+        this.loaderFlag = false;
         this.$fire({
             title: "SUCCESS!",
             text: "WELCOME !",
@@ -308,20 +315,27 @@ export default class Signup extends Vue {
             timer: 2000
         })
         this.$router.push('/hospital_home')
-      } catch (err) {
-
-      }
+        }catch (err) {
+            console.log(err)
+            this.loaderFlag = false;
+            this.$fire({
+                title: "WARNING!",
+                text: "Somthing went wrong, please try again later",
+                type: "error",
+                timer: 2000
+            })
+        }
     }
   }
-  validEmail(email: any) {
+  validEmail(email ) {
     var re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return re.test(email);
   }
-  validPassword(password: any) {
+  validPassword(password ) {
     var re = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
     return re.test(password);
   }
-  getData(location: any, address: any, lating: any) {
+  getData(location , address , lating ) {
     let This = this
     this.address = address
     this.lat = lating.lat
