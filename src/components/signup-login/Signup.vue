@@ -130,6 +130,7 @@
 import { Component, Vue } from "vue-property-decorator";
 import GoogleMap from "@/components/signup-login/GoogleMap.vue";
 import {signup} from "@/endpoints/user";
+import {login} from "@/endpoints/auth";
 import {DoubleBounce} from 'vue-loading-spinner';
 
 @Component({
@@ -314,7 +315,11 @@ export default class Signup extends Vue {
             type: "success",
             timer: 2000
         })
-        this.$router.push('/hospital_home')
+        let res = await login(this.email,this.password);
+        if(res){
+            this.$router.push('/hospital_home')
+            window.location.reload()
+        }
         }catch (err) {
             console.log(err)
             this.loaderFlag = false;

@@ -13,7 +13,7 @@
             </ul>
             <ul class="nav-bar-list-hospital" v-if="auth_state == true">
                 <li><router-link to="/hospital_home" active-class="active">Home</router-link></li>
-                <li><router-link to="/medical_team" active-class="active">Contact Us</router-link></li>
+                <li><router-link to="">Contact Us</router-link></li>
                 <li>Last Reservations</li>
                 <li>
                     <router-link to="/profile" active-class="active">
@@ -27,11 +27,21 @@
                 <li>
                     <i class="fas fa fa-bell"></i>
                 </li>
-                <li>
+                <li @click="moreMenu = !moreMenu">
                     <i class="profile-icon fas fa fa-ellipsis-v"></i>
                     <span>More</span>
                 </li>
             </ul>
+        </div>
+        <div class="more-menu" v-if="moreMenu">
+            <span>
+                <i class="fas fa fa-star"></i>
+                View Your Rate
+            </span>
+            <span @click="logout()">
+                <i class="fas fa fa-sign-out-alt"></i>
+                Sign Out
+            </span>
         </div>
     </div>
 </template>
@@ -39,6 +49,7 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 import { getAuthState } from '@/helpers/utils';
+import {clearAuthInfo} from '@/helpers/utils';
 
 @Component({
   components: {
@@ -46,7 +57,12 @@ import { getAuthState } from '@/helpers/utils';
 })
 export default class Header extends Vue {
     auth_state:Boolean = false;
-
+    moreMenu:Boolean = false;
+    logout(){
+        clearAuthInfo()
+        this.$router.push('/home');
+        window.location.reload()
+    }
     mounted() {
         this.auth_state = getAuthState();   
     }
@@ -113,5 +129,31 @@ ul li{
 }
 .profile-icon{
     margin-right: 10px;
+}
+.more-menu{
+    width: 180px;
+    height: 110px;
+    position: fixed;
+    right: 50px;
+    top: 75px;
+    border-radius: var(--md-radius);
+    border: 1px solid var(--main-green);
+    background: #fff;
+    color: var(--main-green);
+    z-index: 999;
+    padding-top: 10px;
+}
+.more-menu span{
+    display: block;
+    height: 45px;
+    padding-left: 20px;
+    cursor: pointer;
+    line-height: 3;
+}
+.more-menu span:nth-of-type(2){
+    padding-left: 23px;
+}
+.more-menu span:hover{
+    background: #ddd;
 }
 </style>

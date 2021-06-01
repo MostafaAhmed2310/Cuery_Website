@@ -1,5 +1,8 @@
 <template>
     <div class="profile-container">
+        <div class="loader-container" v-if="loaderFlag">
+            <DoubleBounce></DoubleBounce>
+        </div>
         <div class="profile-body">
             <div class="cover-img">
                 <img src="@/assets/images/profile-cover.png" alt="">
@@ -8,8 +11,9 @@
             <div class="profile-inputs-body">
                 <div class="profile-img-panal">
                     <div class="profile-img">
-                        <i v-if="!profileObj.image_path" class="fas fa fa-user-circle"></i>
-                        <img v-if="profileObj.image_path" :src="BaseUrl + profileObj.image_path" alt="">
+                        <i v-if="(!profileObj.image_path || profileObj.image_path.charAt(profileObj.image_path.length-1) == '.') && !fileData" class="fas fa fa-user-circle"></i>
+                        <img v-if="profileObj.image_path && !fileData" :src="BaseUrl + profileObj.image_path" alt="">
+                        <img v-if="fileData" :src="fileData" alt="">
                     </div>
                     <label>
                         Change Your Profile Picture
@@ -24,8 +28,21 @@
                         <div class="input-field">
                             <input type="email" placeholder="Email" v-model="email">
                         </div>
-                        <div class="input-field" v-for="num in phone" :key="num">
-                            <input type="text" placeholder="Phone" v-model="num.number">
+                        <div class="input-field">
+                            <input type="number" placeholder="First Number Phone (Required)" v-model="phone[0].number" v-if="phone[0]">
+                            <span v-if="phoneMsg"> This field is required </span>
+                        </div>
+                        <div class="input-field">
+                            <input type="number" placeholder="Second Number Phone (Optional)" v-model="phone[1].number" v-if="phone[1]">
+                        </div>
+                        <div class="input-field">
+                            <input type="number" placeholder="Third Number Phone (Optional)" v-model="phone[2].number" v-if="phone[2]">
+                        </div>
+                        <div class="input-field">
+                            <input type="number" placeholder="Fourth Number Phone (Optional)" v-model="phone[3].number" v-if="phone[3]">
+                        </div>
+                        <div class="input-field">
+                            <input type="number" placeholder="Fifth Number Phone (Optional)" v-model="phone[4].number" v-if="phone[4]">
                         </div>
                         <div class="input-field">
                             <textarea class="currLocation" placeholder="Current Location" v-model="address"></textarea>
@@ -47,38 +64,45 @@
     </div>
 </template>
 
-<script lang="ts">
+<script>
 import { Component, Vue} from 'vue-property-decorator';
 import GoogleMap from '@/components/signup-login/GoogleMap.vue';
 import {getUserInfo} from '@/endpoints/user';
 import {BaseUrl} from '@/app.config';
 import {editProfile} from '@/endpoints/user';
-
+import {DoubleBounce} from 'vue-loading-spinner';
 @Component({
     components: {
-        GoogleMap
+        GoogleMap,
+        DoubleBounce
     },
 })
 export default class Profile extends Vue {
-    mapContainer:Boolean = false;
-    username:String = '';
-    email:String = '';
-    phone:any[] = [];
-    address:String = '';
-    profileObj:any = {};
-    BaseUrl:any = BaseUrl;
-    latlngObj:any = {};
-    city:any = '';
-    district:any = '';
-    country:any = '';
-    lat:any = '';
-    lng:any = '';
-    imagePath:any = '';
-    extension:any = '';
-    spNumbers:any[] = [];
-    uploadFile:any = '';
-    fileData:any = '';
-    fileFile:any = '';
+    mapContainer = false;
+    username = '';
+    email = '';
+    phone = [];
+    address = '';
+    profileObj = {};
+    BaseUrl = BaseUrl;
+    latlngObj = {};
+    city = '';
+    district = '';
+    country = '';
+    lat = '';
+    lng = '';
+    imagePath = '';
+    extension = '';
+    spNumbers = [];
+    uploadFile = '';
+    fileData = '';
+    fileFile = '';
+    loaderFlag = false;
+    num1 = false;
+    num2 = false;
+    num3 = false;
+    num4 = false;
+    phoneMsg = false;
     openMapBody(){
         this.mapContainer = true;
     };
@@ -86,10 +110,19 @@ export default class Profile extends Vue {
         this.mapContainer = false;
     };
     async getProfile(){
+        this.loaderFlag = true
         this.profileObj = await getUserInfo();
+        this.loaderFlag = false
         this.username = this.profileObj.name;
         this.email = this.profileObj.email;
         this.phone = this.profileObj.sp_numbers;
+        for(var i = 0; i < this.profileObj.sp_numbers.length; i++){
+            if( this.profileObj.sp_numbers.length < 5 ){
+                var length = this.profileObj.sp_numbers.length
+                this.phone[length] = {}
+                length++
+            }
+        }
         this.address = this.profileObj.address;
         this.latlngObj = {
             lat: this.profileObj.lat,
@@ -99,14 +132,15 @@ export default class Profile extends Vue {
         this.district = this.profileObj.district_title;
         this.lat = this.profileObj.lat;
         this.lng = this.profileObj.long;
+        this.country = null;
     }
 
     uploadFileFun(){
-        this.uploadFile = (<any>event).target;
+        this.uploadFile = (event).target;
         if (this.uploadFile.files && this.uploadFile.files[0]) {
             var reader = new FileReader();
             reader.onload = (e) => {
-                this.fileData = (<any>e.target).result;
+                this.fileData = (e.target).result;
                 this.extension = this.fileData.split(";")[0].split("/")[1]
                 this.imagePath = this.fileData.split(",")[1]
                 console.log('base64', this.imagePath)
@@ -117,11 +151,11 @@ export default class Profile extends Vue {
         }
     }
 
-    getLocation(address: any, location: any, latLng: any) {
+    getLocation(address, location, latLng) {
         this.getData(location, address, latLng);
         this.closeModel();
     }
-    getData(location: any, address: any, lating: any) {
+    getData(location, address, lating) {
         let This = this
         this.address = address
         this.lat = lating.lat
@@ -141,36 +175,85 @@ export default class Profile extends Vue {
         }
     }
     getNumbersArr(){
-        this.spNumbers = this.profileObj.sp_numbers.map(function(numberObj:any){
-            return numberObj.number
-        })
+        this.spNumbers = this.profileObj.sp_numbers.filter(function(numberObj){
+            if(!numberObj.number){
+                return false;
+            }
+            return true;
+        }).map(function(numberObj) {return numberObj.number});
     }
     async submitEditProfile(){
-        this.getNumbersArr();
-        let data = {
-            address: this.address,
-            district_title: this.district,
-            city_title: this.city,
-            country_title: this.country,
-            lat: this.lat,
-            long: this.lng,
-            name: this.username,
-            email: this.email,
-            sp_numbers: this.spNumbers,
-            image_string: this.imagePath,
-            ext: this.extension,
-        };
-        try{
-            await editProfile(this.profileObj.id, data)
-            this.$fire({
-                title: "SUCCESS!",
-                text: "Profile edited successfully",
-                type: "success",
-                timer: 2000
-            });
-            this.getProfile();
-        }catch(err){
+        if(this.phone[0].number == ''){
+            this.phoneMsg = true
+        }else{
+            this.phoneMsg = false
+            this.getNumbersArr();
+            var data
+            if(this.country == null && this.fileData == ''){
+                data = {
+                    address: this.address,
+                    district_title: this.district,
+                    city_title: this.city,
+                    lat: this.lat,
+                    long: this.lng,
+                    name: this.username,
+                    email: this.email,
+                    sp_numbers: this.spNumbers,
+                };
+            }else if(this.country == null){
+                data = {
+                    address: this.address,
+                    district_title: this.district,
+                    city_title: this.city,
+                    lat: this.lat,
+                    long: this.lng,
+                    name: this.username,
+                    email: this.email,
+                    sp_numbers: this.spNumbers,
+                    image_string: this.imagePath,
+                    ext: this.extension,
+                };
+            }else if(this.fileData == ''){
+                data = {
+                    address: this.address,
+                    district_title: this.district,
+                    city_title: this.city,
+                    country_title: this.country,
+                    lat: this.lat,
+                    long: this.lng,
+                    name: this.username,
+                    email: this.email,
+                    sp_numbers: this.spNumbers,
+                };
+            }else{
+                data = {
+                    address: this.address,
+                    district_title: this.district,
+                    city_title: this.city,
+                    country_title: this.country,
+                    lat: this.lat,
+                    long: this.lng,
+                    name: this.username,
+                    email: this.email,
+                    sp_numbers: this.spNumbers,
+                    image_string: this.imagePath,
+                    ext: this.extension,
+                };
+            }
+            try{
+                this.loaderFlag = true
+                await editProfile(this.profileObj.id, data)
+                this.loaderFlag = false
+                this.$fire({
+                    title: "SUCCESS!",
+                    text: "Profile edited successfully",
+                    type: "success",
+                    timer: 2000
+                });
+                this.getProfile();
+            }catch(err){
 
+            }
         }
     }
     mounted(){
@@ -277,6 +360,17 @@ export default class Profile extends Vue {
 .input-field:nth-of-type(2){
     width: 49%;
     float: right;
+}
+.input-field:nth-of-type(3){
+    display: block;
+    clear: both;
+    position: relative;
+}
+.input-field span {
+  font-size: 12px;
+  color: var(--alert-color);
+  position: absolute;
+  bottom: 2px;
 }
 .profile-actions h4{
     color: var(--main-green);
