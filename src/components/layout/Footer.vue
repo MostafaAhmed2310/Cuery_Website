@@ -21,7 +21,7 @@
             </div>
             <div class="footer-help">
                 <p>Need Help ?</p>
-                <span>Contact Us</span>
+                <router-link to="/contact_us"><span>Contact Us</span></router-link>
                 <span>Privacy Policy</span>
                 <span>Terms Of Us</span>
                 <span>Patients Privacy Policy</span>
@@ -105,6 +105,9 @@ export default class Footer extends Vue {
 .footer-help span:hover{
     cursor: pointer;
     text-decoration: underline;
+}
+.footer-help a{
+    color: #fff;
 }
 .footer-apps{
     width: auto;
