@@ -13,7 +13,7 @@
             </ul>
             <ul class="nav-bar-list-hospital" v-if="auth_state == true">
                 <li><router-link to="/hospital_home" active-class="active">Home</router-link></li>
-                <li><router-link to="">Contact Us</router-link></li>
+                <li><router-link to="/contact_us" active-class="active">Contact Us</router-link></li>
                 <li>Last Reservations</li>
                 <li>
                     <router-link to="/profile" active-class="active">
