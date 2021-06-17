@@ -5,6 +5,8 @@ import HospitalHome from '@/views/HospitalHome.vue'
 import Signup from '@/components/signup-login/Signup.vue'
 import Profile from '@/components/user/Profile.vue'
 import ContactUs from '@/components/staticPages/ContactUs.vue'
+import Messages from '@/views/Messages.vue'
+import Chat from '@/components/messages/Chat.vue'
 const routes = [
     {
         path: '/',
@@ -45,6 +47,18 @@ const routes = [
         path: '/contact_us',
         name: 'contact_us',
         component: ContactUs
+    },
+    {
+        path: '/messages',
+        name: 'messages',
+        component: Messages,
+        children: [
+            {
+                path: '/messages/:id',
+                name: 'messagesChat',
+                component: Chat
+            },
+        ]
     },
 ]
 
