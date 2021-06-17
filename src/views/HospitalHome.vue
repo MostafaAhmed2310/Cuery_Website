@@ -8,7 +8,8 @@
             <ReservationsTable/>
         </div>
         <div class="home-right-side">
-
+            <Sections/>
+            <News/>
         </div>
     </div>
 </template>
@@ -20,13 +21,17 @@ import UpgradePanal from "@/components/hospitalHome/UpgradePanal.vue";
 import Tabs from "@/components/hospitalHome/Tabs.vue";
 import AppointementsTable from "@/components/hospitalHome/AppointementsTable.vue";
 import ReservationsTable from "@/components/hospitalHome/ReservationsTable.vue";
+import Sections from "@/components/hospitalHome/Sections.vue";
+import News from "@/components/hospitalHome/News.vue";
 @Component({
     components: {
         WelcomePanal,
         UpgradePanal,
         Tabs,
         AppointementsTable,
-        ReservationsTable
+        ReservationsTable,
+        Sections,
+        News
     },
 })
 export default class HospitalHome extends Vue {
@@ -43,11 +48,11 @@ export default class HospitalHome extends Vue {
 }
 .home-left-side{
     width: 60%;
-    margin-right: 10%;
+    margin-right: 5%;
     float: left;
 }
 .home-right-side{
-    width: 30%;
+    width: 35%;
     float: right;
 }
 </style>
