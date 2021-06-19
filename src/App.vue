@@ -34,6 +34,7 @@
 }
 body{
     margin: 0;
+    overflow-x: hidden;
 }
 a{
     text-decoration: none !important;

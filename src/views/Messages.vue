@@ -12,9 +12,13 @@
                 <div class="messages-panal">
                     <UserList/>
                 </div>
-                <div class="chat-body">
+                <div :class="'chat-body '+chatWidth">
                     <Placeholder v-if="$router.currentRoute.name == 'messages'"/>
-                    <router-view></router-view>
+                    <router-view @openInfo="openInfo"></router-view>
+                </div>
+                <div :class="'info-panal '+openInfoAnimate">
+                    <CloseIcon class="close-icon" @closeAction="closeInfo"/>
+                    <InfoPanal @closeInfo="closeInfo"/>
                 </div>
             </div>
         </div>
@@ -26,15 +30,29 @@ import { Component, Vue} from 'vue-property-decorator';
 import {DoubleBounce} from 'vue-loading-spinner';
 import UserList from '@/components/messages/UserList.vue';
 import Placeholder from '@/components/messages/Placeholder.vue';
+import InfoPanal from '@/components/messages/InfoPanal.vue';
+import CloseIcon from '@/assets/icons/CloseIcon.vue';
 @Component({
     components: {
         DoubleBounce,
         UserList,
         Placeholder,
+        InfoPanal,
+        CloseIcon
     },
 })
 export default class Messages extends Vue {
     loaderFlag = false;
+    openInfoAnimate = '';
+    chatWidth = '';
+    openInfo(){
+        this.openInfoAnimate = 'open-info-animate';
+        this.chatWidth = 'chat-width';
+    }
+    closeInfo(){
+        this.chatWidth = 'open-chat';
+        this.openInfoAnimate = 'close-info-animate';
+    }
 }
 </script>
 
@@ -55,7 +73,7 @@ export default class Messages extends Vue {
     width: 85%;
     margin: auto;
     overflow: hidden;
-    margin-top: -10%;
+    margin-top: -14%;
 }
 .messages-panal{
     width: 30%;
@@ -63,13 +81,60 @@ export default class Messages extends Vue {
     background: rgba(241, 250, 245, 1);
     height: 100vh;
     padding-top: 10%;
+    margin-top: 6%;
+    margin-right: 5%;
 }
-.chat-body{
+.placeholder-body{
     float: right;
     width: 65%;
     padding-top: 10%;
     background: rgba(249, 253, 251, 1);
     height: 100vh;
 }
-
+.chat-body{
+    position: relative;
+    height: 110vh;
+    width: 65%;
+    margin: auto;
+    float: left;
+    background: rgba(249, 253, 251, 1);
+}
+.info-panal{
+    width: 0%;
+    opacity: 0;
+    position: absolute;
+    right: 0;
+    height: 110vh;
+    background: rgba(249, 253, 251, 1);
+}
+.close-icon{
+    width: 30px;
+    float: right;
+    margin-bottom: 40px;
+    display: block;
+    clear: both;
+    margin-top: 30px;
+    cursor: pointer;
+}
+.close-icon .close-icon svg{
+    width: 100%;
+}
+.open-info-animate{
+    width: 22% !important;
+    opacity: 1 !important;
+    transition: 0.5s;
+}
+.chat-width{
+    width: 45% !important;
+    transition: 0.5s;
+}
+.close-info-animate{
+    width: 0% !important;
+    opacity: 0 !important;
+    transition: 0.5s;
+}
+.open-chat{
+    width: 65% !important;
+    transition: 0.5s;
+}
 </style>

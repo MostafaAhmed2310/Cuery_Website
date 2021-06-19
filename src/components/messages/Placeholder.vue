@@ -71,6 +71,6 @@ export default class Placeholder extends Vue {
     color: var(--font-navy);
     padding: 60px;
     font-weight: bold;
-    margin-top: 5%;
+    margin-top: 15%;
 }
 </style>
