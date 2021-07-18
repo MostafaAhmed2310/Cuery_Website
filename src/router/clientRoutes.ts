@@ -7,6 +7,7 @@ import Profile from '@/components/user/Profile.vue'
 import ContactUs from '@/components/staticPages/ContactUs.vue'
 import Messages from '@/views/Messages.vue'
 import Chat from '@/components/messages/Chat.vue'
+import Reservations from '@/views/Reservations.vue'
 const routes = [
     {
         path: '/',
@@ -52,6 +53,18 @@ const routes = [
         path: '/messages',
         name: 'messages',
         component: Messages,
+        children: [
+            {
+                path: '/messages/:id',
+                name: 'messagesChat',
+                component: Chat
+            },
+        ]
+    },
+    {
+        path: '/reservations',
+        name: 'reservations',
+        component: Reservations,
         children: [
             {
                 path: '/messages/:id',
