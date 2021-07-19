@@ -7,10 +7,14 @@
             <div class="cover-img">
                 <img src="@/assets/images/profile-cover.png" alt="">
                 <h2>Reservations</h2>
+                <Calendar class="calendar"/>
             </div>
             <div class="reservations-inputs-body">
                 <div class="reservations-panal">
                     <ReservationsList/>
+                </div>
+                <div class="reservation-body">
+                    <router-view></router-view>
                 </div>
             </div>
         </div>
@@ -20,9 +24,11 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 import ReservationsList from '@/components/reservations/ReservationsList.vue';
+import Calendar from '@/assets/icons/Calendar.vue';
 @Component({
     components: {
-        ReservationsList
+        ReservationsList,
+        Calendar
     },
 })
 export default class Reservations extends Vue {
@@ -57,5 +63,17 @@ export default class Reservations extends Vue {
     padding-top: 10%;
     margin-top: 6%;
     margin-right: 5%;
+}
+.calendar{
+    position: absolute;
+    bottom: 60px;
+    right: 190px;
+}
+.reservation-body{
+    width: 65%;
+    float: left;
+    background: rgba(249, 253, 251, 1);
+    height: 110vh;
+    padding: 20% 50px 0px 50px;
 }
 </style>

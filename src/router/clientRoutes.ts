@@ -8,6 +8,7 @@ import ContactUs from '@/components/staticPages/ContactUs.vue'
 import Messages from '@/views/Messages.vue'
 import Chat from '@/components/messages/Chat.vue'
 import Reservations from '@/views/Reservations.vue'
+import ReservationItem from '@/components/reservations/ReservationItem.vue'
 const routes = [
     {
         path: '/',
@@ -67,9 +68,9 @@ const routes = [
         component: Reservations,
         children: [
             {
-                path: '/messages/:id',
-                name: 'messagesChat',
-                component: Chat
+                path: '/reservations/:id',
+                name: 'ReservationItem',
+                component: ReservationItem
             },
         ]
     },

@@ -1,7 +1,7 @@
 <template>
     <div class="reservatios-list-container">
         <div class="reservatios-item" v-for="headChat in chatList" :key="headChat">
-            <router-link :to="'/messages/' + headChat.id" active-class="active-chat">
+            <router-link :to="'/reservations/' + headChat.id">
                 <div class="profile-img">
                     <img src="" alt="">
                     <i class="fas fa fa-user-circle"></i>
@@ -61,9 +61,6 @@ export default class ReservationsList extends Vue {
     overflow: hidden;
     cursor: pointer;
     margin-bottom: 20px;
-}
-.reservatios-item:hover{
-    opacity: 0.9;
 }
 .profile-img{
     width: 45px;
