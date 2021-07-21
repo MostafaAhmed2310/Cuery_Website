@@ -9,6 +9,8 @@ import Messages from '@/views/Messages.vue'
 import Chat from '@/components/messages/Chat.vue'
 import Reservations from '@/views/Reservations.vue'
 import ReservationItem from '@/components/reservations/ReservationItem.vue'
+import Appoinetments from '@/views/Appoinetments.vue'
+import Confirmation from '@/components/appoinetments/Confirmation.vue'
 const routes = [
     {
         path: '/',
@@ -71,6 +73,18 @@ const routes = [
                 path: '/reservations/:id',
                 name: 'ReservationItem',
                 component: ReservationItem
+            },
+        ]
+    },
+    {
+        path: '/appoinetments',
+        name: 'appoinetments',
+        component: Appoinetments,
+        children: [
+            {
+                path: '/confirmation/:id',
+                name: 'Confirmation',
+                component: Confirmation
             },
         ]
     },
