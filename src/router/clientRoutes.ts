@@ -11,6 +11,7 @@ import Reservations from '@/views/Reservations.vue'
 import ReservationItem from '@/components/reservations/ReservationItem.vue'
 import Appoinetments from '@/views/Appoinetments.vue'
 import Confirmation from '@/components/appoinetments/Confirmation.vue'
+import SuccessPage from '@/components/appoinetments/SuccessPage.vue'
 const routes = [
     {
         path: '/',
@@ -85,6 +86,11 @@ const routes = [
                 path: '/confirmation/:id',
                 name: 'Confirmation',
                 component: Confirmation
+            },
+            {
+                path: '/success_page',
+                name: 'SuccessPage',
+                component: SuccessPage
             },
         ]
     },

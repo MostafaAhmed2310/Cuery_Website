@@ -13,7 +13,9 @@
                 <span class="section-name">Section Name</span>
                 <span class="see-more">See More</span>
                 <div class="table-btns">
-                    <button class="navy-btn">Patient Arrived</button>
+                    <router-link to="/confirmation/5">
+                        <button class="navy-btn">Patient Arrived</button>
+                    </router-link>
                 </div>
                 <hr>
             </div>

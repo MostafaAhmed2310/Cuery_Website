@@ -19,7 +19,7 @@
             </div>
             <h5>Resend Code</h5>
             <div class="confirm-btn">
-                <button>Confirm <i class="fas fa fa-sort-up"></i></button>
+                <button @click="confirmPatient()">Confirm <i class="fas fa fa-sort-up"></i></button>
             </div>
         </div>
     </div>
@@ -34,7 +34,9 @@ import { Component, Vue } from 'vue-property-decorator';
     },
 })
 export default class Confirmation extends Vue {
-  
+    confirmPatient(){
+        this.$router.push('/success_page');
+    }
 }
 </script>
 
