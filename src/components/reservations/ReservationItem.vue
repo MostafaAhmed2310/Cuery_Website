@@ -42,6 +42,8 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
+import { getReservation } from '@/endpoints/reservations';
+
 
 @Component({
     components: {
@@ -49,7 +51,14 @@ import { Component, Vue } from 'vue-property-decorator';
     },
 })
 export default class ReservationItem extends Vue {
-  
+    reservationObj = {}
+    resId =this. $route.params.id
+    async getReservation(resId:any){
+        this.reservationObj = await getReservation(resId);
+    }
+    mounted(){
+        this.getReservation(this.resId)
+    }
 }
 </script>
 
