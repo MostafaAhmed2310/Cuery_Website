@@ -29,19 +29,20 @@
             </div>
         </div>
         <div class="chat-input">
-            <div class="send-icon">
+            <div class="send-icon" @click="sendMsg($route.params.id)">
                 <svg xmlns="http://www.w3.org/2000/svg" id="send_icon" data-name="send icon" width="35" height="35" viewBox="0 0 47.867 47.867">
                     <circle id="Ellipse_4" data-name="Ellipse 4" cx="23.934" cy="23.934" r="23.934" transform="translate(0 0)" fill="#30a362"/>
                     <path id="send" d="M23.136,11.932l-.007,0L2.719,3.463a1.126,1.126,0,0,0-1.062.1,1.178,1.178,0,0,0-.532.984V9.965a1.147,1.147,0,0,0,.933,1.126L13.19,13.149a.191.191,0,0,1,0,.376L2.058,15.583a1.147,1.147,0,0,0-.933,1.126v5.415a1.126,1.126,0,0,0,.506.941,1.144,1.144,0,0,0,.632.191,1.173,1.173,0,0,0,.455-.092l20.409-8.417.009,0a1.529,1.529,0,0,0,0-2.81Z" transform="translate(13.028 10.569)" fill="#fff"/>
                 </svg>
             </div>
-            <textarea placeholder="Send Your Message"></textarea>
+            <textarea placeholder="Send Your Message" v-model="msgBody"></textarea>
         </div>
     </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
+import { getUserConversation, sendMsg } from '@/endpoints/messages';
 
 @Component({
     components: {
@@ -50,26 +51,31 @@ import { Component, Vue } from 'vue-property-decorator';
 })
 export default class Chat extends Vue {
     currentId:any = 1;
-    messages:any[] = [
-        {id:1},
-        {id:1},
-        {id:2},
-        {id:1},
-        {id:2},
-        {id:1},
-        {id:2},
-        {id:2},
-        {id:1},
-        {id:2},
-        {id:1},
-        {id:2},
-        {id:1},
-        {id:2},
-        {id:1},
-    ]
+    msg:any='';
+    data:any = {}
+    msgBody:String = '';
+    userId =this.$route.params.id
+    messages:any[] = []
     openInfo(){
         this.$emit('openInfo');
     }
+
+    sendMsg(userId:any){
+        this.data = {
+            body:this.msgBody,
+            message_type_id:1
+        }
+        this.msg =sendMsg(userId,this.data);
+    }
+
+    async getUserConversation(userId:any){
+        this.messages = await getUserConversation(userId);
+    }
+
+    mounted(){
+        this.getUserConversation(this.userId)
+    }
+
 }
 </script>
 

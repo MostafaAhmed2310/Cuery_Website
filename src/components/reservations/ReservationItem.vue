@@ -52,7 +52,7 @@ import { getReservation } from '@/endpoints/reservations';
 })
 export default class ReservationItem extends Vue {
     reservationObj = {}
-    resId =this. $route.params.id
+    resId =this.$route.params.id
     async getReservation(resId:any){
         this.reservationObj = await getReservation(resId);
     }
