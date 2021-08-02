@@ -6,7 +6,7 @@
                 <i class="fas fa fa-user-circle"></i>
             </div>
             <div class="user-info">
-                <h4>Mostafa Ahmed</h4>
+                <h4>{{this.conversation.sender_name}}</h4>
             </div>
             <div class="info-icon" @click="openInfo">
                 <svg xmlns="http://www.w3.org/2000/svg" id="info-circle" width="30" height="30" viewBox="0 0 43.867 43.867">
@@ -18,13 +18,38 @@
         </div>
         <div class="chat-msgs">
             <div v-for="message in messages" :key="message">
-                <div class="msg-item" v-if="message.id == currentId">
-                    <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Qui suscipit magni,</p>
-                    <span>2:17 AM</span>
+                <div class="msg-item" v-if="message.user_id != currentId">
+                    <p v-if="message.message_type_id == 1">{{message.body}}</p>
+                    <div v-if="message.message_type_id == 2">
+                        <p v-if="message.body">{{message.body}}</p>
+                        <img src="" alt="Image">
+                    </div>
+                    <div v-if="message.message_type_id == 3">
+                        <p  v-if="message.body">{{message.body}}</p>
+                        <a href="#">Audio</a>      
+                    </div>
+                    <div v-if="message.message_type_id == 2">
+                        <p  v-if="message.body">{{message.body}}</p>
+                        <a href="#">PDF</a>
+                    </div>
+                    <span>{{message.created_at | moment("h:mm a")}}</span>
                 </div>
-                <div class="msg-item self-msg" v-if="message.id != currentId">
-                    <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Facilis maxime assumenda atque, quod aperiam error eos impedit voluptates numquam. Quod maiores ex aliquam veritatis repellat, quasi illo ad tempora accusamus.</p>
-                    <span>2:17 AM</span>
+                <div class="msg-item self-msg" v-if="message.user_id == currentId">
+                    <i class="fas fa-trash" @click="deleteMsg(message.id)"></i>
+                    <p v-if="message.message_type_id == 1">{{message.body}}</p>
+                    <div v-if="message.message_type_id == 2">
+                        <p v-if="message.body">{{message.body}}</p>
+                        <img src="" alt="Image">
+                    </div>
+                    <div v-if="message.message_type_id == 3">
+                        <p  v-if="message.body">{{message.body}}</p>
+                        <a href="#">Audio</a>      
+                    </div>
+                    <div v-if="message.message_type_id == 4">
+                        <p  v-if="message.body">{{message.body}}</p>
+                        <a href="#">PDF</a>
+                    </div>
+                    <span>{{message.created_at | moment("h:mm a")}}</span>
                 </div>
             </div>
         </div>
@@ -34,6 +59,10 @@
                     <circle id="Ellipse_4" data-name="Ellipse 4" cx="23.934" cy="23.934" r="23.934" transform="translate(0 0)" fill="#30a362"/>
                     <path id="send" d="M23.136,11.932l-.007,0L2.719,3.463a1.126,1.126,0,0,0-1.062.1,1.178,1.178,0,0,0-.532.984V9.965a1.147,1.147,0,0,0,.933,1.126L13.19,13.149a.191.191,0,0,1,0,.376L2.058,15.583a1.147,1.147,0,0,0-.933,1.126v5.415a1.126,1.126,0,0,0,.506.941,1.144,1.144,0,0,0,.632.191,1.173,1.173,0,0,0,.455-.092l20.409-8.417.009,0a1.529,1.529,0,0,0,0-2.81Z" transform="translate(13.028 10.569)" fill="#fff"/>
                 </svg>
+                <i class="fas fa-paperclip" @click="uploadAttachment(3)"></i>
+                <input type="file" name="" id="" @change="uploadAttachment(4)">
+                <i class="fas fa-volume-up" @click="uploadAttachment(4)"></i>
+                <i class="far fa-image" @click="uploadAttachment(2)"></i>
             </div>
             <textarea placeholder="Send Your Message" v-model="msgBody"></textarea>
         </div>
@@ -42,7 +71,8 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import { getUserConversation, sendMsg } from '@/endpoints/messages';
+import { getUserConversation, sendMsg, deleteMsg } from '@/endpoints/messages';
+import {getUserInfo} from '@/endpoints/user';
 
 @Component({
     components: {
@@ -50,12 +80,22 @@ import { getUserConversation, sendMsg } from '@/endpoints/messages';
     },
 })
 export default class Chat extends Vue {
-    currentId:any = 1;
     msg:any='';
     data:any = {}
     msgBody:String = '';
     userId =this.$route.params.id
-    messages:any[] = []
+    messages:any[] = [];
+    conversation:any={};
+    profileObj = {};
+    currentId:any = '';
+    uploadFile:any = {};
+    fileData:any= [];
+    message_type_id = '';
+    extension = '';
+    base64Str  ='';
+    imgPreview = false;
+    txtPreview = false;
+    fileFile = {}
     openInfo(){
         this.$emit('openInfo');
     }
@@ -63,13 +103,45 @@ export default class Chat extends Vue {
     sendMsg(userId:any){
         this.data = {
             body:this.msgBody,
-            message_type_id:1
+            message_type_id:1 
         }
         this.msg =sendMsg(userId,this.data);
+        this.getUserConversation(this.userId)
+        this.msgBody = ''
     }
 
     async getUserConversation(userId:any){
-        this.messages = await getUserConversation(userId);
+        this.currentId=65
+        this.conversation = await getUserConversation(userId);
+        this.messages = this.conversation.messages;
+    }
+
+    uploadAttachment(message_type_id:any){
+        this.uploadFile = (<any>event).target;
+        if (this.uploadFile.files && this.uploadFile.files[0]) {
+            var reader = new FileReader();
+                reader.onload = (e) => {
+                    this.fileData = (<any>e.target).result;
+                    this.message_type_id=message_type_id
+                    this.extension = this.fileData.split(";")[0].split("/")[1]
+                    this.base64Str = this.fileData.split(",")[1]
+                }
+                reader.readAsDataURL(this.uploadFile.files[0]);
+                this.fileFile = this.uploadFile.files[0];
+                if(message_type_id== 2){
+                    this.imgPreview = true
+                    this.txtPreview = false
+                }else{
+                    this.imgPreview = false
+                    this.txtPreview = true
+                }
+            }
+        }
+
+
+    deleteMsg(msgId:any){
+        deleteMsg(msgId);
+        this.getUserConversation(this.userId)
     }
 
     mounted(){

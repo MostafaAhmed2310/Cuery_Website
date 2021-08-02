@@ -6,7 +6,7 @@ import './registerServiceWorker';
 import VueSimpleAlert from "vue-simple-alert";
 
 Vue.use(VueSimpleAlert);
-
+Vue.use(require('vue-moment'));
 Vue.config.productionTip = false;
 
 new Vue({
