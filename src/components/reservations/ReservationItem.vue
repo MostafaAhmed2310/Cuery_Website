@@ -11,14 +11,14 @@
                 </div>
             </div>
             <div class="block">
-                <h5>Section Name</h5>
+                <h5>{{ reservationObj.section_title }}</h5>
                 <h5>Phone Num. : 0123456789</h5>
             </div>
             <div class="block">
                 <div class="left-btn">
                     <button>Mon</button>
-                    <span>What He do</span>
-                    <span>At 9:30 Pm</span>
+                    <span>{{ reservationObj.reservation_type_id }}</span>
+                    <span>{{ reservationObj.reservation_date }}</span>
                 </div>
                 <div class="right-btn">
                     <router-link :to="'/messages/'+ $route.params.id">
@@ -29,12 +29,12 @@
         </div>
         <div class="block">
             <h5>limit your time</h5>
-            <h6>Time <span>Min Time</span> To <span>Max Time</span></h6>
+            <h6>Time <span>{{ reservationObj.start_time }}</span> To <span>{{ reservationObj.end_time }} </span></h6>
         </div>
         <div class="block">
             <div class="reservation-btns">
-                <button>Confirm</button>
-                <button>Decline</button>
+                <button @click = "confirmReservation(reservationObj.id)">Confirm</button>
+                <button @click = "declineReservation(reservationObj.id)">Decline</button>
             </div>
         </div>
     </div>
@@ -42,7 +42,7 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import { getReservation } from '@/endpoints/reservations';
+import { getReservation, confirmReservation, declineReservation  } from '@/endpoints/reservations';
 
 
 @Component({
@@ -55,6 +55,13 @@ export default class ReservationItem extends Vue {
     resId =this. $route.params.id
     async getReservation(resId:any){
         this.reservationObj = await getReservation(resId);
+    }
+     confirmReservation(reservation_id:any){
+        confirmReservation(reservation_id)
+
+    }
+    declineReservation(reservation_id:any){
+        declineReservation(reservation_id)
     }
     mounted(){
         this.getReservation(this.resId)
