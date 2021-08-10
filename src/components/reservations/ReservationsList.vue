@@ -1,19 +1,19 @@
 <template>
     <div class="reservatios-list-container">
-        <div class="reservatios-item" v-for="headChat in chatList" :key="headChat">
-            <router-link :to="'/reservations/' + headChat.id">
+        <div class="reservatios-item" v-for="reservation in reservationsList" :key="reservation">
+            <router-link :to="'/reservations/' + reservation.id" @click="updateDetails()">
                 <div class="profile-img">
                     <img src="" alt="">
                     <i class="fas fa fa-user-circle"></i>
                 </div>
                 <div class="reservatios-info">
-                    <h4>Mostafa Ahmed</h4>
-                    <span>Section Name</span>
+                    <h4> {{ reservation.name }}</h4>
+                    <span>{{ reservation.section_title }}</span>
                 </div>
             </router-link>
             <div class="reservations-btns">
-                <button>Confirm</button>
-                <button>Decline</button>
+                <button @click = "confirmReservation(reservation.id)">Confirm</button>
+                <button @click = "declineReservation(reservation.id)">Decline</button>
             </div>
         </div>
     </div>
@@ -21,6 +21,7 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
+import { getReservationsList ,confirmReservation, declineReservation } from '@/endpoints/reservations';
 
 @Component({
     components: {
@@ -28,18 +29,26 @@ import { Component, Vue } from 'vue-property-decorator';
     },
 })
 export default class ReservationsList extends Vue {
-    chatList = [
-        {id:1},
-        {id:3},
-        {id:5},
-        {id:8},
-        {id:15},
-        {id:6},
-        {id:9},
-        {id:10},
-        {id:11},
-        {id:12},
-    ];
+    reservationsList = [];
+    async getReservationsList(){
+        this.reservationsList = await getReservationsList();
+    }
+
+    confirmReservation(reservation_id:any){
+        confirmReservation(reservation_id)
+
+    }
+
+    declineReservation(reservation_id:any){
+        declineReservation(reservation_id)
+    }
+    updateDetails(){
+        this.$emit('updateDetails');
+    }
+
+    mounted(){
+        this.getReservationsList()
+    }
 }
 </script>
 
