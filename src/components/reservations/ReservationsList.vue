@@ -1,14 +1,14 @@
 <template>
     <div class="reservatios-list-container">
         <div class="reservatios-item" v-for="reservation in reservationsList" :key="reservation">
-            <router-link :to="'/reservations/' + reservation.id">
+            <router-link :to="'/reservations/' + reservation.id" @click="updateDetails()">
                 <div class="profile-img">
                     <img src="" alt="">
                     <i class="fas fa fa-user-circle"></i>
                 </div>
                 <div class="reservatios-info">
-                    <h4>Mostafa Ahmed</h4>
-                    <span>{{ reservation.section_title}}</span>
+                    <h4> {{ reservation.name }}</h4>
+                    <span>{{ reservation.section_title }}</span>
                 </div>
             </router-link>
             <div class="reservations-btns">
@@ -41,6 +41,9 @@ export default class ReservationsList extends Vue {
 
     declineReservation(reservation_id:any){
         declineReservation(reservation_id)
+    }
+    updateDetails(){
+        this.$emit('updateDetails');
     }
 
     mounted(){

@@ -7,17 +7,16 @@
                     <i class="fas fa fa-user-circle"></i>
                 </div>
                 <div class="reservation-info">
-                    <h4>Mostafa Ahmed</h4>
+                    <h4>{{ reservationObj.name }}</h4>
                 </div>
             </div>
             <div class="block">
                 <h5>{{ reservationObj.section_title }}</h5>
-                <h5>Phone Num. : 0123456789</h5>
+                <h5>Phone Num. : {{ reservationObj.phone }}</h5>
             </div>
             <div class="block">
                 <div class="left-btn">
-                    <button>Mon</button>
-                    <span>{{ reservationObj.reservation_type_id }}</span>
+                    <button>{{ reservationObj.Day }}</button>
                     <span>{{ reservationObj.reservation_date }}</span>
                 </div>
                 <div class="right-btn">
@@ -29,7 +28,7 @@
         </div>
         <div class="block">
             <h5>limit your time</h5>
-            <h6>Time <span>{{ reservationObj.start_time }}</span> To <span>{{ reservationObj.end_time }} </span></h6>
+            <h6>From <span>{{ reservationObj.start_time }}:00</span> To <span>{{ reservationObj.end_time }}:00 </span></h6>
         </div>
         <div class="block">
             <div class="reservation-btns">
@@ -62,6 +61,9 @@ export default class ReservationItem extends Vue {
     }
     declineReservation(reservation_id:any){
         declineReservation(reservation_id)
+    }
+    updateDetailsFun(){
+        this.getReservation(this.resId)
     }
     mounted(){
         this.getReservation(this.resId)
