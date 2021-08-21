@@ -34,7 +34,7 @@ import Calendar from '@/assets/icons/Calendar.vue';
 export default class Reservations extends Vue {
     loaderFlag:Boolean = false;
     updateReservationDetails(){
-        this.$refs.updatePage.updateDetailsFun();
+        (<any>this.$refs.updatePage).updateDetailsFun();
     }
 }
 </script>
