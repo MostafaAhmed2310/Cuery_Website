@@ -7,8 +7,8 @@
                     <i class="fas fa fa-user-circle"></i>
                 </div>
                 <div class="appoinetments-info">
-                    <h4>Mostafa Ahmed</h4>
-                    <span>Section Name</span>
+                    <h4>{{item.name}}</h4>
+                    <span>{{item.section_title}}</span>
                 </div>
             </router-link>
         </div>
@@ -17,24 +17,22 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
+import { getAppoinetmentsList, finishAppoinetment } from '@/endpoints/appoinetments';
 
 @Component({
   components: {
   },
 })
 export default class AppoinetmentsLists extends Vue {
-    items = [
-        {id:1},
-        {id:3},
-        {id:5},
-        {id:8},
-        {id:15},
-        {id:6},
-        {id:9},
-        {id:10},
-        {id:11},
-        {id:12},
-    ];
+    items = [];
+    async getAppoinetmentsList(){
+        this.items = await getAppoinetmentsList();
+    }
+
+    mounted(){
+        this.getAppoinetmentsList()
+    }
+
 }
 </script>
 

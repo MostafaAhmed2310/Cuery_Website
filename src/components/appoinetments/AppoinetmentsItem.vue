@@ -7,19 +7,19 @@
                     <i class="fas fa fa-user-circle"></i>
                 </div>
                 <div class="reservation-info">
-                    <h4>Mostafa Ahmed</h4>
+                    <h4>{{ reservationObj.name }}</h4>
                 </div>
             </div>
             <div class="block">
-                <h5><i class="fas fa fa-plus-square"></i>Section Name</h5>
-                <h5><i class="phone-icon fas fa fa-phone"></i>0123456789</h5>
+                <h5><i class="fas fa fa-plus-square"></i>{{ reservationObj.section_title }}</h5>
+                <h5><i class="phone-icon fas fa fa-phone"></i>{{ reservationObj.phone }}</h5>
                 <h5><i class="fas fa-map-marker-alt"></i>15 Albert Al Awal . Smouha , Alexandria</h5>
             </div>
             <div class="block">
                 <div class="left-btn">
-                    <button>Mon</button>
+                    <button>{{ reservationObj.Day }}</button>
                     <span>Request Time</span>
-                    <span>At 9:30 Pm</span>
+                    <span>{{ reservationObj.reservation_date }} {{ reservationObj.start_time }}:00</span>
                 </div>
                 <div class="right-btn">
                     <span>200</span><span>EGP</span>
@@ -36,15 +36,32 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
+import { Component, Vue, Watch } from 'vue-property-decorator';
+import { getReservation } from '@/endpoints/reservations';
+
 
 @Component({
     components: {
 
     },
+    
 })
 export default class AppoinetmentsItem extends Vue {
   
+    reservationObj = {}
+    resId =this.$route.params.id
+    @Watch('$route', { immediate: true, deep: true })
+    onUrlChange(newVal: any) {
+        this.resId =this.$route.params.id
+        this.getReservation(this.resId)
+    }
+    async getReservation(resId:any){
+        this.reservationObj = await getReservation(resId);
+    }
+    mounted(){
+        this.getReservation(this.resId)
+    }
+
 }
 </script>
 

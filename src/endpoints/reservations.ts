@@ -7,6 +7,13 @@ export async function getReservation(id:any){
     else return false
 }
 
+export async function getEmergencyReservation(id:any){
+    let res = await api
+    .get('api/reservations/view_reservation/'+id); // will change
+    if (res) return res.data
+    else return false
+}
+
 export async function getReservationsList(){
     let res = await api
     .get('api/reservations/list_reservations_to_SP');

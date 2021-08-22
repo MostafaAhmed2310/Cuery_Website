@@ -40,7 +40,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
+import { Component, Vue,Watch } from 'vue-property-decorator';
 import { getReservation, confirmReservation, declineReservation  } from '@/endpoints/reservations';
 
 
@@ -52,6 +52,11 @@ import { getReservation, confirmReservation, declineReservation  } from '@/endpo
 export default class ReservationItem extends Vue {
     reservationObj = {}
     resId =this.$route.params.id
+    @Watch('$route', { immediate: true, deep: true })
+    onUrlChange(newVal: any) {
+        this.resId =this.$route.params.id
+        this.getReservation(this.resId)
+    }
     async getReservation(resId:any){
         this.reservationObj = await getReservation(resId);
     }
