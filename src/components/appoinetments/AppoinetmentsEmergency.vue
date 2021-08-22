@@ -1,7 +1,7 @@
 <template>
     <div class="appoinetments-list-container">
-        <div class="appoinetments-item" v-for="item in items" :key="item">
-            <router-link :to="'/normal-appoinetment-details/' + item.id">
+        <div class="appoinetments-item" v-for="item in emergencyItems" :key="item">
+            <router-link :to="'/emergency-appoinetment-details/' + item.id">
                 <div class="profile-img">
                     <img src="" alt="">
                     <i class="fas fa fa-user-circle"></i>
@@ -22,18 +22,11 @@ import { Component, Vue } from 'vue-property-decorator';
   components: {
   },
 })
-export default class AppoinetmentsLists extends Vue {
-    items = [
+export default class AppoinetmentsEmergency extends Vue {
+    emergencyItems = [
         {id:1},
         {id:3},
         {id:5},
-        {id:8},
-        {id:15},
-        {id:6},
-        {id:9},
-        {id:10},
-        {id:11},
-        {id:12},
     ];
 }
 </script>

@@ -12,6 +12,8 @@ import ReservationItem from '@/components/reservations/ReservationItem.vue'
 import Appoinetments from '@/views/Appoinetments.vue'
 import Confirmation from '@/components/appoinetments/Confirmation.vue'
 import SuccessPage from '@/components/appoinetments/SuccessPage.vue'
+import AppoinetmentsItem from '@/components/appoinetments/AppoinetmentsItem.vue'
+import AppoinetmentsItemEmergency from '@/components/appoinetments/AppoinetmentsItemEmergency.vue'
 const routes = [
     {
         path: '/',
@@ -91,6 +93,16 @@ const routes = [
                 path: '/success_page',
                 name: 'SuccessPage',
                 component: SuccessPage
+            },
+            {
+                path: '/normal-appoinetment-details/:id',
+                name: 'normalDetails',
+                component: AppoinetmentsItem
+            },
+            {
+                path: '/emergency-appoinetment-details/:id',
+                name: 'emergencyDetails',
+                component: AppoinetmentsItemEmergency
             },
         ]
     },
