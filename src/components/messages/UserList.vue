@@ -1,14 +1,15 @@
 <template>
     <div class="user-list-container">
         <div class="user-item" v-for="headChat in chatList" :key="headChat">
-            <router-link :to="'/messages/' + headChat.id" active-class="active-chat">
+            <router-link :to="'/messages/' + headChat.sender_id" active-class="active-chat">
                 <div class="profile-img">
                     <img src="" alt="">
                     <i class="fas fa fa-user-circle"></i>
                 </div>
                 <div class="user-info">
-                    <h4>Mostafa Ahmed</h4>
-                    <span>Lorem ipsum dolor, sit amet consectetur adipisicing elit ...</span>
+                    <h4>{{headChat.sender_name}}</h4>
+                    <span v-if="headChat.latest_message.body">{{headChat.latest_message.body}}</span>
+                    <span v-else-if="headChat.latest_message.attachments">{{headChat.sender_name}} send an attachment</span>
                 </div>
             </router-link>
         </div>
@@ -17,6 +18,7 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
+import {getMyConversations} from  '@/endpoints/messages';
 
 @Component({
     components: {
@@ -24,18 +26,13 @@ import { Component, Vue } from 'vue-property-decorator';
     },
 })
 export default class UserList extends Vue {
-    chatList = [
-        {id:1},
-        {id:3},
-        {id:5},
-        {id:8},
-        {id:15},
-        {id:6},
-        {id:9},
-        {id:10},
-        {id:11},
-        {id:12},
-    ];
+    chatList = []
+    async getChatList(){
+        this.chatList = await getMyConversations();
+    }
+    mounted(){
+        this.getChatList()
+    }
 }
 </script>
 

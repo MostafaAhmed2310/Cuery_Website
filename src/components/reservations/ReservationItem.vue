@@ -7,18 +7,17 @@
                     <i class="fas fa fa-user-circle"></i>
                 </div>
                 <div class="reservation-info">
-                    <h4>Mostafa Ahmed</h4>
+                    <h4>{{ reservationObj.name }}</h4>
                 </div>
             </div>
             <div class="block">
-                <h5>Section Name</h5>
-                <h5>Phone Num. : 0123456789</h5>
+                <h5>{{ reservationObj.section_title }}</h5>
+                <h5>Phone Num. : {{ reservationObj.phone }}</h5>
             </div>
             <div class="block">
                 <div class="left-btn">
-                    <button>Mon</button>
-                    <span>What He do</span>
-                    <span>At 9:30 Pm</span>
+                    <button>{{ reservationObj.Day }}</button>
+                    <span>{{ reservationObj.reservation_date }}</span>
                 </div>
                 <div class="right-btn">
                     <router-link :to="'/messages/'+ $route.params.id">
@@ -29,12 +28,12 @@
         </div>
         <div class="block">
             <h5>limit your time</h5>
-            <h6>Time <span>Min Time</span> To <span>Max Time</span></h6>
+            <h6>From <span>{{ reservationObj.start_time }}:00</span> To <span>{{ reservationObj.end_time }}:00 </span></h6>
         </div>
         <div class="block">
             <div class="reservation-btns">
-                <button>Confirm</button>
-                <button>Decline</button>
+                <button @click = "confirmReservation(reservationObj.id)">Confirm</button>
+                <button @click = "declineReservation(reservationObj.id)">Decline</button>
             </div>
         </div>
     </div>
@@ -42,6 +41,8 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
+import { getReservation, confirmReservation, declineReservation  } from '@/endpoints/reservations';
+
 
 @Component({
     components: {
@@ -49,7 +50,24 @@ import { Component, Vue } from 'vue-property-decorator';
     },
 })
 export default class ReservationItem extends Vue {
-  
+    reservationObj = {}
+    resId =this.$route.params.id
+    async getReservation(resId:any){
+        this.reservationObj = await getReservation(resId);
+    }
+     confirmReservation(reservation_id:any){
+        confirmReservation(reservation_id)
+
+    }
+    declineReservation(reservation_id:any){
+        declineReservation(reservation_id)
+    }
+    updateDetailsFun(){
+        this.getReservation(this.resId)
+    }
+    mounted(){
+        this.getReservation(this.resId)
+    }
 }
 </script>
 

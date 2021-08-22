@@ -11,10 +11,10 @@
             </div>
             <div class="reservations-inputs-body">
                 <div class="reservations-panal">
-                    <ReservationsList/>
+                    <ReservationsList @updateDetails="updateReservationDetails"/>
                 </div>
                 <div class="reservation-body">
-                    <router-view></router-view>
+                    <router-view ref="updatePage"></router-view>
                 </div>
             </div>
         </div>
@@ -33,6 +33,9 @@ import Calendar from '@/assets/icons/Calendar.vue';
 })
 export default class Reservations extends Vue {
     loaderFlag:Boolean = false;
+    updateReservationDetails(){
+        (<any>this.$refs.updatePage).updateDetailsFun();
+    }
 }
 </script>
 
