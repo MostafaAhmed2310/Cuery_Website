@@ -10,11 +10,11 @@
             </div>
             <div class="messages-inputs-body">
                 <div class="messages-panal">
-                    <UserList/>
+                    <UserList ref="updateUserList"/>
                 </div>
                 <div :class="'chat-body '+chatWidth">
                     <Placeholder v-if="$router.currentRoute.name == 'messages'"/>
-                    <router-view @openInfo="openInfo"></router-view>
+                    <router-view @updateHeadChat="updateHeadChat" @openInfo="openInfo"></router-view>
                 </div>
                 <div :class="'info-panal '+openInfoAnimate">
                     <CloseIcon class="close-icon" @closeAction="closeInfo"/>
@@ -52,6 +52,9 @@ export default class Messages extends Vue {
     closeInfo(){
         this.chatWidth = 'open-chat';
         this.openInfoAnimate = 'close-info-animate';
+    }
+    updateHeadChat(){
+        this.$refs.updateUserList.updateUserList();
     }
 }
 </script>

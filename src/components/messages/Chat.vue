@@ -20,49 +20,65 @@
             <div v-for="message in messages" :key="message">
                 <div class="msg-item" v-if="message.user_id != currentId">
                     <p v-if="message.message_type_id == 1">{{message.body}}</p>
-                    <div v-if="message.message_type_id == 2">
+                    <div class="img-container" v-if="message.message_type_id == 2">
                         <p v-if="message.body">{{message.body}}</p>
-                        <img src="" alt="Image">
+                        <img v-if="message.attachments[0]" :src="BaseUrl + message.attachments[0].attachment_path" alt="Image">
                     </div>
-                    <div v-if="message.message_type_id == 3">
+                    <div class="audio-container" v-if="message.message_type_id == 3">
                         <p  v-if="message.body">{{message.body}}</p>
-                        <a href="#">Audio</a>      
+                        <audio controls v-if="message.attachments[0]">
+                            <source :src="BaseUrl + message.attachments[0].attachment_path" type="audio/ogg">
+                            <source :src="BaseUrl + message.attachments[0].attachment_path" type="audio/mpeg">
+                        </audio>
                     </div>
-                    <div v-if="message.message_type_id == 2">
+                    <div class="file-container" v-if="message.message_type_id == 4">
                         <p  v-if="message.body">{{message.body}}</p>
-                        <a href="#">PDF</a>
+                        <iframe v-if="message.attachments[0]" :src="BaseUrl + message.attachments[0].attachment_path" frameborder="0"></iframe>
                     </div>
                     <span>{{message.created_at | moment("h:mm a")}}</span>
                 </div>
                 <div class="msg-item self-msg" v-if="message.user_id == currentId">
                     <i class="fas fa-trash" @click="deleteMsg(message.id)"></i>
                     <p v-if="message.message_type_id == 1">{{message.body}}</p>
-                    <div v-if="message.message_type_id == 2">
+                    <div class="img-container" v-if="message.message_type_id == 2">
                         <p v-if="message.body">{{message.body}}</p>
-                        <img src="" alt="Image">
+                        <img v-if="message.attachments[0]" :src="BaseUrl + message.attachments[0].attachment_path" alt="Image">
                     </div>
-                    <div v-if="message.message_type_id == 3">
+                    <div class="audio-container" v-if="message.message_type_id == 3">
                         <p  v-if="message.body">{{message.body}}</p>
-                        <a href="#">Audio</a>      
+                        <audio controls v-if="message.attachments[0]">
+                            <source :src="BaseUrl + message.attachments[0].attachment_path" type="audio/ogg">
+                            <source :src="BaseUrl + message.attachments[0].attachment_path" type="audio/mpeg">
+                        </audio>      
                     </div>
-                    <div v-if="message.message_type_id == 4">
+                    <div class="file-container" v-if="message.message_type_id == 4">
                         <p  v-if="message.body">{{message.body}}</p>
-                        <a href="#">PDF</a>
+                        <iframe v-if="message.attachments[0]" :src="BaseUrl + message.attachments[0].attachment_path" frameborder="0"></iframe>
                     </div>
                     <span>{{message.created_at | moment("h:mm a")}}</span>
                 </div>
             </div>
         </div>
         <div class="chat-input">
+            <div class="inputs-body">
+                <div class="upload-ions">
+                    <i class="far fa-image"></i>
+                    <input type="file" name="" id="" @change="uploadAttachment(2)">
+                </div>
+                <div class="upload-ions">
+                    <i class="fas fa-volume-up"></i>
+                    <input type="file" name="" id="" @change="uploadAttachment(3)">
+                </div>
+                <div class="upload-ions">
+                    <i class="fas fa-paperclip"></i>
+                    <input type="file" name="" id="" @change="uploadAttachment(4)">
+                </div>
+            </div>
             <div class="send-icon" @click="sendMsg($route.params.id)">
                 <svg xmlns="http://www.w3.org/2000/svg" id="send_icon" data-name="send icon" width="35" height="35" viewBox="0 0 47.867 47.867">
                     <circle id="Ellipse_4" data-name="Ellipse 4" cx="23.934" cy="23.934" r="23.934" transform="translate(0 0)" fill="#30a362"/>
                     <path id="send" d="M23.136,11.932l-.007,0L2.719,3.463a1.126,1.126,0,0,0-1.062.1,1.178,1.178,0,0,0-.532.984V9.965a1.147,1.147,0,0,0,.933,1.126L13.19,13.149a.191.191,0,0,1,0,.376L2.058,15.583a1.147,1.147,0,0,0-.933,1.126v5.415a1.126,1.126,0,0,0,.506.941,1.144,1.144,0,0,0,.632.191,1.173,1.173,0,0,0,.455-.092l20.409-8.417.009,0a1.529,1.529,0,0,0,0-2.81Z" transform="translate(13.028 10.569)" fill="#fff"/>
                 </svg>
-                <i class="fas fa-paperclip" @click="uploadAttachment(3)"></i>
-                <input type="file" name="" id="" @change="uploadAttachment(4)">
-                <i class="fas fa-volume-up" @click="uploadAttachment(4)"></i>
-                <i class="far fa-image" @click="uploadAttachment(2)"></i>
             </div>
             <textarea placeholder="Send Your Message" v-model="msgBody"></textarea>
         </div>
@@ -70,9 +86,10 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
+import { Component, Vue, Watch } from 'vue-property-decorator';
 import { getUserConversation, sendMsg, deleteMsg } from '@/endpoints/messages';
 import {getUserInfo} from '@/endpoints/user';
+import {BaseUrl} from '@/app.config';
 
 @Component({
     components: {
@@ -81,71 +98,94 @@ import {getUserInfo} from '@/endpoints/user';
 })
 export default class Chat extends Vue {
     msg:any='';
-    data:any = {}
+    data:any = {};
     msgBody:String = '';
-    userId =this.$route.params.id
     messages:any[] = [];
     conversation:any={};
-    profileObj = {};
+    profileObj:any = {};
     currentId:any = '';
     uploadFile:any = {};
     fileData:any= [];
-    message_type_id = '';
-    extension = '';
-    base64Str  ='';
-    imgPreview = false;
-    txtPreview = false;
-    fileFile = {}
+    message_type_id:Number = 1;
+    extension:any = '';
+    base64Str:any  ='';
+    imgPreview:Boolean = false;
+    txtPreview:Boolean = false;
+    fileFile:any = {}
+    BaseUrl:any = BaseUrl
+    @Watch('$route', { immediate: true, deep: true })
+    onUrlChange() {
+        let id =this.$route.params.id
+        this.getUserConversation(id)
+    }
     openInfo(){
         this.$emit('openInfo');
     }
-
-    sendMsg(userId:any){
-        this.data = {
-            body:this.msgBody,
-            message_type_id:1 
-        }
-        this.msg =sendMsg(userId,this.data);
-        this.getUserConversation(this.userId)
-        this.msgBody = ''
-    }
-
     async getUserConversation(userId:any){
-        this.currentId=65
+        let currentUserObj = await getUserInfo();
+        this.currentId= currentUserObj.id
         this.conversation = await getUserConversation(userId);
         this.messages = this.conversation.messages;
     }
 
     uploadAttachment(message_type_id:any){
-        this.uploadFile = (<any>event).target;
-        if (this.uploadFile.files && this.uploadFile.files[0]) {
-            var reader = new FileReader();
-                reader.onload = (e) => {
-                    this.fileData = (<any>e.target).result;
-                    this.message_type_id=message_type_id
-                    this.extension = this.fileData.split(";")[0].split("/")[1]
-                    this.base64Str = this.fileData.split(",")[1]
-                }
-                reader.readAsDataURL(this.uploadFile.files[0]);
-                this.fileFile = this.uploadFile.files[0];
-                if(message_type_id== 2){
-                    this.imgPreview = true
-                    this.txtPreview = false
-                }else{
-                    this.imgPreview = false
-                    this.txtPreview = true
-                }
-            }
-        }
+        this.uploadFile = (<any>event).target;
+        if (this.uploadFile.files && this.uploadFile.files[0]) {
+            var reader = new FileReader();
+            reader.onload = (e) => {
+                this.fileData = (<any>e.target).result;
+                this.message_type_id=message_type_id
+                this.extension = this.fileData.split(";")[0].split("/")[1]
+                this.base64Str = this.fileData.split(",")[1]
+            }
+            reader.readAsDataURL(this.uploadFile.files[0]);
+            this.fileFile = this.uploadFile.files[0];
+            if(message_type_id== 2){
+                this.imgPreview = true
+                this.txtPreview = false
+            }else{
+                this.imgPreview = false
+                this.txtPreview = true
+            }
+        }
+    }
 
+    async sendMsg(userId:any){
+        if(this.message_type_id == 1){
+            this.data = {
+                body:this.msgBody,
+                message_type_id:this.message_type_id,
+            }
+        }else{
+            this.data = {
+                body:this.msgBody,
+                message_type_id:this.message_type_id,
+                ext: this.extension,
+                file: this.base64Str,
+            }
+        }
+        let res = await sendMsg(userId,this.data);
+        if(res){
+            this.message_type_id = 1;
+            this.fileFile = '';
+            this.uploadFile = '';
+            this.fileData = '';
+            this.base64Str = '';
+            this.extension = '';
+        }
+        this.getUserConversation(this.$route.params.id);
+        this.msgBody = ''
+        this.$emit('updateHeadChat');
+    }
 
     deleteMsg(msgId:any){
         deleteMsg(msgId);
-        this.getUserConversation(this.userId)
+        this.getUserConversation(this.$route.params.id);
+        this.$emit('updateHeadChat');
     }
 
     mounted(){
-        this.getUserConversation(this.userId)
+        this.getUserConversation(this.$route.params.id);
     }
 
 }
@@ -184,9 +224,10 @@ export default class Chat extends Vue {
     cursor: pointer;
 }
 .chat-msgs{
-    height: 80vh;
+    height: 55vh;
     overflow: auto;
     padding: 30px;
+    margin-bottom: 15px;
 }
 .msg-item{
     width: 60%;
@@ -198,10 +239,11 @@ export default class Chat extends Vue {
     color: var(--font-navy);
     clear: both;
     display: block;
+    overflow: hidden;
 }
 .msg-item span{
     float: right;
-    margin-top: -20px;
+    margin-top: 10px;
     font-size: 11px;
     color: var(--main-green);
 }
@@ -222,6 +264,7 @@ export default class Chat extends Vue {
     display: block;
     padding: 20px;
     outline: none;
+    padding-right: 165px;
 }
 .send-icon{
     position: absolute;
@@ -231,5 +274,50 @@ export default class Chat extends Vue {
 }
 .send-icon:hover{
     opacity: 0.9;
+}
+input[type=file]{ 
+   position: absolute;
+   width: 100%;
+   height: 100%;
+   left: 0;
+   right: 0;
+   top: 0;
+   bottom: 0;
+   opacity: 0;
+   cursor: pointer;
+}
+.upload-ions{
+    width: 30px;
+    height: 30px;
+    position: relative;
+    display: inline-block;
+    border-radius: 50%;
+    color: #fff;
+    text-align: center;
+    background: var(--main-green);
+    line-height: 2;
+    margin-right: 10px;
+    cursor: pointer;
+}
+.inputs-body{
+    position: absolute;
+    top: 22px;
+    right: 95px;
+}
+.img-container img{
+    width: 85%;
+    height: auto;
+    border-radius: 3px;
+}
+.fa-trash{
+    float: right;
+    cursor: pointer;
+}
+.audio-container audio{
+    width: 85%;
+}
+.file-container iframe{
+    width: 85%;
+    height: auto;
 }
 </style>

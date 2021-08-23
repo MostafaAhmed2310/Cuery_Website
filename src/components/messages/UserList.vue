@@ -8,8 +8,9 @@
                 </div>
                 <div class="user-info">
                     <h4>{{headChat.sender_name}}</h4>
-                    <span v-if="headChat.latest_message.body">{{headChat.latest_message.body}}</span>
-                    <span v-else-if="headChat.latest_message.attachments">{{headChat.sender_name}} send an attachment</span>
+                    <span v-if="headChat.latest_message.body && !headChat.latest_message.attachments[0]">{{headChat.latest_message.body}}</span>
+                    <span v-if="headChat.latest_message.attachments[0] && headChat.latest_message.user_id != currentUserId">{{headChat.sender_name}} send an attachment</span>
+                    <span v-if="headChat.latest_message.attachments[0] && headChat.latest_message.user_id == currentUserId">You send an attachment</span>
                 </div>
             </router-link>
         </div>
@@ -19,19 +20,29 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 import {getMyConversations} from  '@/endpoints/messages';
-
+import {getUserInfo} from '@/endpoints/user';
 @Component({
     components: {
 
     },
 })
 export default class UserList extends Vue {
-    chatList = []
+    chatList:any = [];
+    currentUser:any = {};
+    currentUserId:any = '';
+    updateUserList(){
+        this.getChatList();
+    }
     async getChatList(){
         this.chatList = await getMyConversations();
     }
+    async getCurrentUser(){
+        this.currentUser = await getUserInfo();
+        this.currentUserId = this.currentUser.id;
+    }
     mounted(){
-        this.getChatList()
+        this.getChatList();
+        this.getCurrentUser();
     }
 }
 </script>
