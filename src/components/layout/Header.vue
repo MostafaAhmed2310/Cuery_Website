@@ -34,10 +34,12 @@
             </ul>
         </div>
         <div class="more-menu" v-if="moreMenu">
-            <span>
-                <i class="fas fa fa-star"></i>
-                View Your Rate
-            </span>
+            <router-link to="/ratings">
+                <span>
+                    <i class="fas fa fa-star"></i>
+                    View Your Rate
+                </span>
+            </router-link>
             <span @click="logout()">
                 <i class="fas fa fa-sign-out-alt"></i>
                 Sign Out
