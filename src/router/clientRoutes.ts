@@ -14,6 +14,8 @@ import Confirmation from '@/components/appoinetments/Confirmation.vue'
 import SuccessPage from '@/components/appoinetments/SuccessPage.vue'
 import AppoinetmentsItem from '@/components/appoinetments/AppoinetmentsItem.vue'
 import AppoinetmentsItemEmergency from '@/components/appoinetments/AppoinetmentsItemEmergency.vue'
+import Sections from '@/views/Sections.vue'
+import AddSections from '@/views/AddSections.vue'
 const routes = [
     {
         path: '/',
@@ -54,6 +56,16 @@ const routes = [
         path: '/contact_us',
         name: 'contact_us',
         component: ContactUs
+    },
+    {
+        path: '/sections',
+        name: 'Sections',
+        component: Sections
+    },
+    {
+        path: '/add-section',
+        name: 'AddSections',
+        component: AddSections
     },
     {
         path: '/messages',

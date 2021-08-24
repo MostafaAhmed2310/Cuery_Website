@@ -34,7 +34,9 @@
                 </div>
                 <p>Blood Tests Section</p>
             </div>
-            <span>More <i class="fas fa fa-sort-up"></i></span>
+            <router-link to="/sections">
+                <span>More <i class="fas fa fa-sort-up"></i></span>
+            </router-link>
         </div>
     </div>
 </template>
@@ -89,6 +91,9 @@ export default class Sections extends Vue {
     float: right;
     line-height: 7;
     margin-right: 30px;
+}
+.sections-body a{
+    color: #fff !important;
 }
 .sections-body span:hover{
     text-decoration: underline;
