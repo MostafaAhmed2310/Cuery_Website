@@ -20,9 +20,12 @@
                 <div class="left-side">
                     <multiselect v-model="mainArea" :options="options" label="main_title" track-by="main_title" :searchable="false"  :show-labels="false" placeholder="Select New Section"></multiselect>
                     <div class="add-section-btn">
-                        <button><i class="fas fa-plus-circle"></i> Add Section</button>
+                        <button @click="openSectionPanal()"><i class="fas fa-plus-circle"></i> Add Section</button>
                     </div>
                 </div>
+            </div>
+            <div class="section-panal">
+                <SectionAppointement ref="openSlidePanal"/>
             </div>
         </div>
     </div>
@@ -32,10 +35,12 @@
 import { Component, Vue} from 'vue-property-decorator';
 import {DoubleBounce} from 'vue-loading-spinner';
 import Multiselect from 'vue-multiselect';
+import SectionAppointement from '@/components/sections/SectionAppointement.vue';
 @Component({
     components: {
         DoubleBounce,
         Multiselect,
+        SectionAppointement,
     },
 })
 export default class AddSections extends Vue {
@@ -62,7 +67,12 @@ export default class AddSections extends Vue {
             main_title:"Sec5"
         },
     ];
-    mainArea
+    mainArea = '';
+
+
+    openSectionPanal(){
+        this.$refs.openSlidePanal.openSlidePanal();
+    }
 }
 </script>
 

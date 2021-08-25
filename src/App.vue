@@ -9,7 +9,7 @@
 <style lang="scss">
 @import url('https://fonts.googleapis.com/css?family=Cairo&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;400&display=swap');
-
+@import '~vue2-timepicker/dist/VueTimepicker.css';
 :root{
     --background-color: #fff;
     --main-green: #30A362;
@@ -148,6 +148,16 @@ input[type=number] {
 }
 .sections-inputs-body .multiselect__select:before {
     border-color:var(--main-green) transparent transparent !important;
+}
+.time-container .vue__time-picker input.display-time{
+    border: none;
+    width: 10em;
+    height: 2.2em;
+    padding: .3em .5em;
+    font-size: 1em;
+    box-shadow: 0px 1px 4px 0px #ddd;
+    border-radius: 5px;
+    outline: var(--main-green) !important;
 }
 </style>
 
