@@ -18,7 +18,7 @@
                     <img src="@/assets/images/section-img.png" alt="">
                 </div>
                 <div class="left-side">
-                    <multiselect v-model="mainArea" :options="options" label="main_title" track-by="main_title" :searchable="false"  :show-labels="false" placeholder="Select New Section"></multiselect>
+                    <multiselect v-model="selectedSection" :options="sections" label="section_title" :close-on-select="true" track-by="section_title" :searchable="true"  :show-labels="false" placeholder="Select New Section"></multiselect>
                     <div class="add-section-btn">
                         <button><i class="fas fa-plus-circle"></i> Add Section</button>
                     </div>
@@ -32,6 +32,8 @@
 import { Component, Vue} from 'vue-property-decorator';
 import {DoubleBounce} from 'vue-loading-spinner';
 import Multiselect from 'vue-multiselect';
+import {getAllSections} from '@/endpoints/sections';
+
 @Component({
     components: {
         DoubleBounce,
@@ -40,29 +42,20 @@ import Multiselect from 'vue-multiselect';
 })
 export default class AddSections extends Vue {
     loaderFlag = false;
-    options = [
-        {
-            id:1,
-            main_title:"Sec1"
-        },
-        {
-            id:2,
-            main_title:"Sec2"
-        },
-        {
-            id:3,
-            main_title:"Sec3"
-        },
-        {
-            id:4,
-            main_title:"Sec4"
-        },
-        {
-            id:5,
-            main_title:"Sec5"
-        },
-    ];
-    mainArea
+    sections = []
+    selectedSection = ''
+
+    async getAllSections(){
+        this.sections = await getAllSections();
+    }
+
+    async addSection(){
+
+    }
+    
+     async mounted(){
+        await this.getAllSections()
+    }
 }
 </script>
 
