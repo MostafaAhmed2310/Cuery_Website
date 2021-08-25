@@ -22,7 +22,8 @@
                     <div class="section-items" v-for="section in sections" :key="section">
                         <div class="item">
                             <div class="section-item-img">
-                                <img src="@/assets/images/services/cardiogram.png" alt="">
+                                <i  v-if="section.is_verified == 'n'" class="fas fa-window-close"></i>
+sssss                                <img src="@/assets/images/services/cardiogram.png" alt="">
                             </div>
                             <span>{{section.section_title}}</span>
                         </div>
