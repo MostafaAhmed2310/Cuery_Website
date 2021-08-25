@@ -14,6 +14,7 @@ import Confirmation from '@/components/appoinetments/Confirmation.vue'
 import SuccessPage from '@/components/appoinetments/SuccessPage.vue'
 import AppoinetmentsItem from '@/components/appoinetments/AppoinetmentsItem.vue'
 import AppoinetmentsItemEmergency from '@/components/appoinetments/AppoinetmentsItemEmergency.vue'
+import Ratings from '@/views/Ratings.vue'
 const routes = [
     {
         path: '/',
@@ -78,6 +79,11 @@ const routes = [
                 component: ReservationItem
             },
         ]
+    },
+    {
+        path: '/ratings',
+        name: 'ratings',
+        component: Ratings
     },
     {
         path: '/appoinetments',
