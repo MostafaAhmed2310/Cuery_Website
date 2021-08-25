@@ -13,13 +13,13 @@
             <div class="block">
                 <h5><i class="fas fa fa-plus-square"></i>{{reservationObj.service_title}}</h5>
                 <h5><i class="phone-icon fas fa fa-phone"></i>{{ reservationObj.phone }}</h5>
-                <h5><i class="fas fa-map-marker-alt"></i>15 Albert Al Awal . Smouha , Alexandria</h5>
+                <h5><i class="fas fa-map-marker-alt"></i>{{ reservationObj.address }}</h5>
             </div>
             <div class="block">
                 <div class="left-btn">
                     <button>{{ reservationObj.Day }}</button>
                     <span>Request Time</span>
-                    <span>At 9:30 Pm</span>
+                    <span>At {{ reservationObj.call_time }}</span>
                 </div>
             </div>
             <div class="block emergency-block">
@@ -28,7 +28,7 @@
                     <h5>Max Time Arrived 02:15 Am</h5>
                 </div>
                 <div class="right-btn">
-                    <span>200</span><span>EGP</span>
+                    <span>{{ reservationObj.charge }}</span><span>EGP</span>
                 </div>
             </div>
         </div>

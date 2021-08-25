@@ -12,3 +12,15 @@ export async function getAllSections(){
     if (res) return res.data
     else return false
 }
+export async function getHomeSections(){
+    let res = await api
+    .get('api/getSections');
+    if (res) return res.data
+    else return false
+}
+export async function assginSection(id:any){
+    let res = await api
+    .post('api/assign_section_to_sp/'+id);
+    if (res) return res.data.id
+    else return false
+  }

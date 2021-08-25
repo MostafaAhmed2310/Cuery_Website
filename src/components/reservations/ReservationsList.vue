@@ -21,7 +21,7 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import { getReservationsList ,confirmReservation, declineReservation } from '@/endpoints/reservations';
+import { getReservationsList, confirmReservation, declineReservation } from '@/endpoints/reservations';
 
 @Component({
     components: {

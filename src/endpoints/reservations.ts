@@ -9,7 +9,7 @@ export async function getReservation(id:any){
 
 export async function getEmergencyReservation(id:any){
     let res = await api
-    .get('api/reservations/view_reservation/'+id); // will change
+    .get('api/view_emerg_reservation/'+id);
     if (res) return res.data
     else return false
 }

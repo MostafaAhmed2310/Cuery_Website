@@ -3,7 +3,7 @@
         <div class="section-appointement-head">
             <h4>
                 <i @click="closePanal()" class="fas fa-chevron-left"></i> 
-                Cancer Section
+                {{ selectedSection.section_title }}
             </h4>
             <div class="section-icon">
                 <img src="@/assets/images/services/cardiogram.png" alt="">
@@ -12,19 +12,19 @@
         <div class="section-body">
             <div class="date-container">
                 <h5>Date</h5>
-                <span>Saturday</span>
-                <span>Sunday</span>
-                <span>Monday</span>
-                <span>Tuesday</span>
-                <span>Wednesday</span>
-                <span>Thursday</span>
-                <span>Friday</span>
+                <span  @click="addDay(1)">Saturday</span>
+                <span  @click="addDay(2)">Sunday</span>
+                <span  @click="addDay(3)">Monday</span>
+                <span  @click="addDay(4)">Tuesday</span>
+                <span  @click="addDay(5)">Wednesday</span>
+                <span  @click="addDay(6)">Thursday</span>
+                <span  @click="addDay(7)">Friday</span>
             </div>
             <div class="time-container">
                 <h5>Time</h5>
                 <div class="from-time">
                     <span class="time-label">From</span>
-                    <vue-timepicker format="hh:mm A" placeholder="From" v-model="FromTime"></vue-timepicker>
+                    <vue-timepicker @change="getFromTime" format="hh:mm A" placeholder="From" v-model="FromTime"></vue-timepicker>
                     <div class="filter-bar">
                         <div class="filter-btns">
                             <span @click="selectAmFrom()">AM</span>
@@ -35,7 +35,7 @@
                 </div>
                 <div class="to-time">
                     <span class="time-label">To</span>
-                    <vue-timepicker format="hh:mm A" placeholder="To" v-model="ToTime"></vue-timepicker>
+                    <vue-timepicker @change="getToTime" format="hh:mm A" placeholder="To" v-model="ToTime"></vue-timepicker>
                     <div class="filter-bar">
                         <div class="filter-btns">
                             <span @click="selectAmTo()">AM</span>
@@ -66,28 +66,53 @@ import VueTimepicker from 'vue2-timepicker';
     },
 })
 export default class SectionAppointement extends Vue {
-    week = [0,1,2,3,4,5,6];
+    week = [1,2,3,4,5,6,7];
     toggleToPmFrom = '';
     toggleToPmTo = '';
     slidePanal = '';
+    selectedSection = {};
+    userSectionId = '';
+    daysList = [];
 
+    addDay(day){
+        this.daysList += day
+    }
     selectAmFrom(){
         this.toggleToPmFrom = '';
+        this.FromTime.A = 'AM'
     }
-
     selectPmFrom(){
         this.toggleToPmFrom = 'move-to-center';
+        this.FromTime.A = 'PM'
     }
-
     selectAmTo(){
         this.toggleToPmTo = '';
+        this.ToTime.A = 'AM'
     }
-
     selectPmTo(){
         this.toggleToPmTo = 'move-to-center';
+        this.ToTime.A = 'PM'
     }
-    openSlidePanal(){
+    openSlidePanal(selectedSection, userSectionId){
+        this.userSectionId = userSectionId;
+        this.selectedSection = selectedSection;
         this.slidePanal = 'open-slide-animate';
+    }
+    getFromTime(){
+        var amOrPm = this.FromTime.A
+        if (amOrPm == 'PM'){
+            this.selectPmFrom()
+        }else if (amOrPm == 'AM'){
+            this.selectAmFrom()
+        }
+    }
+    getToTime(){
+        var amOrPm = this.ToTime.A
+        if (amOrPm == 'PM'){
+            this.selectPmTo()
+        }else if (amOrPm == 'AM'){
+            this.selectAmTo()
+        }
     }
     closePanal(){
         this.slidePanal = '';

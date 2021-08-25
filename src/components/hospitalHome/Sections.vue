@@ -4,35 +4,11 @@
             <h2>My Sections</h2>
         </div>
         <div class="sections-body">
-            <div class="section-item">
+            <div class="section-item" v-for="section in sectionsList" :key="section">
                 <div class="item">
                     <img src="@/assets/images/services/rooms.png" alt="">
                 </div>
-                <p>Rooms Section</p>
-            </div>
-            <div class="section-item">
-                <div class="item">
-                    <img src="@/assets/images/services/cardiogram.png" alt="">
-                </div>
-                <p>Cardiogram Section</p>
-            </div>
-            <div class="section-item">
-                <div class="item">
-                    <img src="@/assets/images/services/x-ray.png" alt="">
-                </div>
-                <p>X-ray Section</p>
-            </div>
-            <div class="section-item">
-                <div class="item">
-                    <img src="@/assets/images/services/cancer.png" alt="">
-                </div>
-                <p>Cancer Section</p>
-            </div>
-            <div class="section-item">
-                <div class="item">
-                    <img src="@/assets/images/services/blood.png" alt="">
-                </div>
-                <p>Blood Tests Section</p>
+                <p>{{ section.section_title }}</p>
             </div>
             <router-link to="/sections">
                 <span>More <i class="fas fa fa-sort-up"></i></span>
@@ -43,6 +19,7 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
+import { getHomeSections } from '@/endpoints/sections';
 
 @Component({
     components: {
@@ -51,6 +28,14 @@ import { Component, Vue } from 'vue-property-decorator';
 })
 export default class Sections extends Vue {
 
+ sectionsList = [];
+    async getHomeSections(){
+        this.sectionsList = await getHomeSections();
+    }
+
+    mounted(){
+        this.getHomeSections()
+    }
 }
 </script>
 
@@ -89,8 +74,6 @@ export default class Sections extends Vue {
 }
 .sections-body span{
     float: right;
-    line-height: 7;
-    margin-right: 30px;
 }
 .sections-body a{
     color: #fff !important;
