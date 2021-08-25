@@ -5,11 +5,11 @@
 </template>
 
 
-
+<style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
 <style lang="scss">
 @import url('https://fonts.googleapis.com/css?family=Cairo&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;400&display=swap');
-
+@import '~vue2-timepicker/dist/VueTimepicker.css';
 :root{
     --background-color: #fff;
     --main-green: #30A362;
@@ -128,6 +128,36 @@ input::-webkit-inner-spin-button {
 /* Firefox */
 input[type=number] {
   -moz-appearance: textfield;
+}
+
+.sections-inputs-body .multiselect{
+    width: 80% !important;
+    color: var(--main-green) !important;
+}
+.sections-inputs-body .multiselect__select{
+    height: 45px !important;
+}
+.sections-inputs-body .multiselect__tags {
+    min-height: 45px !important;
+    background: rgba(241, 250, 245, 1) !important;
+    color: var(--main-green) !important;
+    line-height: 2 !important;
+}
+.sections-inputs-body .multiselect__placeholder{
+    color: var(--main-green) !important;
+}
+.sections-inputs-body .multiselect__select:before {
+    border-color:var(--main-green) transparent transparent !important;
+}
+.time-container .vue__time-picker input.display-time{
+    border: none;
+    width: 10em;
+    height: 2.2em;
+    padding: .3em .5em;
+    font-size: 1em;
+    box-shadow: 0px 1px 4px 0px #ddd;
+    border-radius: 5px;
+    outline: var(--main-green) !important;
 }
 </style>
 
