@@ -24,7 +24,7 @@
                             <div class="section-item-img">
                                 <img src="@/assets/images/services/cardiogram.png" alt="">
                             </div>
-                            <span>Blood Section</span>
+                            <span>{{section.section_title}}</span>
                         </div>
                     </div>
                 </div>
@@ -36,6 +36,7 @@
 <script>
 import { Component, Vue} from 'vue-property-decorator';
 import {DoubleBounce} from 'vue-loading-spinner';
+import {getMySections} from '@/endpoints/sections';
 
 @Component({
     components: {
@@ -44,7 +45,13 @@ import {DoubleBounce} from 'vue-loading-spinner';
 })
 export default class Sections extends Vue {
     loaderFlag = false;
-    sections = [0,1,2,3,4,5];
+    sections = [];
+    async getMySections(){
+        this.sections = await getMySections();
+    }
+      mounted(){
+        this.getMySections()
+    }
 }
 </script>
 

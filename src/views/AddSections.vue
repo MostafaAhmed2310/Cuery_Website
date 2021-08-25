@@ -18,7 +18,7 @@
                     <img src="@/assets/images/section-img.png" alt="">
                 </div>
                 <div class="left-side">
-                    <multiselect v-model="mainArea" :options="options" label="main_title" track-by="main_title" :searchable="false"  :show-labels="false" placeholder="Select New Section"></multiselect>
+                    <multiselect v-model="selectedSection" :options="sections" label="section_title" :close-on-select="true" track-by="section_title" :searchable="true"  :show-labels="false" placeholder="Select New Section"></multiselect>
                     <div class="add-section-btn">
                         <button @click="openSectionPanal()"><i class="fas fa-plus-circle"></i> Add Section</button>
                     </div>
@@ -36,6 +36,8 @@ import { Component, Vue} from 'vue-property-decorator';
 import {DoubleBounce} from 'vue-loading-spinner';
 import Multiselect from 'vue-multiselect';
 import SectionAppointement from '@/components/sections/SectionAppointement.vue';
+import {getAllSections} from '@/endpoints/sections';
+
 @Component({
     components: {
         DoubleBounce,
@@ -72,6 +74,20 @@ export default class AddSections extends Vue {
 
     openSectionPanal(){
         this.$refs.openSlidePanal.openSlidePanal();
+    }
+    sections = []
+    selectedSection = ''
+
+    async getAllSections(){
+        this.sections = await getAllSections();
+    }
+
+    async addSection(){
+
+    }
+    
+     async mounted(){
+        await this.getAllSections()
     }
 }
 </script>
