@@ -3,12 +3,15 @@
         <div class="special-hospital-body">
             <h1>Our Specialized Hospitals</h1>
             <div class="hospital-info">
-                <h2>Hospital Name</h2>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium magni, architecto temporibus adipisci distinctio, quae labore doloremque fugiat necessitatibus tempore illo. Autem, et ipsum! Quisquam similique deserunt minus exercitationem delectus?</p>
-                <button>See More</button>
+                <h2>{{highestHospital.name}}</h2>
+                <p v-if="highestHospital.description">{{highestHospital.description}}</p>
+                <p v-if="!highestHospital.description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium magni, architecto temporibus adipisci distinctio, quae labore doloremque fugiat necessitatibus tempore illo. Autem, et ipsum! Quisquam similique deserunt minus exercitationem delectus?Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium magni, architecto temporibus adipisci distinctio, quae labore doloremque fugiat necessitatibus tempore illo. Autem, et ipsum! Quisquam similique deserunt minus exercitationem delectus?Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium magni, architecto temporibus adipisci distinctio, quae labore doloremque fugiat necessitatibus tempore illo. Autem, et ipsum! Quisquam similique deserunt minus exercitationem delectus?</p>
+                <router-link to="/medical_team">
+                    <button>See More</button>
+                </router-link>
             </div>
             <div class="hospital-img">
-                <img src="" alt="">
+                <img :src="BaseUrl + highestHospital.image_path" alt="Image">
                 <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="150.4" viewBox="0 0 547.369 150.4">
                     <path id="path_vector_" data-name="path vector " d="M36.2,150.52H583.256S589.73,85.095,544,83.045,411.761,94.7,341.732,78.98,258.937.806,171.045.123,36.2,150.52,36.2,150.52Z" transform="translate(-36.201 -0.12)" fill="#43c079"/>
                 </svg>
@@ -19,6 +22,9 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
+import { gethighestHospital } from '@/endpoints/static_pages';
+import {BaseUrl} from '@/app.config';
+
 
 @Component({
     components: {
@@ -26,7 +32,16 @@ import { Component, Vue } from 'vue-property-decorator';
     },
 })
 export default class SpecialHospital extends Vue {
-  
+   highestHospital={}
+   BaseUrl:any = BaseUrl
+
+   async getMedicalTeam(){
+        this.highestHospital = await gethighestHospital();
+    }
+
+    mounted(){
+        this.getMedicalTeam()
+    }
 }
 </script>
 
@@ -88,5 +103,7 @@ export default class SpecialHospital extends Vue {
 .hospital-img svg{
     position: absolute;
     bottom: -30px;
+    left: 0;
+    right: 0;
 }
 </style>

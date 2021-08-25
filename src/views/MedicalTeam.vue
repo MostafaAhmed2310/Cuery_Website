@@ -19,10 +19,9 @@
                 <div class="hospitals-items" v-for="hospital in hospitals" :key="hospital">
                     <div class="hospital-item">
                         <div class="item-img">
-                            <i class="fas fa fa-image"></i>
-                            <img src="" alt="">
+                            <img :src="BaseUrl + hospital.image_path" alt="Image">
                         </div>
-                        <p>Hospital Name</p>
+                        <p>{{hospital.name}}</p>
                     </div>
                 </div>
                 <p class="join-now">All of these are part of our entity .. <span @click="pushToSignup()">Join us now .</span></p>
@@ -33,6 +32,9 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
+import {getMedicalTeam} from '@/endpoints/static_pages';
+import {BaseUrl} from '@/app.config';
+
 
 @Component({
     components: {
@@ -40,9 +42,18 @@ import { Component, Vue } from 'vue-property-decorator';
     },
 })
 export default class MedicalTeam extends Vue {
-    hospitals:any[] = [0,1,2,3,4,5,6,7,8,9]
+    hospitals = [];
+    BaseUrl:any = BaseUrl
+
+    async getMedicalTeam(){
+        this.hospitals = await getMedicalTeam();
+    }
+
     pushToSignup(){
         this.$router.push('/signup')
+    }
+    mounted(){
+        this.getMedicalTeam()
     }
 }
 </script>
