@@ -9,8 +9,8 @@
                     <img src="" alt="">
                     <i class="fas fa fa-user-circle"></i>
                 </div>
-                <span class="patient-name">Mostafa Ahmed</span>
-                <span class="section-name">Section Name</span>
+                <span class="patient-name">{{ row.name}}</span>
+                <span class="section-name">{{ row.section_title}}</span>
                 <span class="see-more">See More</span>
                 <div class="table-btns">
                     <button class="green-btn">Confirm</button>
@@ -24,6 +24,8 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
+import { getlatestReservations} from '@/endpoints/reservations';
+
 
 @Component({
     components: {
@@ -32,6 +34,12 @@ import { Component, Vue } from 'vue-property-decorator';
 })
 export default class ReservationsTable extends Vue {
     tableArr:any[] = [0,1,2,3];
+    async getlatestReservations(){
+        this.tableArr = await getlatestReservations();
+    }
+    mounted(){
+        this.getlatestReservations()
+    }
 }
 </script>
 

@@ -34,3 +34,10 @@ export async function declineReservation(id:any){
     if (res) return res.data
     else return false
 }
+
+export async function getlatestReservations(){
+    let res = await api
+    .get('api/latestReservations');
+    if (res) return res.data
+    else return false
+}
