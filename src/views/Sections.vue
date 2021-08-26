@@ -11,7 +11,9 @@
                     <router-link to="/add-section">
                         <button class="add-section"><i class="fas fa-plus-circle"></i>Add New Section</button>
                     </router-link>
-                    <button class="suggest-section"><i class="fas fa-plus-circle"></i>Suggest New Section</button>
+                    <router-link to="/suggest-sections">
+                        <button class="suggest-section"><i class="fas fa-plus-circle"></i>Suggest New Section</button>
+                    </router-link>
                 </div>
             </div>
             <div class="sections-inputs-body">
@@ -22,6 +24,7 @@
                     <div class="section-items" v-for="section in sections" :key="section">
                         <div class="item">
                             <div class="section-item-img">
+                                <i  v-if="section.is_verified == 'n'" class="fas fa-window-close"></i>
                                 <img src="@/assets/images/services/cardiogram.png" alt="">
                             </div>
                             <span>{{section.section_title}}</span>
