@@ -3,7 +3,10 @@
         <div class="table-title">
             <h4>Latest Reservations</h4>
         </div>
-        <div class="table-body">
+        <div v-if="tableArr.length == 0" class="table-body">
+            <span>no reservations found</span>
+        </div>
+        <div v-if="tableArr" class="table-body">
             <div class="table-row" v-for="row in tableArr" :key="row">
                 <div class="profile-img">
                     <img src="" alt="">
@@ -13,8 +16,8 @@
                 <span class="section-name">{{ row.section_title}}</span>
                 <span class="see-more">See More</span>
                 <div class="table-btns">
-                    <button class="green-btn">Confirm</button>
-                    <button class="red-btn">Decline</button>
+                    <button @click = "confirmReservation(row.id)">Confirm</button>
+                    <button @click = "declineReservation(row.id)">Decline</button>
                 </div>
                 <hr>
             </div>
@@ -24,7 +27,8 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import { getlatestReservations} from '@/endpoints/reservations';
+import { getlatestReservations, confirmReservation, declineReservation } from '@/endpoints/reservations';
+
 
 
 @Component({
@@ -36,6 +40,13 @@ export default class ReservationsTable extends Vue {
     tableArr:any[] = [0,1,2,3];
     async getlatestReservations(){
         this.tableArr = await getlatestReservations();
+    }
+    confirmReservation(reservation_id:any){
+        confirmReservation(reservation_id)
+
+    }
+    declineReservation(reservation_id:any){
+        declineReservation(reservation_id)
     }
     mounted(){
         this.getlatestReservations()

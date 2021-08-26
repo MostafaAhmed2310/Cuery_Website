@@ -41,3 +41,12 @@ export async function getlatestReservations(){
     if (res) return res.data
     else return false
 }
+export async function confirmCode(id:any,data:any){
+    let res = await api
+    .post('/api/reservations/confirm_code/'+id,data);
+    console.log('resss', res)
+
+    if (res) return res.data
+    else return false
+}
+

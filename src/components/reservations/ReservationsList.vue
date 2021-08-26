@@ -33,7 +33,6 @@ export default class ReservationsList extends Vue {
     async getReservationsList(){
         this.reservationsList = await getReservationsList();
     }
-
     confirmReservation(reservation_id:any){
         confirmReservation(reservation_id)
 

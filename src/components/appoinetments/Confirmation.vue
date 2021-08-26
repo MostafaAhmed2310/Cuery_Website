@@ -16,7 +16,10 @@
                 <input type="number" v-model="num2" placeholder="-">
                 <input type="number" v-model="num3" placeholder="-">
                 <input type="number" v-model="num4" placeholder="-">
+                <input type="number" v-model="num5" placeholder="-">
+                <input type="number" v-model="num6" placeholder="-">
             </div>
+            <span v-if="errorFlag" > the error msg </span>
             <h5>Resend Code</h5>
             <div class="confirm-btn">
                 <button @click="confirmPatient()">Confirm <i class="fas fa fa-sort-up"></i></button>
@@ -27,6 +30,7 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
+import { confirmCode } from '@/endpoints/reservations';
 
 @Component({
     components: {
@@ -34,8 +38,31 @@ import { Component, Vue } from 'vue-property-decorator';
     },
 })
 export default class Confirmation extends Vue {
-    confirmPatient(){
-        this.$router.push('/success_page');
+    num1 ='';
+    num2 = '';
+    num3 = '';
+    num4 = '';
+    num5 = '';
+    num6 = '';
+    errorFlag = false;
+
+    secret_code = this.num1 + this.num2 + this.num3 + this.num4 + this.num5 + this.num6
+    resId =this.$route.params.id
+    async confirmPatient(){
+        try{
+            let res  = await confirmCode(this.resId,this.secret_code);
+            if(res.success == true ){
+            this.$router.push('/success_page');
+            }else{
+                this.errorFlag = true
+            }
+        }catch(err){
+            console.log('err>>', err)
+            if(err == 'Error: Request failed with status code 422'){
+                this.errorFlag = true
+
+            }
+        }
     }
 }
 </script>
