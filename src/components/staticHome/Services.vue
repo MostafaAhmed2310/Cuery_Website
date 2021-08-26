@@ -4,28 +4,33 @@
         <div class="cards-container">
             <div class="cards-info">
                 <div v-if="service1">
-                    <h2>Cardiogram</h2>
-                    <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Neque voluptatum beatae inventore iste odio labore soluta maiores ducimus perferendis modi, similique laborum quis nostrum velit praesentium sequi quibusdam quam id!</p>
+                    <h2>{{ sectionsList[0].section_title}}</h2>
+                    <p v-if="sectionsList[0].section_description">{{ sectionsList[0].section_description}}</p>
+                    <p v-if="!sectionsList[0].section_description">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Neque voluptatum beatae inventore iste odio labore soluta maiores ducimus perferendis modi</p>
                 </div>
                 <div v-if="service2">
-                    <h2>Room Sections</h2>
-                    <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Neque voluptatum beatae inventore iste odio labore soluta maiores ducimus perferendis modi</p>
-                </div>
+                    <h2>{{ sectionsList[1].section_title}}</h2>
+                    <p v-if="sectionsList[1].section_description">{{ sectionsList[0].section_description}}</p>
+                    <p v-if="!sectionsList[1].section_description">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Neque voluptatum beatae inventore iste odio labore soluta maiores ducimus perferendis modi</p>                </div>
                 <div v-if="service3">
-                    <h2>Brain</h2>
-                    <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Neque voluptatum beatae inventore iste odio labore soluta maiores ducimus perferendis modi, similique laborum quis nostrum velit praesentium sequi quibusdam quam id!</p>
+                    <h2>{{ sectionsList[2].section_title}}</h2>
+                    <p v-if="sectionsList[2].section_description">{{ sectionsList[0].section_description}}</p>
+                    <p v-if="!sectionsList[2].section_description">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Neque voluptatum beatae inventore iste odio labore soluta maiores ducimus perferendis modi</p>
                 </div>
                 <div v-if="service4">
-                    <h2>Cancer</h2>
-                    <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Neque voluptatum beatae inventore iste odio labore soluta maiores ducimus perferendis modi</p>
+                    <h2>{{ sectionsList[3].section_title}}</h2>
+                    <p v-if="sectionsList[3].section_description">{{ sectionsList[0].section_description}}</p>
+                    <p v-if="!sectionsList[3].section_description">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Neque voluptatum beatae inventore iste odio labore soluta maiores ducimus perferendis modi</p>
                 </div>
                 <div v-if="service5">
-                    <h2>X-Ray</h2>
-                    <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Neque voluptatum beatae inventore iste odio labore soluta maiores ducimus perferendis modi, similique laborum quis nostrum velit praesentium sequi quibusdam quam id!</p>
+                    <h2>{{ sectionsList[4].section_title}}</h2>
+                    <p v-if="sectionsList[4].section_description">{{ sectionsList[0].section_description}}</p>
+                    <p v-if="!sectionsList[4].section_description">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Neque voluptatum beatae inventore iste odio labore soluta maiores ducimus perferendis modi</p>
                 </div>
                 <div v-if="service6">
-                    <h2>Blood Test</h2>
-                    <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Neque voluptatum beatae inventore iste odio labore soluta maiores ducimus perferendis modi, similique laborum quis nostrum velit praesentium sequi quibusdam quam id!</p>
+                    <h2>{{ sectionsList[5].section_title}}</h2>
+                    <p v-if="sectionsList[5].section_description">{{ sectionsList[0].section_description}}</p>
+                    <p v-if="!sectionsList[5].section_description">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Neque voluptatum beatae inventore iste odio labore soluta maiores ducimus perferendis modi</p>
                 </div>
                 <div class="arrow-btns">
                     <span @click="leftAction()"><i class="fas fa fa-sort-up"></i></span>
@@ -70,6 +75,8 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
+import { getSectionsList } from '@/endpoints/static_pages';
+
 
 @Component({
     components: {
@@ -85,6 +92,8 @@ export default class Services extends Vue {
     service6:Boolean = false;
 
     localNum:any = 1;
+
+    sectionsList = [];
 
     heartActive:String = 'active';
     cancerActive:String = '';
@@ -132,9 +141,12 @@ export default class Services extends Vue {
             this.rightAction()
         }, 3000);
     }
-
+    async getSectionsList(){
+        this.sectionsList = await getSectionsList();
+    }
     mounted(){
         this.switchSliderAuto()
+        this.getSectionsList()
     }
 
     toggleServices(slideNum:Number){
