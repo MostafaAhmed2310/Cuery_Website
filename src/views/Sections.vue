@@ -11,7 +11,9 @@
                     <router-link to="/add-section">
                         <button class="add-section"><i class="fas fa-plus-circle"></i>Add New Section</button>
                     </router-link>
-                    <button class="suggest-section"><i class="fas fa-plus-circle"></i>Suggest New Section</button>
+                    <router-link to="/suggest-sections">
+                        <button class="suggest-section"><i class="fas fa-plus-circle"></i>Suggest New Section</button>
+                    </router-link>
                 </div>
             </div>
             <div class="sections-inputs-body">

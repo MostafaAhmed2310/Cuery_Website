@@ -16,6 +16,7 @@ import AppoinetmentsItem from '@/components/appoinetments/AppoinetmentsItem.vue'
 import AppoinetmentsItemEmergency from '@/components/appoinetments/AppoinetmentsItemEmergency.vue'
 import Sections from '@/views/Sections.vue'
 import AddSections from '@/views/AddSections.vue'
+import SuggestSections from '@/views/SuggestSections.vue'
 const routes = [
     {
         path: '/',
@@ -66,6 +67,11 @@ const routes = [
         path: '/add-section',
         name: 'AddSections',
         component: AddSections
+    },
+    {
+        path: '/suggest-sections',
+        name: 'SuggestSections',
+        component: SuggestSections
     },
     {
         path: '/messages',

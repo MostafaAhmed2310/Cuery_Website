@@ -153,7 +153,7 @@ export default class AddSections extends Vue {
 }
 .add-section-btn{
     position: absolute;
-    bottom: 35px;
+    bottom: 20%;
 }
 .add-section-btn button{
     padding: 10px 15px;
