@@ -12,3 +12,9 @@ export async function gethighestHospital(){
   if (res) return res.data
   else return false
 }
+export async function getSectionsList(){
+  let res = await api
+  .get('api/getSixSystemSections');
+  if (res) return res.data
+  else return false
+}
