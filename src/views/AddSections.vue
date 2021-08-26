@@ -36,7 +36,7 @@ import { Component, Vue} from 'vue-property-decorator';
 import {DoubleBounce} from 'vue-loading-spinner';
 import Multiselect from 'vue-multiselect';
 import SectionAppointement from '@/components/sections/SectionAppointement.vue';
-import {getAllSections} from '@/endpoints/sections';
+import {getAllSections, assginSection} from '@/endpoints/sections';
 
 @Component({
     components: {
@@ -47,46 +47,18 @@ import {getAllSections} from '@/endpoints/sections';
 })
 export default class AddSections extends Vue {
     loaderFlag = false;
-    options = [
-        {
-            id:1,
-            main_title:"Sec1"
-        },
-        {
-            id:2,
-            main_title:"Sec2"
-        },
-        {
-            id:3,
-            main_title:"Sec3"
-        },
-        {
-            id:4,
-            main_title:"Sec4"
-        },
-        {
-            id:5,
-            main_title:"Sec5"
-        },
-    ];
-    mainArea = '';
+    sections = [];
+    selectedSection = '';
+    userSectionId = '';
 
-
-    openSectionPanal(){
-        this.$refs.openSlidePanal.openSlidePanal();
+    async openSectionPanal(){
+        this.userSectionId = await assginSection(this.selectedSection.id)
+        this.$refs.openSlidePanal.openSlidePanal(this.selectedSection,this.userSectionId);
     }
-    sections = []
-    selectedSection = ''
-
     async getAllSections(){
         this.sections = await getAllSections();
     }
-
-    async addSection(){
-
-    }
-    
-     async mounted(){
+    async mounted(){
         await this.getAllSections()
     }
 }
