@@ -23,8 +23,9 @@
                 <div class="left-side">
                     <div class="section-items" v-for="section in sections" :key="section">
                         <div class="item">
+                            <div v-if="section.is_verified == 'n' && titleHover == true" class="pending-title">This Section Not Verified Yet</div>
+                            <i @mouseover="showTitle()" @mouseleave="hideTitle()" v-if="section.is_verified == 'n'" class="fas fa-exclamation-circle"></i>
                             <div class="section-item-img">
-                                <i  v-if="section.is_verified == 'n'" class="fas fa-window-close"></i>
                                 <img src="@/assets/images/services/cardiogram.png" alt="">
                             </div>
                             <span>{{section.section_title}}</span>
@@ -49,8 +50,15 @@ import {getMySections} from '@/endpoints/sections';
 export default class Sections extends Vue {
     loaderFlag = false;
     sections = [];
+    titleHover = false;
     async getMySections(){
         this.sections = await getMySections();
+    }
+    showTitle(){
+        this.titleHover = true;
+    }
+    hideTitle(){
+        this.titleHover = false;
     }
       mounted(){
         this.getMySections()
@@ -93,11 +101,25 @@ export default class Sections extends Vue {
     height: 70px;
     border-radius: 5px;
     background: rgba(241, 250, 245, 1);
-    overflow: hidden;
     margin-right: 20px;
     margin-bottom: 20px;
     float: left;
     padding: 20px;
+    position: relative;
+}
+.section-items .item i{
+    position: absolute;
+    top: -10px;
+    right: 10px;
+    font-size: 20px;
+    color: var(--alert-color);
+    border: 3px solid var(--alert-color);
+    border-radius: 50%;
+    line-height: 1.2;
+    width: 30px;
+    height: 30px;
+    text-align: center;
+    cursor: pointer;
 }
 .section-item-img{
     width: 30px;
@@ -133,5 +155,15 @@ export default class Sections extends Vue {
 }
 .section-btns button i{
     margin-right: 10px;
+}
+.pending-title{
+    padding: 10px;
+    background: var(--alert-color);
+    color: #fff;
+    border-radius: 3px;
+    position: absolute;
+    top: -55px;
+    font-size: 11px;
+    right: 15px;
 }
 </style>
