@@ -10,7 +10,7 @@
             </div>
             <div class="reservations-inputs-body">
                 <div class="reservations-panal">
-                    <ReservationsList/>
+                    <ReservationsHistoryList/>
                 </div>
                 <div class="reservation-body">
                     <router-view></router-view>
@@ -22,10 +22,10 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import ReservationsList from '@/components/reservations/ReservationsList.vue';
+import ReservationsHistoryList from '@/components/reservationHistory/ReservationsHistoryList.vue';
 @Component({
     components: {
-        ReservationsList,
+        ReservationsHistoryList,
     },
 })
 export default class ReservationHistory extends Vue {

@@ -74,6 +74,8 @@ export default class Sections extends Vue {
 }
 .sections-body span{
     float: right;
+    margin-right: 25px;
+    margin-top: 35px;
 }
 .sections-body a{
     color: #fff !important;

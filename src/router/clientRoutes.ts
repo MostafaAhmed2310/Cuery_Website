@@ -20,6 +20,7 @@ import AddSections from '@/views/AddSections.vue'
 import SuggestSections from '@/views/SuggestSections.vue'
 import SectionDetails from '@/views/SectionDetails.vue'
 import ReservationHistory from '@/views/ReservationHistory.vue'
+import ReservationHistoryItem from '@/components/reservationHistory/ReservationHistoryItem.vue'
 const routes = [
     {
         path: '/',
@@ -116,9 +117,9 @@ const routes = [
         component: ReservationHistory,
         children: [
             {
-                path: '/reservations/:id',
-                name: 'ReservationItem',
-                component: ReservationItem
+                path: '/reservation-history/:id',
+                name: 'ReservationHistoryItem',
+                component: ReservationHistoryItem
             },
         ]
     },

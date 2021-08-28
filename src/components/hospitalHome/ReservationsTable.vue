@@ -3,8 +3,8 @@
         <div class="table-title">
             <h4>Latest Reservations</h4>
         </div>
-        <div v-if="tableArr.length == 0" class="table-body">
-            <span>no reservations found</span>
+        <div v-if="tableArr.length == 0" class="table-body placeholder">
+            <span>No reservations found</span>
         </div>
         <div v-if="tableArr" class="table-body">
             <div class="table-row" v-for="row in tableArr" :key="row">
@@ -16,8 +16,8 @@
                 <span class="section-name">{{ row.section_title}}</span>
                 <span class="see-more">See More</span>
                 <div class="table-btns">
-                    <button @click = "confirmReservation(row.id)">Confirm</button>
-                    <button @click = "declineReservation(row.id)">Decline</button>
+                    <button class="green-btn" @click="confirmReservation(row.id)">Confirm</button>
+                    <button class="red-btn" @click="declineReservation(row.id)">Decline</button>
                 </div>
                 <hr>
             </div>
@@ -37,7 +37,7 @@ import { getlatestReservations, confirmReservation, declineReservation } from '@
     },
 })
 export default class ReservationsTable extends Vue {
-    tableArr:any[] = [0,1,2,3];
+    tableArr:any[] = [];
     async getlatestReservations(){
         this.tableArr = await getlatestReservations();
     }
@@ -127,5 +127,9 @@ export default class ReservationsTable extends Vue {
 }
 .red-btn{
     background: rgba(197, 58, 58, 1);
+}
+.placeholder{
+    text-align: center;
+    color: var(--font-navy);
 }
 </style>
