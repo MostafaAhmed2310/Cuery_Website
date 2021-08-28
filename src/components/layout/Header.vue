@@ -14,7 +14,7 @@
             <ul class="nav-bar-list-hospital" v-if="auth_state == true">
                 <li><router-link to="/hospital_home" active-class="active">Home</router-link></li>
                 <li><router-link to="/contact_us" active-class="active">Contact Us</router-link></li>
-                <li>Last Reservations</li>
+                <li><router-link to="/reservation-history" active-class="active">Reservation History</router-link></li>
                 <li>
                     <router-link to="/profile" active-class="active">
                         <i class="profile-icon far fa fa-user-circle"></i>

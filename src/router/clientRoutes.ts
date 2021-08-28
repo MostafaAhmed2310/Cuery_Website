@@ -18,6 +18,8 @@ import Ratings from '@/views/Ratings.vue'
 import Sections from '@/views/Sections.vue'
 import AddSections from '@/views/AddSections.vue'
 import SuggestSections from '@/views/SuggestSections.vue'
+import SectionDetails from '@/views/SectionDetails.vue'
+import ReservationHistory from '@/views/ReservationHistory.vue'
 const routes = [
     {
         path: '/',
@@ -75,6 +77,11 @@ const routes = [
         component: SuggestSections
     },
     {
+        path: '/section-details/:id',
+        name: 'sectionDetails',
+        component: SectionDetails
+    },
+    {
         path: '/messages',
         name: 'messages',
         component: Messages,
@@ -102,6 +109,18 @@ const routes = [
         path: '/ratings',
         name: 'ratings',
         component: Ratings
+    },
+    {
+        path: '/reservation-history',
+        name: 'reservationHistory',
+        component: ReservationHistory,
+        children: [
+            {
+                path: '/reservations/:id',
+                name: 'ReservationItem',
+                component: ReservationItem
+            },
+        ]
     },
     {
         path: '/appoinetments',
