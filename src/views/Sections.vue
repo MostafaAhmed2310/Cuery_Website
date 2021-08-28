@@ -22,14 +22,16 @@
                 </div>
                 <div class="left-side">
                     <div class="section-items" v-for="section in sections" :key="section">
-                        <div class="item">
-                            <div v-if="section.is_verified == 'n' && titleHover == true" class="pending-title">This Section Not Verified Yet</div>
-                            <i @mouseover="showTitle()" @mouseleave="hideTitle()" v-if="section.is_verified == 'n'" class="fas fa-exclamation-circle"></i>
-                            <div class="section-item-img">
-                                <img src="@/assets/images/services/cardiogram.png" alt="">
+                        <router-link :to="'/section-details/' + section.id">
+                            <div class="item">
+                                <div v-if="section.is_verified == 'n' && titleHover == true" class="pending-title">This Section Not Verified Yet</div>
+                                <i @mouseover="showTitle()" @mouseleave="hideTitle()" v-if="section.is_verified == 'n'" class="fas fa-exclamation-circle"></i>
+                                <div class="section-item-img">
+                                    <img src="@/assets/images/services/cardiogram.png" alt="">
+                                </div>
+                                <span>{{section.section_title}}</span>
                             </div>
-                            <span>{{section.section_title}}</span>
-                        </div>
+                        </router-link>
                     </div>
                 </div>
             </div>

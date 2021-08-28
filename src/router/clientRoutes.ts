@@ -17,6 +17,8 @@ import AppoinetmentsItemEmergency from '@/components/appoinetments/Appoinetments
 import Sections from '@/views/Sections.vue'
 import AddSections from '@/views/AddSections.vue'
 import SuggestSections from '@/views/SuggestSections.vue'
+import SectionDetails from '@/views/SectionDetails.vue'
+import ReservationHistory from '@/views/ReservationHistory.vue'
 const routes = [
     {
         path: '/',
@@ -74,6 +76,11 @@ const routes = [
         component: SuggestSections
     },
     {
+        path: '/section-details/:id',
+        name: 'sectionDetails',
+        component: SectionDetails
+    },
+    {
         path: '/messages',
         name: 'messages',
         component: Messages,
@@ -89,6 +96,18 @@ const routes = [
         path: '/reservations',
         name: 'reservations',
         component: Reservations,
+        children: [
+            {
+                path: '/reservations/:id',
+                name: 'ReservationItem',
+                component: ReservationItem
+            },
+        ]
+    },
+    {
+        path: '/reservation-history',
+        name: 'reservationHistory',
+        component: ReservationHistory,
         children: [
             {
                 path: '/reservations/:id',
