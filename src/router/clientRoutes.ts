@@ -21,6 +21,10 @@ import SuggestSections from '@/views/SuggestSections.vue'
 import SectionDetails from '@/views/SectionDetails.vue'
 import ReservationHistory from '@/views/ReservationHistory.vue'
 import ReservationHistoryItem from '@/components/reservationHistory/ReservationHistoryItem.vue'
+import Eemergency from '@/views/Emergency.vue'
+import EmergencyItem from '@/components/emergency/EmergencyItem.vue'
+import EmergencySection from '@/components/emergency/EmergencySection.vue'
+import AddEmergencySections from '@/components/emergency/AddEmergencySections.vue'
 const routes = [
     {
         path: '/',
@@ -107,9 +111,26 @@ const routes = [
         ]
     },
     {
+        path: '/emergency',
+        name: 'emergency',
+        component: Eemergency,
+        children: [
+            {
+                path: '/emergency/:id',
+                name: 'emergencyItem',
+                component: EmergencyItem
+            },
+        ]
+    },
+    {
         path: '/ratings',
         name: 'ratings',
         component: Ratings
+    },
+    {
+        path: '/emergency-sections',
+        name: 'EmergencySection',
+        component: EmergencySection
     },
     {
         path: '/reservation-history',
@@ -149,6 +170,11 @@ const routes = [
                 component: AppoinetmentsItemEmergency
             },
         ]
+    },
+    {
+        path: '/add-emergency-section',
+        name: 'AddEmergencySections',
+        component: AddEmergencySections
     },
 ]
 
