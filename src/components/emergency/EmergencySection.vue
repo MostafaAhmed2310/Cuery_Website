@@ -21,12 +21,13 @@
                     <div class="section-items" v-for="emergency in emergencySections" :key="emergency">
                         <router-link :to="'/section-details/' + emergency.id">
                             <div class="item">
-                                <!-- <div v-if="section.is_verified == 'n' && titleHover == true" class="pending-title">This Section Not Verified Yet</div>
-                                <i @mouseover="showTitle()" @mouseleave="hideTitle()" v-if="section.is_verified == 'n'" class="fas fa-exclamation-circle"></i> -->
                                 <div class="section-item-img">
-                                    <img src="@/assets/images/services/cardiogram.png" alt="">
+                                    <Energy v-if="emergency.icon_id == 4"/>
+                                    <Ambulance v-if="emergency.icon_id == 1"/>
+                                    <Oxygen v-if="emergency.icon_id == 2"/>
+                                    <Visit v-if="emergency.icon_id == 3"/>
                                 </div>
-                                <span>Section Title</span>
+                                <span>{{emergency.service_title}}</span>
                             </div>
                         </router-link>
                     </div>
@@ -39,27 +40,27 @@
 <script>
 import { Component, Vue} from 'vue-property-decorator';
 import {DoubleBounce} from 'vue-loading-spinner';
-import {getMySections} from '@/endpoints/sections';
-
+import {getMyServices} from '@/endpoints/emergency';
+import Energy from '@/assets/icons/Energy.vue';
+import Ambulance from '@/assets/icons/Ambulance.vue';
+import Oxygen from '@/assets/icons/Oxygen.vue';
+import Visit from '@/assets/icons/Visit.vue'
 @Component({
     components: {
         DoubleBounce,
+        Energy,
+        Ambulance,
+        Oxygen,
+        Visit,
     },
 })
 export default class EmergencySection extends Vue {
     loaderFlag = false;
-    emergencySections = [0,1,2,3,4,5,6];
-    titleHover = false;
+    emergencySections = [];
     async getMySections(){
-        this.sections = await getMySections();
+        this.emergencySections = await getMyServices();
     }
-    showTitle(){
-        this.titleHover = true;
-    }
-    hideTitle(){
-        this.titleHover = false;
-    }
-      mounted(){
+    mounted(){
         this.getMySections()
     }
 }
@@ -124,7 +125,8 @@ export default class EmergencySection extends Vue {
     width: 30px;
     height: 30px;
     float: left;
-    margin-right: 10px;
+    margin-right: 20px;
+    margin-top: -5px;
 }
 .section-item-img img{
     width: 100%;

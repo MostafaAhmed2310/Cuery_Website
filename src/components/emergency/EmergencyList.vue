@@ -24,14 +24,20 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-
+import {getPendingEmergencyList} from '@/endpoints/emergency';
 @Component({
     components: {
 
     },
 })
 export default class EmergencyList extends Vue {
-    EmergencyList = [0,1,2,3,4,5,6];
+    EmergencyList = [];
+    async getEmergencyList(){
+        this.EmergencyList = await getPendingEmergencyList();
+    }
+    mounted() {
+        this.getEmergencyList();   
+    }
 }
 </script>
 

@@ -3,10 +3,13 @@
         <div class="section-appointement-head">
             <h4>
                 <i @click="closePanal()" class="fas fa-chevron-left"></i> 
-                {{ selectedSection.section_title }}
+                {{ selectedSection.service_title }}
             </h4>
             <div class="section-icon">
-                <img src="@/assets/images/services/cardiogram.png" alt="">
+                <Energy v-if="selectedSection.icon_id == 4"/>
+                <Ambulance v-if="selectedSection.icon_id == 1"/>
+                <Oxygen v-if="selectedSection.icon_id == 2"/>
+                <Visit v-if="selectedSection.icon_id == 3"/>
             </div>
         </div>
         <div class="section-body">
@@ -46,12 +49,17 @@
                 </div>
             </div>
             <div class="price-container">
+                <span>Time required</span>
+                <label for="price">Mins</label>
+                <input type="text" id="price" v-model="min">
+            </div>
+            <div class="price-container">
                 <span>Price</span>
                 <label for="price">EGP</label>
                 <input type="text" id="price" v-model="price">
             </div>
             <div class="save-btn">
-                <button>Save</button>
+                <button @click="addDetails()">Save</button>
             </div>
         </div>
     </div>
@@ -60,9 +68,18 @@
 <script>
 import { Component, Vue } from 'vue-property-decorator';
 import VueTimepicker from 'vue2-timepicker';
+import Energy from '@/assets/icons/Energy.vue';
+import Ambulance from '@/assets/icons/Ambulance.vue';
+import Oxygen from '@/assets/icons/Oxygen.vue';
+import Visit from '@/assets/icons/Visit.vue'
+import {addDetailsToService} from '@/endpoints/emergency';
 @Component({
     components: {
         VueTimepicker,
+        Energy,
+        Ambulance,
+        Oxygen,
+        Visit
     },
 })
 export default class EmergencySectionAppointement extends Vue {
@@ -73,9 +90,13 @@ export default class EmergencySectionAppointement extends Vue {
     selectedSection = {};
     userSectionId = '';
     daysList = [];
-
+    price = '';
+    min = '';
+    FromTime = '';
+    ToTime = '';
     addDay(day){
-        this.daysList += day
+        this.daysList.push(day)
+        console.log('rrrrrrr', this.daysList);
     }
     selectAmFrom(){
         this.toggleToPmFrom = '';
@@ -117,6 +138,19 @@ export default class EmergencySectionAppointement extends Vue {
     closePanal(){
         this.slidePanal = '';
     }
+    async addDetails(){
+        let detailsObj = {
+            from:this.FromTime,
+            to:this.ToTime,
+            waiting_time_in_mins:this.min,
+            charge:this.price,
+            days_array:this.daysList
+        }
+        let res = await addDetailsToService(this.userSectionId, detailsObj);
+        if(res){
+            console.log('add details', res);
+        }
+    }
 }
 </script>
 
@@ -130,7 +164,7 @@ export default class EmergencySectionAppointement extends Vue {
     background: #fff;
     box-shadow: 1px 3px 6px 0px #ddd;
     z-index: 9999;
-    padding: 20px 30px;
+    padding: 10px 30px;
     color: var(--font-navy);
     opacity: 0;
     transition: 0.7s;
@@ -145,6 +179,7 @@ export default class EmergencySectionAppointement extends Vue {
 }
 .section-appointement-container h4{
     text-align: center;
+    margin: 15px 0px;
 }
 .section-appointement-container h5{
     margin: 10px 0px;
@@ -223,8 +258,11 @@ export default class EmergencySectionAppointement extends Vue {
     transform: translateX(54px);
     transition: 0.7s;
 }
+.price-container{
+    margin-bottom: 20px;
+}
 .price-container span{
-    width: 100px;
+    width: 155px;
     display: inline-block;
     font-weight: bold;
 }
@@ -233,6 +271,8 @@ export default class EmergencySectionAppointement extends Vue {
     font-weight: bold;
     margin-right: 10px;
     color: var(--main-green);
+    width: 35px;
+    display: inline-block;
 }
 .price-container input{
     width: 75px;
@@ -247,7 +287,7 @@ export default class EmergencySectionAppointement extends Vue {
     clear: both;
     display: block;
     overflow: hidden;
-    margin-top: 30px;
+    margin-top: 15px;
     text-align: center;
 }
 .save-btn button{

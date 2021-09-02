@@ -18,7 +18,7 @@
                     <img src="@/assets/images/section-img.png" alt="">
                 </div>
                 <div class="left-side">
-                    <multiselect v-model="selectedSection" :options="sections" label="section_title" :close-on-select="true" track-by="section_title" :searchable="true"  :show-labels="false" placeholder="Select New Section"></multiselect>
+                    <multiselect v-model="selectedSection" :options="sections" label="service_title" :close-on-select="true" track-by="service_title" :searchable="true"  :show-labels="false" placeholder="Select New Section"></multiselect>
                     <div class="add-section-btn">
                         <button @click="openSectionPanal()"><i class="fas fa-plus-circle"></i> Add Section</button>
                     </div>
@@ -36,7 +36,7 @@ import { Component, Vue} from 'vue-property-decorator';
 import {DoubleBounce} from 'vue-loading-spinner';
 import Multiselect from 'vue-multiselect';
 import EmergencySectionAppointement from '@/components/emergency/EmergencySectionAppointement.vue';
-import {getAllSections, assginSection} from '@/endpoints/sections';
+import {getAllServices, assginService} from '@/endpoints/emergency';
 
 @Component({
     components: {
@@ -52,11 +52,11 @@ export default class AddEmergencySections extends Vue {
     userSectionId = '';
 
     async openSectionPanal(){
-        this.userSectionId = await assginSection(this.selectedSection.id)
+        this.userSectionId = await assginService(this.selectedSection.id)
         this.$refs.openSlidePanal.openSlidePanal(this.selectedSection,this.userSectionId);
     }
     async getAllSections(){
-        this.sections = await getAllSections();
+        this.sections = await getAllServices();
     }
     async mounted(){
         await this.getAllSections()
