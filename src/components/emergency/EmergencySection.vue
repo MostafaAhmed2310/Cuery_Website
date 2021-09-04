@@ -58,7 +58,9 @@ export default class EmergencySection extends Vue {
     loaderFlag = false;
     emergencySections = [];
     async getMySections(){
+        this.loaderFlag = true;
         this.emergencySections = await getMyServices();
+        this.loaderFlag = false;
     }
     mounted(){
         this.getMySections()

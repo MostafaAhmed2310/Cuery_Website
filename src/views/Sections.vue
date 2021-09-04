@@ -24,10 +24,21 @@
                     <div class="section-items" v-for="section in sections" :key="section">
                         <router-link :to="'/section-details/' + section.id">
                             <div class="item">
-                                <div v-if="section.is_verified == 'n' && titleHover == true" class="pending-title">This Section Not Verified Yet</div>
-                                <i @mouseover="showTitle()" @mouseleave="hideTitle()" v-if="section.is_verified == 'n'" class="fas fa-exclamation-circle"></i>
+                                <div v-if="section.is_verified == 'n' && titleHover == true && sectionId == section.id" class="pending-title">This Section Not Verified Yet</div>
+                                <i @mouseover="showTitle(section.id)" @mouseleave="hideTitle()" v-if="section.is_verified == 'n'" class="fas fa-exclamation-circle"></i>
                                 <div class="section-item-img">
-                                    <img src="@/assets/images/services/cardiogram.png" alt="">
+                                    <img v-if="section.icon_id == 1" src="@/assets/images/sectionIcons/blood.png" alt="">
+                                    <img v-if="section.icon_id == 5" src="@/assets/images/sectionIcons/brain.png" alt="">
+                                    <img v-if="section.icon_id == 2" src="@/assets/images/sectionIcons/cancer.png" alt="">
+                                    <img v-if="section.icon_id == 3" src="@/assets/images/sectionIcons/cardiogram.png" alt="">
+                                    <img v-if="section.icon_id == 6" src="@/assets/images/sectionIcons/eye.png" alt="">
+                                    <img v-if="section.icon_id == 7 || section.icon_id == 0" src="@/assets/images/sectionIcons/firstaid.png" alt="">
+                                    <img v-if="section.icon_id == 8" src="@/assets/images/sectionIcons/lungs.png" alt="">
+                                    <img v-if="section.icon_id == 10" src="@/assets/images/sectionIcons/rooms.png" alt="">
+                                    <img v-if="section.icon_id == 9" src="@/assets/images/sectionIcons/stomach.png" alt="">
+                                    <img v-if="section.icon_id == 11" src="@/assets/images/sectionIcons/teeth.png" alt="">
+                                    <img v-if="section.icon_id == 12" src="@/assets/images/sectionIcons/women.png" alt="">
+                                    <img v-if="section.icon_id == 4" src="@/assets/images/sectionIcons/x-ray.png" alt="">
                                 </div>
                                 <span>{{section.section_title}}</span>
                             </div>
@@ -53,10 +64,14 @@ export default class Sections extends Vue {
     loaderFlag = false;
     sections = [];
     titleHover = false;
+    sectionId = '';
     async getMySections(){
+        this.loaderFlag = true
         this.sections = await getMySections();
+        this.loaderFlag = false
     }
-    showTitle(){
+    showTitle(id){
+        this.sectionId = id
         this.titleHover = true;
     }
     hideTitle(){

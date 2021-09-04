@@ -6,7 +6,18 @@
         <div class="sections-body">
             <div class="section-item" v-for="section in sectionsList" :key="section">
                 <div class="item">
-                    <img src="@/assets/images/services/rooms.png" alt="">
+                    <img v-if="section.icon_id == 1" src="@/assets/images/sectionIcons/blood.png" alt="">
+                    <img v-if="section.icon_id == 5" src="@/assets/images/sectionIcons/brain.png" alt="">
+                    <img v-if="section.icon_id == 2" src="@/assets/images/sectionIcons/cancer.png" alt="">
+                    <img v-if="section.icon_id == 3" src="@/assets/images/sectionIcons/cardiogram.png" alt="">
+                    <img v-if="section.icon_id == 6" src="@/assets/images/sectionIcons/eye.png" alt="">
+                    <img v-if="section.icon_id == 7 || section.icon_id == 0" src="@/assets/images/sectionIcons/firstaid.png" alt="">
+                    <img v-if="section.icon_id == 8" src="@/assets/images/sectionIcons/lungs.png" alt="">
+                    <img v-if="section.icon_id == 10" src="@/assets/images/sectionIcons/rooms.png" alt="">
+                    <img v-if="section.icon_id == 9" src="@/assets/images/sectionIcons/stomach.png" alt="">
+                    <img v-if="section.icon_id == 11" src="@/assets/images/sectionIcons/teeth.png" alt="">
+                    <img v-if="section.icon_id == 12" src="@/assets/images/sectionIcons/women.png" alt="">
+                    <img v-if="section.icon_id == 4" src="@/assets/images/sectionIcons/x-ray.png" alt="">
                 </div>
                 <p>{{ section.section_title }}</p>
             </div>

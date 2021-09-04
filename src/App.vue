@@ -159,6 +159,13 @@ input[type=number] {
     border-radius: 5px;
     outline: var(--main-green) !important;
 }
+.swal2-styled.swal2-confirm{
+    background: var(--font-navy) !important;
+}
+.swal2-content{
+    color: var(--font-navy) !important;
+    font-weight: bold !important;
+}
 </style>
 
 

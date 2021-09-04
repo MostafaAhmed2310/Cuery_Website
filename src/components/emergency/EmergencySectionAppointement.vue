@@ -1,5 +1,8 @@
 <template>
     <div :class="'section-appointement-container ' + slidePanal">
+        <div class="loader-container" v-if="loaderFlag">
+            <DoubleBounce></DoubleBounce>
+        </div>
         <div class="section-appointement-head">
             <h4>
                 <i @click="closePanal()" class="fas fa-chevron-left"></i> 
@@ -15,13 +18,13 @@
         <div class="section-body">
             <div class="date-container">
                 <h5>Date</h5>
-                <span  @click="addDay(1)">Saturday</span>
-                <span  @click="addDay(2)">Sunday</span>
-                <span  @click="addDay(3)">Monday</span>
-                <span  @click="addDay(4)">Tuesday</span>
-                <span  @click="addDay(5)">Wednesday</span>
-                <span  @click="addDay(6)">Thursday</span>
-                <span  @click="addDay(7)">Friday</span>
+                <span :class="activeDay1"  @click="addDay(1)">Saturday</span>
+                <span :class="activeDay2"  @click="addDay(2)">Sunday</span>
+                <span :class="activeDay3"  @click="addDay(3)">Monday</span>
+                <span :class="activeDay4"  @click="addDay(4)">Tuesday</span>
+                <span :class="activeDay5"  @click="addDay(5)">Wednesday</span>
+                <span :class="activeDay6"  @click="addDay(6)">Thursday</span>
+                <span :class="activeDay7"  @click="addDay(7)">Friday</span>
             </div>
             <div class="time-container">
                 <h5>Time</h5>
@@ -73,13 +76,15 @@ import Ambulance from '@/assets/icons/Ambulance.vue';
 import Oxygen from '@/assets/icons/Oxygen.vue';
 import Visit from '@/assets/icons/Visit.vue'
 import {addDetailsToService} from '@/endpoints/emergency';
+import {DoubleBounce} from 'vue-loading-spinner';
 @Component({
     components: {
         VueTimepicker,
         Energy,
         Ambulance,
         Oxygen,
-        Visit
+        Visit,
+        DoubleBounce
     },
 })
 export default class EmergencySectionAppointement extends Vue {
@@ -92,11 +97,39 @@ export default class EmergencySectionAppointement extends Vue {
     daysList = [];
     price = '';
     min = '';
-    FromTime = '';
-    ToTime = '';
+    FromTime = {};
+    ToTime = {};
+    activeDay1 = '';
+    activeDay2 = '';
+    activeDay3 = '';
+    activeDay4 = '';
+    activeDay5 = '';
+    activeDay6= '';
+    activeDay7 = '';
+    loaderFlag = false;
     addDay(day){
         this.daysList.push(day)
-        console.log('rrrrrrr', this.daysList);
+        if(day == 1){
+            this.activeDay1 = 'active-day';
+        }
+        if(day == 2){
+            this.activeDay2 = 'active-day';
+        }
+        if(day == 3){
+            this.activeDay3 = 'active-day';
+        }
+        if(day == 4){
+            this.activeDay4 = 'active-day';
+        }
+        if(day == 5){
+            this.activeDay5 = 'active-day';
+        }
+        if(day == 6){
+            this.activeDay6 = 'active-day';
+        }
+        if(day == 7){
+            this.activeDay7 = 'active-day';
+        }
     }
     selectAmFrom(){
         this.toggleToPmFrom = '';
@@ -140,15 +173,17 @@ export default class EmergencySectionAppointement extends Vue {
     }
     async addDetails(){
         let detailsObj = {
-            from:this.FromTime,
-            to:this.ToTime,
+            from:this.FromTime.hh +':'+ this.FromTime.mm +' '+ this.FromTime.A,
+            to:this.ToTime.hh +':'+ this.ToTime.mm +' '+ this.ToTime.A,
             waiting_time_in_mins:this.min,
             charge:this.price,
             days_array:this.daysList
         }
+        this.loaderFlag = true
         let res = await addDetailsToService(this.userSectionId, detailsObj);
+        this.loaderFlag = false;
         if(res){
-            console.log('add details', res);
+            this.$router.push('/emergency-sections');
         }
     }
 }
@@ -303,5 +338,8 @@ export default class EmergencySectionAppointement extends Vue {
 }
 .save-btn button:hover{
     opacity: 0.8;
+}
+.active-day{
+    border: 1px solid var(--main-green) !important;
 }
 </style>

@@ -16,51 +16,58 @@
             <div class="sections-inputs-body">
                 <div class="input-body">
                     <input type="text" v-model="sectionEn" placeholder="Write Section Name EN">
+                    <span v-if="enSectionErr">Please enter English section</span>
                 </div>
                 <div class="input-body">
                     <input type="text" v-model="sectionAr" placeholder="Write Section Name AR">
+                    <span v-if="arSectionErr">Please enter Arabic section</span>
+                </div>
+                <div class="input-body">
+                    <input type="text" v-model="description" placeholder="Description">
+                    <span v-if="descriptionErr">Please enter the description</span>
                 </div>
                 <div class="section-icons-body">
                     <h4>Select The Suggestion Icon </h4>
-                    <div class="section-icon">
+                    <div :class="'section-icon '+ activeBorder1" @click="addIcon(1)">
                         <img src="@/assets/images/sectionIcons/blood.png" alt="">
                     </div>
-                    <div class="section-icon">
+                    <div :class="'section-icon '+ activeBorder2" @click="addIcon(5)">
                         <img src="@/assets/images/sectionIcons/brain.png" alt="">
                     </div>
-                    <div class="section-icon">
+                    <div :class="'section-icon '+ activeBorder3" @click="addIcon(2)">
                         <img src="@/assets/images/sectionIcons/cancer.png" alt="">
                     </div>
-                    <div class="section-icon">
+                    <div :class="'section-icon '+ activeBorder4" @click="addIcon(3)">
                         <img src="@/assets/images/sectionIcons/cardiogram.png" alt="">
                     </div>
-                    <div class="section-icon">
+                    <div :class="'section-icon '+ activeBorder5" @click="addIcon(11)">
                         <img src="@/assets/images/sectionIcons/teeth.png" alt="">
                     </div>
-                    <div class="section-icon">
+                    <div :class="'section-icon '+ activeBorder6" @click="addIcon(6)">
                         <img src="@/assets/images/sectionIcons/eye.png" alt="">
                     </div>
-                    <div class="section-icon">
+                    <div :class="'section-icon '+ activeBorder7" @click="addIcon(0)">
                         <img src="@/assets/images/sectionIcons/firstaid.png" alt="">
                     </div>
-                    <div class="section-icon">
+                    <div :class="'section-icon '+ activeBorder8" @click="addIcon(8)">
                         <img src="@/assets/images/sectionIcons/lungs.png" alt="">
                     </div>
-                    <div class="section-icon">
+                    <div :class="'section-icon '+ activeBorder9" @click="addIcon(4)">
                         <img src="@/assets/images/sectionIcons/x-ray.png" alt="">
                     </div>
-                    <div class="section-icon">
+                    <div :class="'section-icon '+ activeBorder10" @click="addIcon(10)">
                         <img src="@/assets/images/sectionIcons/rooms.png" alt="">
                     </div>
-                    <div class="section-icon">
+                    <div :class="'section-icon '+ activeBorder11" @click="addIcon(12)">
                         <img src="@/assets/images/sectionIcons/women.png" alt="">
                     </div>
-                    <div class="section-icon">
+                    <div :class="'section-icon '+ activeBorder12" @click="addIcon(9)">
                         <img src="@/assets/images/sectionIcons/stomach.png" alt="">
                     </div>
+                    <span v-if="iconErr">Please select icon for your section</span>
                 </div>
                 <div class="suggest-section-btn">
-                    <button>Submit</button>
+                    <button @click="suggestSection()">Submit</button>
                 </div>
             </div>
         </div>
@@ -70,18 +77,231 @@
 <script>
 import { Component, Vue} from 'vue-property-decorator';
 import {DoubleBounce} from 'vue-loading-spinner';
-
+import {suggestSection} from '@/endpoints/sections';
 
 @Component({
     components: {
         DoubleBounce,
-        
     },
 })
 export default class SuggestSections extends Vue {
     loaderFlag = false;
     sectionEn = '';
     sectionAr = '';
+    description = '';
+    icon_id = '';
+    enSectionErr = false;
+    arSectionErr = false;
+    descriptionErr = false;
+    iconErr = false;
+    activeBorder1 = '';
+    activeBorder2 = '';
+    activeBorder3 = '';
+    activeBorder4 = '';
+    activeBorder5 = '';
+    activeBorder6 = '';
+    activeBorder7 = '';
+    activeBorder8 = '';
+    activeBorder9 = '';
+    activeBorder10 = '';
+    activeBorder11 = '';
+    activeBorder12 = '';
+    addIcon(iconId){
+        this.icon_id = iconId;
+        if(iconId == 1){
+            this.activeBorder1 = 'active-border';
+            this.activeBorder2 = '';
+            this.activeBorder3 = '';
+            this.activeBorder4 = '';
+            this.activeBorder5 = '';
+            this.activeBorder6 = '';
+            this.activeBorder7 = '';
+            this.activeBorder8 = '';
+            this.activeBorder9 = '';
+            this.activeBorder10 = '';
+            this.activeBorder11 = '';
+            this.activeBorder12 = '';
+        }else if(iconId == 5){
+            this.activeBorder1 = '';
+            this.activeBorder2 = 'active-border';
+            this.activeBorder3 = '';
+            this.activeBorder4 = '';
+            this.activeBorder5 = '';
+            this.activeBorder6 = '';
+            this.activeBorder7 = '';
+            this.activeBorder8 = '';
+            this.activeBorder9 = '';
+            this.activeBorder10 = '';
+            this.activeBorder11 = '';
+            this.activeBorder12 = '';
+        }else if(iconId == 2){
+            this.activeBorder1 = '';
+            this.activeBorder2 = '';
+            this.activeBorder3 = 'active-border';
+            this.activeBorder4 = '';
+            this.activeBorder5 = '';
+            this.activeBorder6 = '';
+            this.activeBorder7 = '';
+            this.activeBorder8 = '';
+            this.activeBorder9 = '';
+            this.activeBorder10 = '';
+            this.activeBorder11 = '';
+            this.activeBorder12 = '';
+        }else if(iconId == 3){
+            this.activeBorder1 = '';
+            this.activeBorder2 = '';
+            this.activeBorder3 = '';
+            this.activeBorder4 = 'active-border';
+            this.activeBorder5 = '';
+            this.activeBorder6 = '';
+            this.activeBorder7 = '';
+            this.activeBorder8 = '';
+            this.activeBorder9 = '';
+            this.activeBorder10 = '';
+            this.activeBorder11 = '';
+            this.activeBorder12 = '';
+        }else if(iconId == 11){
+            this.activeBorder1 = '';
+            this.activeBorder2 = '';
+            this.activeBorder3 = '';
+            this.activeBorder4 = '';
+            this.activeBorder5 = 'active-border';
+            this.activeBorder6 = '';
+            this.activeBorder7 = '';
+            this.activeBorder8 = '';
+            this.activeBorder9 = '';
+            this.activeBorder10 = '';
+            this.activeBorder11 = '';
+            this.activeBorder12 = '';
+        }else if(iconId == 6){
+            this.activeBorder1 = '';
+            this.activeBorder2 = '';
+            this.activeBorder3 = '';
+            this.activeBorder4 = '';
+            this.activeBorder5 = '';
+            this.activeBorder6 = 'active-border';
+            this.activeBorder7 = '';
+            this.activeBorder8 = '';
+            this.activeBorder9 = '';
+            this.activeBorder10 = '';
+            this.activeBorder11 = '';
+            this.activeBorder12 = '';
+        }else if(iconId == 0){
+            this.activeBorder1 = '';
+            this.activeBorder2 = '';
+            this.activeBorder3 = '';
+            this.activeBorder4 = '';
+            this.activeBorder5 = '';
+            this.activeBorder6 = '';
+            this.activeBorder7 = 'active-border';
+            this.activeBorder8 = '';
+            this.activeBorder9 = '';
+            this.activeBorder10 = '';
+            this.activeBorder11 = '';
+            this.activeBorder12 = '';
+        }else if(iconId == 8){
+            this.activeBorder1 = '';
+            this.activeBorder2 = '';
+            this.activeBorder3 = '';
+            this.activeBorder4 = '';
+            this.activeBorder5 = '';
+            this.activeBorder6 = '';
+            this.activeBorder7 = '';
+            this.activeBorder8 = 'active-border';
+            this.activeBorder9 = '';
+            this.activeBorder10 = '';
+            this.activeBorder11 = '';
+            this.activeBorder12 = '';
+        }else if(iconId == 4){
+            this.activeBorder1 = '';
+            this.activeBorder2 = '';
+            this.activeBorder3 = '';
+            this.activeBorder4 = '';
+            this.activeBorder5 = '';
+            this.activeBorder6 = '';
+            this.activeBorder7 = '';
+            this.activeBorder8 = '';
+            this.activeBorder9 = 'active-border';
+            this.activeBorder10 = '';
+            this.activeBorder11 = '';
+            this.activeBorder12 = '';
+        }else if(iconId == 10){
+            this.activeBorder1 = '';
+            this.activeBorder2 = '';
+            this.activeBorder3 = '';
+            this.activeBorder4 = '';
+            this.activeBorder5 = '';
+            this.activeBorder6 = '';
+            this.activeBorder7 = '';
+            this.activeBorder8 = '';
+            this.activeBorder9 = '';
+            this.activeBorder10 = 'active-border';
+            this.activeBorder11 = '';
+            this.activeBorder12 = '';
+        }else if(iconId == 12){
+            this.activeBorder1 = '';
+            this.activeBorder2 = '';
+            this.activeBorder3 = '';
+            this.activeBorder4 = '';
+            this.activeBorder5 = '';
+            this.activeBorder6 = '';
+            this.activeBorder7 = '';
+            this.activeBorder8 = '';
+            this.activeBorder9 = '';
+            this.activeBorder10 = '';
+            this.activeBorder11 = 'active-border';
+            this.activeBorder12 = '';
+        }else if(iconId == 9){
+            this.activeBorder1 = '';
+            this.activeBorder2 = '';
+            this.activeBorder3 = '';
+            this.activeBorder4 = '';
+            this.activeBorder5 = '';
+            this.activeBorder6 = '';
+            this.activeBorder7 = '';
+            this.activeBorder8 = '';
+            this.activeBorder9 = '';
+            this.activeBorder10 = '';
+            this.activeBorder11 = '';
+            this.activeBorder12 = 'active-border';
+        }
+    }
+    async suggestSection() {
+        if(this.sectionEn == '' || this.sectionEn.trim() == ''){
+            this.enSectionErr = true
+        }else{
+            this.enSectionErr = false
+        }
+        if(this.sectionAr == '' || this.sectionAr.trim() == ''){
+            this.arSectionErr = true
+        }else{
+            this.arSectionErr = false
+        }
+        if(this.description == '' || this.description.trim() == ''){
+            this.descriptionErr = true
+        }else{
+            this.descriptionErr = false
+        }
+        if(this.icon_id == ''){
+            this.iconErr = true
+        }else{
+            this.iconErr = false
+        }
+        if(this.enSectionErr == false && this.arSectionErr == false && this.descriptionErr == false && this.iconErr == false){
+            let suggestObj = {
+                section_title: this.sectionEn,
+                section_title_ar: this.sectionAr,
+                icon_id: this.icon_id,
+                description: this.description
+            };
+            this.loaderFlag = true;
+            let res = await suggestSection(suggestObj);
+            this.loaderFlag = false;
+            if(res){
+                this.$router.push('/sections');
+            }
+        }
+    }
 }
 </script>
 
@@ -160,5 +380,23 @@ export default class SuggestSections extends Vue {
 }
 .suggest-section-btn button:hover{
     opacity: 0.8;
+}
+.input-body span{
+    display: block;
+    font-size: 11px;
+    color: var(--alert-color);
+    position: absolute;
+    margin-top: 5px;
+}
+.section-icons-body span{
+    display: block;
+    font-size: 11px;
+    color: var(--alert-color);
+    overflow: hidden;
+    clear: both;
+    margin-bottom: 10px;
+}
+.active-border{
+    border: 2px solid var(--font-navy) !important;
 }
 </style>

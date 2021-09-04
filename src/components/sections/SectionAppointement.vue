@@ -6,19 +6,30 @@
                 {{ selectedSection.section_title }}
             </h4>
             <div class="section-icon">
-                <img src="@/assets/images/services/cardiogram.png" alt="">
+                <img v-if="selectedSection.icon_id == 1" src="@/assets/images/sectionIcons/blood.png" alt="">
+                <img v-if="selectedSection.icon_id == 5" src="@/assets/images/sectionIcons/brain.png" alt="">
+                <img v-if="selectedSection.icon_id == 2" src="@/assets/images/sectionIcons/cancer.png" alt="">
+                <img v-if="selectedSection.icon_id == 3" src="@/assets/images/sectionIcons/cardiogram.png" alt="">
+                <img v-if="selectedSection.icon_id == 6" src="@/assets/images/sectionIcons/eye.png" alt="">
+                <img v-if="selectedSection.icon_id == 7 || selectedSection.icon_id == 0" src="@/assets/images/sectionIcons/firstaid.png" alt="">
+                <img v-if="selectedSection.icon_id == 8" src="@/assets/images/sectionIcons/lungs.png" alt="">
+                <img v-if="selectedSection.icon_id == 10" src="@/assets/images/sectionIcons/rooms.png" alt="">
+                <img v-if="selectedSection.icon_id == 9" src="@/assets/images/sectionIcons/stomach.png" alt="">
+                <img v-if="selectedSection.icon_id == 11" src="@/assets/images/sectionIcons/teeth.png" alt="">
+                <img v-if="selectedSection.icon_id == 12" src="@/assets/images/sectionIcons/women.png" alt="">
+                <img v-if="selectedSection.icon_id == 4" src="@/assets/images/sectionIcons/x-ray.png" alt="">
             </div>
         </div>
         <div class="section-body">
             <div class="date-container">
                 <h5>Date</h5>
-                <span  @click="addDay(1)">Saturday</span>
-                <span  @click="addDay(2)">Sunday</span>
-                <span  @click="addDay(3)">Monday</span>
-                <span  @click="addDay(4)">Tuesday</span>
-                <span  @click="addDay(5)">Wednesday</span>
-                <span  @click="addDay(6)">Thursday</span>
-                <span  @click="addDay(7)">Friday</span>
+                <span :class="activeDay1"  @click="addDay(1)">Saturday</span>
+                <span :class="activeDay2"  @click="addDay(2)">Sunday</span>
+                <span :class="activeDay3"  @click="addDay(3)">Monday</span>
+                <span :class="activeDay4"  @click="addDay(4)">Tuesday</span>
+                <span :class="activeDay5"  @click="addDay(5)">Wednesday</span>
+                <span :class="activeDay6"  @click="addDay(6)">Thursday</span>
+                <span :class="activeDay7"  @click="addDay(7)">Friday</span>
             </div>
             <div class="time-container">
                 <h5>Time</h5>
@@ -51,7 +62,7 @@
                 <input type="text" id="price" v-model="price">
             </div>
             <div class="save-btn">
-                <button>Save</button>
+                <button @click="addDetails()">Save</button>
             </div>
         </div>
     </div>
@@ -60,6 +71,7 @@
 <script>
 import { Component, Vue } from 'vue-property-decorator';
 import VueTimepicker from 'vue2-timepicker';
+import {addDetailsToSection} from '@/endpoints/sections';
 @Component({
     components: {
         VueTimepicker,
@@ -73,9 +85,39 @@ export default class SectionAppointement extends Vue {
     selectedSection = {};
     userSectionId = '';
     daysList = [];
-
+    price = '';
+    FromTime = {};
+    ToTime = {};
+    activeDay1 = '';
+    activeDay2 = '';
+    activeDay3 = '';
+    activeDay4 = '';
+    activeDay5 = '';
+    activeDay6= '';
+    activeDay7 = '';
     addDay(day){
-        this.daysList += day
+        this.daysList.push(day);
+        if(day == 1){
+            this.activeDay1 = 'active-day';
+        }
+        if(day == 2){
+            this.activeDay2 = 'active-day';
+        }
+        if(day == 3){
+            this.activeDay3 = 'active-day';
+        }
+        if(day == 4){
+            this.activeDay4 = 'active-day';
+        }
+        if(day == 5){
+            this.activeDay5 = 'active-day';
+        }
+        if(day == 6){
+            this.activeDay6 = 'active-day';
+        }
+        if(day == 7){
+            this.activeDay7 = 'active-day';
+        }
     }
     selectAmFrom(){
         this.toggleToPmFrom = '';
@@ -116,6 +158,18 @@ export default class SectionAppointement extends Vue {
     }
     closePanal(){
         this.slidePanal = '';
+    }
+    async addDetails(){
+        let detailsObj = {
+            from:this.FromTime.hh +':'+ this.FromTime.mm +' '+ this.FromTime.A,
+            to:this.ToTime.hh +':'+ this.ToTime.mm +' '+ this.ToTime.A,
+            charge:this.price,
+            days_array:this.daysList
+        }
+        let res = await addDetailsToSection(this.userSectionId, detailsObj);
+        if(res){
+            this.$router.push('/sections')
+        }
     }
 }
 </script>
@@ -263,5 +317,8 @@ export default class SectionAppointement extends Vue {
 }
 .save-btn button:hover{
     opacity: 0.8;
+}
+.active-day{
+    border: 1px solid var(--main-green) !important;
 }
 </style>

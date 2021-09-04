@@ -10,22 +10,33 @@
                     <router-link to="/sections">
                         <i class="fas fa-chevron-left"></i> 
                     </router-link>
-                    Room Section
+                    {{sectionTitle}}
                 </h2>
-                <img src="@/assets/images/sectionIcons/rooms.png" alt="" class="calendar">
+                <img v-if="iconId == 1" src="@/assets/images/sectionIcons/blood.png" alt="" class="calendar">
+                <img v-if="iconId == 5" src="@/assets/images/sectionIcons/brain.png" alt="" class="calendar">
+                <img v-if="iconId == 2" src="@/assets/images/sectionIcons/cancer.png" alt="" class="calendar">
+                <img v-if="iconId == 3" src="@/assets/images/sectionIcons/cardiogram.png" alt="" class="calendar">
+                <img v-if="iconId == 6" src="@/assets/images/sectionIcons/eye.png" alt="" class="calendar">
+                <img v-if="iconId == 7 || iconId == 0" src="@/assets/images/sectionIcons/firstaid.png" alt="" class="calendar">
+                <img v-if="iconId == 8" src="@/assets/images/sectionIcons/lungs.png" alt="" class="calendar">
+                <img v-if="iconId == 10" src="@/assets/images/sectionIcons/rooms.png" alt="" class="calendar">
+                <img v-if="iconId == 9" src="@/assets/images/sectionIcons/stomach.png" alt="" class="calendar">
+                <img v-if="iconId == 11" src="@/assets/images/sectionIcons/teeth.png" alt="" class="calendar">
+                <img v-if="iconId == 12" src="@/assets/images/sectionIcons/women.png" alt="" class="calendar">
+                <img v-if="iconId == 4" src="@/assets/images/sectionIcons/x-ray.png" alt="" class="calendar">
             </div>
             <div class="sections-inputs-body">
                 <div class="right-side">
                     <button @click="openSectionPanal()" class="edit-btn"><i class="fas fa-pen"></i>Edit Your Schedule</button>
-                    <button class="delete-btn"><i class="fas fa-trash"></i>Delete Section</button>
+                    <button @click="removeSection()" class="delete-btn"><i class="fas fa-trash"></i>Delete Section</button>
                 </div>
                 <div class="left-side">
                     <h4>Previous Appointments</h4>
                     <div class="appointment-body">
                         <div class="item" v-for="day in days" :key="day">
-                            <div class="day-square">Mon</div>
-                            <span class="time-body">From 6:30am</span>
-                            <span class="time-body">To 6:30am</span>
+                            <div class="day-square">{{getDayName(day)}}</div>
+                            <span class="time-body">From {{sectionDetailsObj.details.from}}</span>
+                            <span class="time-body">To {{sectionDetailsObj.details.to}}</span>
                         </div>
                     </div>
                 </div>
@@ -41,7 +52,7 @@
 import { Component, Vue} from 'vue-property-decorator';
 import {DoubleBounce} from 'vue-loading-spinner';
 import SectionAppointement from '@/components/sections/SectionAppointement.vue';
-
+import {getSectionDetails, unassignSection} from '@/endpoints/sections';
 @Component({
     components: {
         DoubleBounce,
@@ -50,12 +61,57 @@ import SectionAppointement from '@/components/sections/SectionAppointement.vue';
 })
 export default class SectionDetails extends Vue {
     loaderFlag = false;
-    days = [0,1,2,3];
+    days = [];
+    sectionDetailsObj = {};
+    sectionTitle = 'Section Name';
+    userSectionId = '';
+    detailsObj = {};
+    sectionId = '';
+    iconId = 0;
     async openSectionPanal(){       
-        this.$refs.openSlidePanal.openSlidePanal();
+        this.$refs.openSlidePanal.openSlidePanal(this.detailsObj, this.userSectionId);
+    }
+    async getDetails(){
+        this.loaderFlag = true;
+        this.sectionDetailsObj = await getSectionDetails(this.$route.params.id);
+        this.sectionTitle = this.sectionDetailsObj.details.section_title;
+        this.iconId = this.sectionDetailsObj.details.icon_id;
+        this.userSectionId = this.sectionDetailsObj.details.id;
+        this.sectionId = this.sectionDetailsObj.details.section_id;
+        this.detailsObj = this.sectionDetailsObj.details;
+        this.days = this.sectionDetailsObj.days;
+        this.loaderFlag = false;
+    }
+    getDayName(day){
+        if(day == 1){
+            return "Sat"
+        }else if(day == 2){
+            return "Sun"
+        }else if(day == 3){
+            return "Mon"
+        }else if(day == 4){
+            return "Tue"
+        }else if(day == 5){
+            return "Wed"
+        }else if(day == 6){
+            return "Thu"
+        }else if(day == 7){
+            return "Fri"
+        }
+    }
+    async unAssignSection(){
+        let res = await unassignSection(this.sectionId);
+        if(res.result == true){
+            this.$router.push('/sections');
+        }
+    }
+    async removeSection(){
+        this.$confirm("Are you sure you want to delete this section ?").then(() => {
+            this.unAssignSection();
+        });
     }
     async mounted(){
-
+        this.getDetails()
     }
 }
 </script>
