@@ -25,6 +25,7 @@ import Eemergency from '@/views/Emergency.vue'
 import EmergencyItem from '@/components/emergency/EmergencyItem.vue'
 import EmergencySection from '@/components/emergency/EmergencySection.vue'
 import AddEmergencySections from '@/components/emergency/AddEmergencySections.vue'
+import EmergencySectionDetails from '@/components/emergency/EmergencySectionDetails.vue'
 const routes = [
     {
         path: '/',
@@ -85,6 +86,11 @@ const routes = [
         path: '/section-details/:id',
         name: 'sectionDetails',
         component: SectionDetails
+    },
+    {
+        path: '/emergency-section-details/:id',
+        name: 'emergencySectionDetails',
+        component: EmergencySectionDetails
     },
     {
         path: '/messages',

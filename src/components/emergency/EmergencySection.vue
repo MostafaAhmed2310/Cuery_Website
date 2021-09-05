@@ -19,7 +19,7 @@
                 </div>
                 <div class="left-side">
                     <div class="section-items" v-for="emergency in emergencySections" :key="emergency">
-                        <router-link :to="'/section-details/' + emergency.id">
+                        <router-link :to="'/emergency-section-details/' + emergency.id">
                             <div class="item">
                                 <div class="section-item-img">
                                     <Energy v-if="emergency.icon_id == 4"/>

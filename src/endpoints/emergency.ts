@@ -34,3 +34,17 @@ export async function addDetailsToService(id:any,detailsObj:any){
   if (res) return res.data
   else return false
 }
+
+export async function getServiceDetails(id:any){
+  let res = await api
+  .get('api/get_SP_service_details/'+id);
+  if (res) return res.data
+  else return false
+}
+
+export async function unassignService(id:any){
+  let res = await api
+  .get('api/unassign_service_to_sp/'+ id);
+  if (res) return res.data
+  else return false
+}

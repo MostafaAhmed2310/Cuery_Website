@@ -7,23 +7,15 @@
             <div class="cover-img">
                 <img class="profile-cover" src="@/assets/images/profile-cover.png" alt="">
                 <h2>
-                    <router-link to="/sections">
+                    <router-link to="/emergency-sections">
                         <i class="fas fa-chevron-left"></i> 
                     </router-link>
                     {{sectionTitle}}
                 </h2>
-                <img v-if="iconId == 1" src="@/assets/images/sectionIcons/blood.png" alt="" class="calendar">
-                <img v-if="iconId == 5" src="@/assets/images/sectionIcons/brain.png" alt="" class="calendar">
-                <img v-if="iconId == 2" src="@/assets/images/sectionIcons/cancer.png" alt="" class="calendar">
-                <img v-if="iconId == 3" src="@/assets/images/sectionIcons/cardiogram.png" alt="" class="calendar">
-                <img v-if="iconId == 6" src="@/assets/images/sectionIcons/eye.png" alt="" class="calendar">
-                <img v-if="iconId == 7 || iconId == 0" src="@/assets/images/sectionIcons/firstaid.png" alt="" class="calendar">
-                <img v-if="iconId == 8" src="@/assets/images/sectionIcons/lungs.png" alt="" class="calendar">
-                <img v-if="iconId == 10" src="@/assets/images/sectionIcons/rooms.png" alt="" class="calendar">
-                <img v-if="iconId == 9" src="@/assets/images/sectionIcons/stomach.png" alt="" class="calendar">
-                <img v-if="iconId == 11" src="@/assets/images/sectionIcons/teeth.png" alt="" class="calendar">
-                <img v-if="iconId == 12" src="@/assets/images/sectionIcons/women.png" alt="" class="calendar">
-                <img v-if="iconId == 4" src="@/assets/images/sectionIcons/x-ray.png" alt="" class="calendar">
+                <!-- <Energy v-if="selectedSection.icon_id == 4"/>
+                <Ambulance v-if="selectedSection.icon_id == 1"/>
+                <Oxygen v-if="selectedSection.icon_id == 2"/>
+                <Visit v-if="selectedSection.icon_id == 3"/> -->
             </div>
             <div class="sections-inputs-body">
                 <div class="right-side">
@@ -42,7 +34,7 @@
                 </div>
             </div>
             <div class="section-panal">
-                <SectionAppointement ref="openSlidePanal"/>
+                <EmergencySectionAppointement ref="openSlidePanal"/>
             </div>
         </div>
     </div>
@@ -51,15 +43,23 @@
 <script>
 import { Component, Vue} from 'vue-property-decorator';
 import {DoubleBounce} from 'vue-loading-spinner';
-import SectionAppointement from '@/components/sections/SectionAppointement.vue';
-import {getSectionDetails, unassignSection} from '@/endpoints/sections';
+import EmergencySectionAppointement from '@/components/emergency/EmergencySectionAppointement.vue';
+import {getServiceDetails, unassignService} from '@/endpoints/emergency';
+import Energy from '@/assets/icons/Energy.vue';
+import Ambulance from '@/assets/icons/Ambulance.vue';
+import Oxygen from '@/assets/icons/Oxygen.vue';
+import Visit from '@/assets/icons/Visit.vue'
 @Component({
     components: {
         DoubleBounce,
-        SectionAppointement,
+        EmergencySectionAppointement,
+        Energy,
+        Ambulance,
+        Oxygen,
+        Visit
     },
 })
-export default class SectionDetails extends Vue {
+export default class EmergencySectionDetails extends Vue {
     loaderFlag = false;
     days = [];
     sectionDetailsObj = {};
@@ -73,11 +73,11 @@ export default class SectionDetails extends Vue {
     }
     async getDetails(){
         this.loaderFlag = true;
-        this.sectionDetailsObj = await getSectionDetails(this.$route.params.id);
-        this.sectionTitle = this.sectionDetailsObj.details.section_title;
-        this.iconId = this.sectionDetailsObj.details.icon_id;
+        this.sectionDetailsObj = await getServiceDetails(this.$route.params.id);
+        this.sectionTitle = this.sectionDetailsObj.details.service_title;
+        // this.iconId = this.sectionDetailsObj.details.icon_id;
         this.userSectionId = this.sectionDetailsObj.details.id;
-        this.sectionId = this.sectionDetailsObj.details.section_id;
+        this.sectionId = this.sectionDetailsObj.details.service_id;
         this.detailsObj = this.sectionDetailsObj.details;
         this.days = this.sectionDetailsObj.days;
         this.loaderFlag = false;
@@ -100,9 +100,9 @@ export default class SectionDetails extends Vue {
         }
     }
     async unAssignSection(){
-        let res = await unassignSection(this.sectionId);
+        let res = await unassignService(this.sectionId);
         if(res.result == true){
-            this.$router.push('/sections');
+            this.$router.push('/emergency-sections');
         }
     }
     async removeSection(){

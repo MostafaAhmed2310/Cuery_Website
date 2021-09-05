@@ -1,5 +1,8 @@
 <template>
     <div :class="'section-appointement-container ' + slidePanal">
+        <div class="loader-container" v-if="loaderFlag">
+            <DoubleBounce></DoubleBounce>
+        </div>
         <div class="section-appointement-head">
             <h4>
                 <i @click="closePanal()" class="fas fa-chevron-left"></i> 
@@ -23,13 +26,13 @@
         <div class="section-body">
             <div class="date-container">
                 <h5>Date</h5>
-                <span :class="activeDay1"  @click="addDay(1)">Saturday</span>
-                <span :class="activeDay2"  @click="addDay(2)">Sunday</span>
-                <span :class="activeDay3"  @click="addDay(3)">Monday</span>
-                <span :class="activeDay4"  @click="addDay(4)">Tuesday</span>
-                <span :class="activeDay5"  @click="addDay(5)">Wednesday</span>
-                <span :class="activeDay6"  @click="addDay(6)">Thursday</span>
-                <span :class="activeDay7"  @click="addDay(7)">Friday</span>
+                <span :class="activeDay1"  @click="addOrDeleteDay(1)">Saturday</span>
+                <span :class="activeDay2"  @click="addOrDeleteDay(2)">Sunday</span>
+                <span :class="activeDay3"  @click="addOrDeleteDay(3)">Monday</span>
+                <span :class="activeDay4"  @click="addOrDeleteDay(4)">Tuesday</span>
+                <span :class="activeDay5"  @click="addOrDeleteDay(5)">Wednesday</span>
+                <span :class="activeDay6"  @click="addOrDeleteDay(6)">Thursday</span>
+                <span :class="activeDay7"  @click="addOrDeleteDay(7)">Friday</span>
             </div>
             <div class="time-container">
                 <h5>Time</h5>
@@ -72,9 +75,11 @@
 import { Component, Vue } from 'vue-property-decorator';
 import VueTimepicker from 'vue2-timepicker';
 import {addDetailsToSection} from '@/endpoints/sections';
+import {DoubleBounce} from 'vue-loading-spinner';
 @Component({
     components: {
         VueTimepicker,
+        DoubleBounce
     },
 })
 export default class SectionAppointement extends Vue {
@@ -95,8 +100,21 @@ export default class SectionAppointement extends Vue {
     activeDay5 = '';
     activeDay6= '';
     activeDay7 = '';
-    addDay(day){
-        this.daysList.push(day);
+    loaderFlag = false;
+    addOrDeleteDay(day){
+        var flag = this.daysList.includes(day);
+        if (flag){
+            const i = this.daysList.indexOf(day);
+            if(i > -1){
+                this.daysList.splice(i, 1);
+                this.removeActiveFromDays(day);
+            }
+        }else{
+            this.daysList.push(day);
+            this.addActiveToDays(day);
+        }
+    }
+    addActiveToDays(day){
         if(day == 1){
             this.activeDay1 = 'active-day';
         }
@@ -119,6 +137,29 @@ export default class SectionAppointement extends Vue {
             this.activeDay7 = 'active-day';
         }
     }
+    removeActiveFromDays(day){
+        if(day == 1){
+            this.activeDay1 = '';
+        }
+        if(day == 2){
+            this.activeDay2 = '';
+        }
+        if(day == 3){
+            this.activeDay3 = '';
+        }
+        if(day == 4){
+            this.activeDay4 = '';
+        }
+        if(day == 5){
+            this.activeDay5 = '';
+        }
+        if(day == 6){
+            this.activeDay6 = '';
+        }
+        if(day == 7){
+            this.activeDay7 = '';
+        }
+    }
     selectAmFrom(){
         this.toggleToPmFrom = '';
         this.FromTime.A = 'AM'
@@ -135,9 +176,12 @@ export default class SectionAppointement extends Vue {
         this.toggleToPmTo = 'move-to-center';
         this.ToTime.A = 'PM'
     }
-    openSlidePanal(selectedSection, userSectionId){
+    openSlidePanal(selectedSection, userSectionId, daysArr){
         this.userSectionId = userSectionId;
         this.selectedSection = selectedSection;
+        if(this.$router.currentRoute.name == 'sectionDetails'){
+            this.getOldData(daysArr);
+        }
         this.slidePanal = 'open-slide-animate';
     }
     getFromTime(){
@@ -166,9 +210,29 @@ export default class SectionAppointement extends Vue {
             charge:this.price,
             days_array:this.daysList
         }
+        this.loaderFlag = true;
         let res = await addDetailsToSection(this.userSectionId, detailsObj);
+        this.loaderFlag = false;
         if(res){
             this.$router.push('/sections')
+        }
+    }
+    getOldData(daysArr){
+        this.daysList = daysArr;
+        for (let i = 0; i < this.daysList.length; i++) {
+            const day = this.daysList[i];
+            this.addActiveToDays(day);
+        };
+        this.price = this.selectedSection.charge;
+        this.FromTime = {
+            hh: this.selectedSection.from.slice(0,2),
+            mm: this.selectedSection.from.slice(3,5),
+            A: "AM"
+        }
+        this.ToTime = {
+            hh: this.selectedSection.to.slice(0,2),
+            mm: this.selectedSection.to.slice(3,5),
+            A: "PM"
         }
     }
 }
