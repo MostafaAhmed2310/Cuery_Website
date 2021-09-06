@@ -170,6 +170,10 @@ input[type=number] {
     width: 75px !important;
     height: 75px !important;
 }
+.placeholder-icon svg{
+    width: 150px !important;
+    height: 150px !important;
+}
 </style>
 
 

@@ -1,5 +1,8 @@
 <template>
     <div class="reservation-item-container">
+        <div class="loader-container" v-if="loaderFlag">
+            <DoubleBounce></DoubleBounce>
+        </div>
         <div class="reservation-item">
             <div class="block">
                 <div class="profile-img">
@@ -35,28 +38,30 @@
     </div>
 </template>
 
-<script lang="ts">
+<script>
 import { Component, Vue, Watch } from 'vue-property-decorator';
 import { getReservation } from '@/endpoints/reservations';
-
+import {DoubleBounce} from 'vue-loading-spinner';
 
 @Component({
     components: {
-
+        DoubleBounce
     },
-    
 })
 export default class AppoinetmentsItem extends Vue {
   
-    reservationObj = {}
-    resId =this.$route.params.id
+    reservationObj = {};
+    resId =this.$route.params.id;
+    loaderFlag = false;
     @Watch('$route', { immediate: true, deep: true })
-    onUrlChange(newVal: any) {
+    onUrlChange(newVal) {
         this.resId =this.$route.params.id
         this.getReservation(this.resId)
     }
-    async getReservation(resId:any){
+    async getReservation(resId){
+        this.loaderFlag = true;
         this.reservationObj = await getReservation(resId);
+        this.loaderFlag = false;
     }
     mounted(){
         this.getReservation(this.resId)

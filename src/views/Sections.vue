@@ -6,8 +6,13 @@
         <div class="sections-body">
             <div class="cover-img">
                 <img src="@/assets/images/profile-cover.png" alt="">
-                <h2>My Sections</h2>
-                <div class="section-btns">
+                <h2>
+                    <router-link to="/hospital_home">
+                        <i class="fas fa-chevron-left"></i> 
+                    </router-link>
+                    My Sections
+                </h2>
+                <div class="section-btns" v-if="sections.length != 0">
                     <router-link to="/add-section">
                         <button class="add-section"><i class="fas fa-plus-circle"></i>Add New Section</button>
                     </router-link>
@@ -16,7 +21,10 @@
                     </router-link>
                 </div>
             </div>
-            <div class="sections-inputs-body">
+            <div class="placeholder-body" v-if="sections.length == 0">
+                <PagePlaceholder/>
+            </div>
+            <div class="sections-inputs-body" v-if="sections.length != 0">
                 <div class="right-side">
                     <img src="@/assets/images/section-img.png" alt="">
                 </div>
@@ -54,10 +62,11 @@
 import { Component, Vue} from 'vue-property-decorator';
 import {DoubleBounce} from 'vue-loading-spinner';
 import {getMySections} from '@/endpoints/sections';
-
+import PagePlaceholder from '@/views/PagePlaceholder.vue';
 @Component({
     components: {
         DoubleBounce,
+        PagePlaceholder,
     },
 })
 export default class Sections extends Vue {
@@ -182,5 +191,10 @@ export default class Sections extends Vue {
     top: -55px;
     font-size: 11px;
     right: 15px;
+}
+.cover-img h2 i{
+    cursor: pointer;
+    margin-right: 10px;
+    color: var(--font-navy) !important;
 }
 </style>

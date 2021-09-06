@@ -1,5 +1,8 @@
 <template>
     <div class="user-list-container">
+        <div class="loader-container" v-if="loaderFlag">
+            <DoubleBounce></DoubleBounce>
+        </div>
         <div class="user-item" v-for="headChat in chatList" :key="headChat">
             <router-link :to="'/messages/' + headChat.sender_id" active-class="active-chat">
                 <div class="profile-img">
@@ -17,24 +20,28 @@
     </div>
 </template>
 
-<script lang="ts">
+<script>
 import { Component, Vue } from 'vue-property-decorator';
 import {getMyConversations} from  '@/endpoints/messages';
 import {getUserInfo} from '@/endpoints/user';
+import {DoubleBounce} from 'vue-loading-spinner';
 @Component({
     components: {
-
+        DoubleBounce,
     },
 })
 export default class UserList extends Vue {
-    chatList:any = [];
-    currentUser:any = {};
-    currentUserId:any = '';
+    chatList = [];
+    currentUser = {};
+    currentUserId = '';
+    loaderFlag = false;
     updateUserList(){
         this.getChatList();
     }
     async getChatList(){
+        this.loaderFlag = true;
         this.chatList = await getMyConversations();
+        this.loaderFlag = false;
     }
     async getCurrentUser(){
         this.currentUser = await getUserInfo();

@@ -6,7 +6,12 @@
         <div class="reservations-body">
             <div class="cover-img">
                 <img src="@/assets/images/profile-cover.png" alt="">
-                <h2>Reservations</h2>
+                <h2>
+                    <router-link to="/hospital_home">
+                        <i class="fas fa-chevron-left"></i> 
+                    </router-link>
+                    Reservations
+                </h2>
                 <Calendar class="calendar"/>
             </div>
             <div class="reservations-inputs-body">
@@ -78,5 +83,10 @@ export default class Reservations extends Vue {
     background: rgba(249, 253, 251, 1);
     height: 110vh;
     padding: 20% 50px 0px 50px;
+}
+.cover-img h2 i{
+    cursor: pointer;
+    margin-right: 10px;
+    color: var(--font-navy) !important;
 }
 </style>

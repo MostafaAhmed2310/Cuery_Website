@@ -1,5 +1,8 @@
 <template>
     <div class="chat-container">
+        <div class="loader-container" v-if="loaderFlag">
+            <DoubleBounce></DoubleBounce>
+        </div>
         <div class="chat-head">
             <div class="profile-img">
                 <img src="" alt="">
@@ -85,34 +88,35 @@
     </div>
 </template>
 
-<script lang="ts">
+<script>
 import { Component, Vue, Watch } from 'vue-property-decorator';
 import { getUserConversation, sendMsg, deleteMsg } from '@/endpoints/messages';
 import {getUserInfo} from '@/endpoints/user';
 import {BaseUrl} from '@/app.config';
-
+import {DoubleBounce} from 'vue-loading-spinner';
 @Component({
     components: {
-
+        DoubleBounce,
     },
 })
 export default class Chat extends Vue {
-    msg:any='';
-    data:any = {};
-    msgBody:String = '';
-    messages:any[] = [];
-    conversation:any={};
-    profileObj:any = {};
-    currentId:any = '';
-    uploadFile:any = {};
-    fileData:any= [];
-    message_type_id:Number = 1;
-    extension:any = '';
-    base64Str:any  ='';
-    imgPreview:Boolean = false;
-    txtPreview:Boolean = false;
-    fileFile:any = {}
-    BaseUrl:any = BaseUrl
+    msg ='';
+    data = {};
+    msgBody = '';
+    messages = [];
+    conversation ={};
+    profileObj = {};
+    currentId = '';
+    uploadFile = {};
+    fileData = [];
+    message_type_id = 1;
+    extension = '';
+    base64Str ='';
+    imgPreview = false;
+    txtPreview = false;
+    fileFile = {};
+    BaseUrl = BaseUrl;
+    loaderFlag = false;
     @Watch('$route', { immediate: true, deep: true })
     onUrlChange() {
         let id =this.$route.params.id
@@ -121,19 +125,21 @@ export default class Chat extends Vue {
     openInfo(){
         this.$emit('openInfo');
     }
-    async getUserConversation(userId:any){
+    async getUserConversation(userId){
+        this.loaderFlag = true;
         let currentUserObj = await getUserInfo();
-        this.currentId= currentUserObj.id
+        this.currentId= currentUserObj.id;
         this.conversation = await getUserConversation(userId);
         this.messages = this.conversation.messages;
+        this.loaderFlag = false;
     }
 
-    uploadAttachment(message_type_id:any){
-        this.uploadFile = (<any>event).target;
+    uploadAttachment(message_type_id){
+        this.uploadFile = event.target;
         if (this.uploadFile.files && this.uploadFile.files[0]) {
             var reader = new FileReader();
             reader.onload = (e) => {
-                this.fileData = (<any>e.target).result;
+                this.fileData = e.target.result;
                 this.message_type_id=message_type_id
                 this.extension = this.fileData.split(";")[0].split("/")[1]
                 this.base64Str = this.fileData.split(",")[1]
@@ -150,7 +156,7 @@ export default class Chat extends Vue {
         }
     }
 
-    async sendMsg(userId:any){
+    async sendMsg(userId){
         if(this.message_type_id == 1){
             this.data = {
                 body:this.msgBody,
@@ -164,7 +170,9 @@ export default class Chat extends Vue {
                 file: this.base64Str,
             }
         }
+        this.loaderFlag = true;
         let res = await sendMsg(userId,this.data);
+        this.loaderFlag = false;
         if(res){
             this.message_type_id = 1;
             this.fileFile = '';
@@ -178,7 +186,7 @@ export default class Chat extends Vue {
         this.$emit('updateHeadChat');
     }
 
-    deleteMsg(msgId:any){
+    deleteMsg(msgId){
         deleteMsg(msgId);
         this.getUserConversation(this.$route.params.id);
         this.$emit('updateHeadChat');

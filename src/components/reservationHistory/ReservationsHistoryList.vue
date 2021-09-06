@@ -1,5 +1,8 @@
 <template>
     <div class="reservatios-list-container">
+        <div class="loader-container" v-if="loaderFlag">
+            <DoubleBounce></DoubleBounce>
+        </div>
         <div class="reservatios-item" v-for="reservation in reservationsList" :key="reservation">
             <router-link :to="'/reservation-history/' + reservation.id">
                 <div class="profile-img">
@@ -15,17 +18,28 @@
     </div>
 </template>
 
-<script lang="ts">
+<script>
 import { Component, Vue } from 'vue-property-decorator';
-import { getReservationsList, confirmReservation, declineReservation } from '@/endpoints/reservations';
+import {getReservationsHistory} from '@/endpoints/reservations';
+import {DoubleBounce} from 'vue-loading-spinner';
 
 @Component({
     components: {
-
+        DoubleBounce,
     },
 })
 export default class ReservationsHistoryList extends Vue {
-    reservationsList = [0,1,2,3,4,5];
+    reservationsList = [];
+    loaderFlag = false;
+
+    async getHistoryList(){
+        this.loaderFlag = true;
+        this.reservationsList = await getReservationsHistory();
+        this.loaderFlag = false;
+    }
+    mounted() {
+        this.getHistoryList();
+    }
 }
 </script>
 

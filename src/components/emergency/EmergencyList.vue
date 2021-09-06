@@ -1,5 +1,8 @@
 <template>
     <div class="reservatios-list-container">
+        <div class="loader-container" v-if="loaderFlag">
+            <DoubleBounce></DoubleBounce>
+        </div>
         <router-link to="/emergency-sections">
             <button class="my-section-btn">My Sections</button>
         </router-link>
@@ -22,21 +25,31 @@
     </div>
 </template>
 
-<script lang="ts">
+<script>
 import { Component, Vue } from 'vue-property-decorator';
 import {getPendingEmergencyList} from '@/endpoints/emergency';
+import {DoubleBounce} from 'vue-loading-spinner';
 @Component({
     components: {
-
+        DoubleBounce,
     },
 })
 export default class EmergencyList extends Vue {
-    EmergencyList = [];
+    EmergencyList = [0,1,2,3];
+    length = 0;
+    loaderFlag = false;
     async getEmergencyList(){
+        this.loaderFlag = true;
         this.EmergencyList = await getPendingEmergencyList();
+        this.length = this.EmergencyList.length;
+        this.checkArrayLength();
+        this.loaderFlag = false;   
+    }
+    checkArrayLength(){
+        this.$emit('updateLength', this.length)
     }
     mounted() {
-        this.getEmergencyList();   
+        this.getEmergencyList();
     }
 }
 </script>

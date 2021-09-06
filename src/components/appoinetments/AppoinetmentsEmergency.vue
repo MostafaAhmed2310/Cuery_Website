@@ -1,5 +1,8 @@
 <template>
     <div class="appoinetments-list-container">
+        <div class="loader-container" v-if="loaderFlag">
+            <DoubleBounce></DoubleBounce>
+        </div>
         <div class="appoinetments-item" v-for="item in emergencyItems" :key="item">
             <router-link :to="'/emergency-appoinetment-details/' + item.id">
                 <div class="profile-img">
@@ -15,23 +18,33 @@
     </div>
 </template>
 
-<script lang="ts">
+<script>
 import { Component, Vue } from 'vue-property-decorator';
 import { getEmergencyAppoinetmentsList, finishAppoinetment } from '@/endpoints/appoinetments';
-
+import {DoubleBounce} from 'vue-loading-spinner';
 
 @Component({
-  components: {
-  },
+    components: {
+        DoubleBounce,
+    },
 })
 export default class AppoinetmentsEmergency extends Vue {
-    emergencyItems=[]
+    emergencyItems=[];
+    loaderFlag = false;
+    length = 0;
     async getEmergencyAppoinetmentsList(){
+        this.loaderFlag = true;
         this.emergencyItems = await getEmergencyAppoinetmentsList();
+        this.length = this.emergencyItems.length;
+        this.checkArrayLength();
+        this.loaderFlag = false;
+    }
+    checkArrayLength(){
+        this.$emit('updateEmergencyLength', this.length);
     }
 
     mounted(){
-        this.getEmergencyAppoinetmentsList()
+        this.getEmergencyAppoinetmentsList();
     }
 }
 </script>

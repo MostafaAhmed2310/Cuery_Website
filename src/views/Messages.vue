@@ -6,7 +6,12 @@
         <div class="messages-body">
             <div class="cover-img">
                 <img src="@/assets/images/profile-cover.png" alt="">
-                <h2>Messages</h2>
+                <h2>
+                    <router-link to="/hospital_home">
+                        <i class="fas fa-chevron-left"></i> 
+                    </router-link>
+                    Messages
+                </h2>
             </div>
             <div class="messages-inputs-body">
                 <div class="messages-panal">
@@ -139,5 +144,10 @@ export default class Messages extends Vue {
 .open-chat{
     width: 65% !important;
     transition: 0.5s;
+}
+.cover-img h2 i{
+    cursor: pointer;
+    margin-right: 10px;
+    color: var(--font-navy) !important;
 }
 </style>

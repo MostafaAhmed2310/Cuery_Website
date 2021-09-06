@@ -6,12 +6,20 @@
         <div class="reservations-body">
             <div class="cover-img">
                 <img src="@/assets/images/profile-cover.png" alt="">
-                <h2>Emergency</h2>
+                <h2>
+                    <router-link to="/hospital_home">
+                        <i class="fas fa-chevron-left"></i> 
+                    </router-link>
+                    Emergency
+                </h2>
                 <Emergency class="calendar"/>
             </div>
-            <div class="reservations-inputs-body">
+            <div class="placeholder-body" v-if="placeholderFlag">
+                <PagePlaceholder/>
+            </div>
+            <div class="reservations-inputs-body" v-if="bodyFlag">
                 <div class="reservations-panal">
-                    <EmergencyList/>
+                    <EmergencyList @updateLength="updateLength"/>
                 </div>
                 <div class="reservation-body">
                     <router-view></router-view>
@@ -21,18 +29,31 @@
     </div>
 </template>
 
-<script lang="ts">
+<script>
 import { Component, Vue } from 'vue-property-decorator';
 import EmergencyList from '@/components/emergency/EmergencyList.vue';
 import Emergency from '@/assets/icons/Emergency.vue';
+import PagePlaceholder from '@/views/PagePlaceholder.vue';
 @Component({
     components: {
         EmergencyList,
-        Emergency
+        Emergency,
+        PagePlaceholder
     },
 })
 export default class Eemergency extends Vue {
-    loaderFlag:Boolean = false;
+    loaderFlag = false;
+    bodyFlag = true;
+    placeholderFlag = false;
+    updateLength(len){
+        if(len == 0){
+            this.bodyFlag = false;
+            this.placeholderFlag = true;
+        }else{
+            this.bodyFlag = true;
+            this.placeholderFlag = false;
+        }
+    }
 }
 </script>
 
@@ -75,5 +96,10 @@ export default class Eemergency extends Vue {
     background: rgba(249, 253, 251, 1);
     height: 110vh;
     padding: 20% 50px 0px 50px;
+}
+.cover-img h2 i{
+    cursor: pointer;
+    margin-right: 10px;
+    color: var(--font-navy) !important;
 }
 </style>

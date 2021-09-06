@@ -16,10 +16,8 @@
                 <input type="number" v-model="num2" placeholder="-">
                 <input type="number" v-model="num3" placeholder="-">
                 <input type="number" v-model="num4" placeholder="-">
-                <input type="number" v-model="num5" placeholder="-">
-                <input type="number" v-model="num6" placeholder="-">
             </div>
-            <span v-if="errorFlag" > the error msg </span>
+            <span class="err-msg" v-if="errorFlag" > the error msg </span>
             <h5>Resend Code</h5>
             <div class="confirm-btn">
                 <button @click="confirmPatient()">Confirm <i class="fas fa fa-sort-up"></i></button>
@@ -42,17 +40,16 @@ export default class Confirmation extends Vue {
     num2 = '';
     num3 = '';
     num4 = '';
-    num5 = '';
-    num6 = '';
+    
     errorFlag = false;
 
-    secret_code = this.num1 + this.num2 + this.num3 + this.num4 + this.num5 + this.num6
+    secret_code = this.num1 + this.num2 + this.num3 + this.num4
     resId =this.$route.params.id
     async confirmPatient(){
         try{
             let res  = await confirmCode(this.resId,this.secret_code);
             if(res.success == true ){
-            this.$router.push('/success_page');
+                this.$router.push('/success_page');
             }else{
                 this.errorFlag = true
             }
@@ -161,5 +158,13 @@ export default class Confirmation extends Vue {
 }
 .confirm-btn button i{
     transform: rotate(90deg);
+}
+.err-msg{
+    color: var(--alert-color);
+    font-size: 12px;
+    display: block;
+    width: 70%;
+    margin: auto;
+    margin-top: 10px;
 }
 </style>

@@ -1,5 +1,8 @@
 <template>
     <div class="appoinetments-list-container">
+        <div class="loader-container" v-if="loaderFlag">
+            <DoubleBounce></DoubleBounce>
+        </div>
         <div class="appoinetments-item" v-for="item in items" :key="item">
             <router-link :to="'/normal-appoinetment-details/' + item.id">
                 <div class="profile-img">
@@ -15,23 +18,34 @@
     </div>
 </template>
 
-<script lang="ts">
+<script>
 import { Component, Vue } from 'vue-property-decorator';
 import { getAppoinetmentsList, finishAppoinetment } from '@/endpoints/appoinetments';
-
+import {DoubleBounce} from 'vue-loading-spinner';
 @Component({
-  components: {
-  },
+    components: {
+        DoubleBounce
+    },
 })
 export default class AppoinetmentsLists extends Vue {
     items = [];
+    loaderFlag = false;
+    length = 0;
     async getAppoinetmentsList(){
+        this.loaderFlag = true;
         this.items = await getAppoinetmentsList();
+        this.length = this.items.length;
+        this.checkArrayLength();
+        this.loaderFlag = false;
+    }
+    checkArrayLength(){
+        this.$emit('updateLength', this.length);
     }
 
     mounted(){
-        this.getAppoinetmentsList()
+        this.getAppoinetmentsList();
     }
+    
 
 }
 </script>

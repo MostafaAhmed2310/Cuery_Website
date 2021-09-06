@@ -50,3 +50,9 @@ export async function confirmCode(id:any,data:any){
     else return false
 }
 
+export async function getReservationsHistory(){
+    let res = await api
+    .get('api/reservaionsHistory');
+    if (res) return res.data
+    else return false
+}
