@@ -166,6 +166,10 @@ input[type=number] {
     color: var(--font-navy) !important;
     font-weight: bold !important;
 }
+.calendar svg{
+    width: 75px !important;
+    height: 75px !important;
+}
 </style>
 
 

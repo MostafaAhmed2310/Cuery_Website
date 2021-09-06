@@ -12,10 +12,10 @@
                     </router-link>
                     {{sectionTitle}}
                 </h2>
-                <!-- <Energy v-if="selectedSection.icon_id == 4"/>
-                <Ambulance v-if="selectedSection.icon_id == 1"/>
-                <Oxygen v-if="selectedSection.icon_id == 2"/>
-                <Visit v-if="selectedSection.icon_id == 3"/> -->
+                <Energy v-if="iconId == 4" class="calendar"/>
+                <Ambulance v-if="iconId == 1" class="calendar"/>
+                <Oxygen v-if="iconId == 2" class="calendar"/>
+                <Visit v-if="iconId == 3" class="calendar"/>
             </div>
             <div class="sections-inputs-body">
                 <div class="right-side">
@@ -75,7 +75,7 @@ export default class EmergencySectionDetails extends Vue {
         this.loaderFlag = true;
         this.sectionDetailsObj = await getServiceDetails(this.$route.params.id);
         this.sectionTitle = this.sectionDetailsObj.details.service_title;
-        // this.iconId = this.sectionDetailsObj.details.icon_id;
+        this.iconId = this.sectionDetailsObj.details.icon_id;
         this.userSectionId = this.sectionDetailsObj.details.id;
         this.sectionId = this.sectionDetailsObj.details.service_id;
         this.detailsObj = this.sectionDetailsObj.details;
