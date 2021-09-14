@@ -6,8 +6,8 @@
         <div class="reservation-item">
             <div class="block">
                 <div class="profile-img">
-                    <img src="" alt="">
-                    <i class="fas fa fa-user-circle"></i>
+                    <img :src="BaseUrl + reservationObj.image_path" alt="" v-if="reservationObj.image_path">
+                    <i class="fas fa fa-user-circle" v-if="reservationObj.image_path == null"></i>
                 </div>
                 <div class="reservation-info">
                     <h4>{{ reservationObj.name }}</h4>
@@ -35,8 +35,8 @@
         </div>
         <div class="block">
             <div class="reservation-btns">
-                <button @click = "confirmReservation(reservationObj.id)">Confirm</button>
-                <button @click = "declineReservation(reservationObj.id)">Decline</button>
+                <button @click="confirmReservation(reservationObj.id)">Confirm</button>
+                <button @click="declineReservation(reservationObj.id)">Decline</button>
             </div>
         </div>
     </div>
@@ -46,7 +46,7 @@
 import { Component, Vue,Watch } from 'vue-property-decorator';
 import { getReservation, confirmReservation, declineReservation  } from '@/endpoints/reservations';
 import {DoubleBounce} from 'vue-loading-spinner';
-
+import {BaseUrl} from '@/app.config';
 @Component({
     components: {
         DoubleBounce,
@@ -55,7 +55,8 @@ import {DoubleBounce} from 'vue-loading-spinner';
 export default class ReservationItem extends Vue {
     reservationObj = {};
     loaderFlag = false;
-    resId =this.$route.params.id
+    resId =this.$route.params.id;
+    BaseUrl = BaseUrl;
     @Watch('$route', { immediate: true, deep: true })
     onUrlChange(newVal) {
         this.resId =this.$route.params.id
@@ -66,9 +67,19 @@ export default class ReservationItem extends Vue {
         this.reservationObj = await getReservation(resId);
         this.loaderFlag = false;
     }
-     confirmReservation(reservation_id){
-        confirmReservation(reservation_id)
-
+    async confirmReservation(reservation_id){
+        this.loaderFlag = true;
+        let res = await confirmReservation(reservation_id);
+        this.loaderFlag = false;
+        if(res){
+            this.$fire({
+                title: "SUCCESS!",
+                text: "This reservation confirmed",
+                type: "success",
+                timer: 2000
+            })
+            this.$router.push('/reservations');
+        }
     }
     declineReservation(reservation_id){
         declineReservation(reservation_id)
@@ -104,6 +115,10 @@ export default class ReservationItem extends Vue {
     font-size: 30px;
     text-align: center;
     line-height: 1.5;
+}
+.profile-img img{
+    width: 100%;
+    height: 100%;
 }
 .reservation-info{
     float: left;

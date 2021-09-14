@@ -1,22 +1,28 @@
 <template>
     <div class="table-container">
+        <div class="loader-container" v-if="loaderFlag">
+            <DoubleBounce></DoubleBounce>
+        </div>
         <div class="table-title">
             <h4>Latest Reservations</h4>
         </div>
         <div v-if="tableArr.length == 0" class="table-body placeholder">
+            <Calendar/>
             <span>No reservations found</span>
         </div>
         <div v-if="tableArr" class="table-body">
             <div class="table-row" v-for="row in tableArr" :key="row">
                 <div class="profile-img">
-                    <img src="" alt="">
-                    <i class="fas fa fa-user-circle"></i>
+                    <img :src="BaseUrl + row.image_path" alt="" v-if="row.image_path">
+                    <i class="fas fa fa-user-circle" v-if="row.image_path == null"></i>
                 </div>
                 <span class="patient-name">{{ row.name}}</span>
                 <span class="section-name">{{ row.section_title}}</span>
-                <span class="see-more">See More</span>
+                <router-link :to="'/reservations/'+row.id">
+                    <span class="see-more">See More</span>
+                </router-link>
                 <div class="table-btns">
-                    <button class="green-btn" @click="confirmReservation(row.id)">Confirm</button>
+                    <button class="green-btn" @click="ConfirmReservation(row.id)">Confirm</button>
                     <button class="red-btn" @click="declineReservation(row.id)">Decline</button>
                 </div>
                 <hr>
@@ -25,27 +31,40 @@
     </div>
 </template>
 
-<script lang="ts">
+<script>
 import { Component, Vue } from 'vue-property-decorator';
 import { getlatestReservations, confirmReservation, declineReservation } from '@/endpoints/reservations';
-
-
-
+import Calendar from '@/assets/icons/Calendar.vue';
+import {DoubleBounce} from 'vue-loading-spinner';
+import {BaseUrl} from '@/app.config';
 @Component({
     components: {
-
+        Calendar,
+        DoubleBounce,
     },
 })
 export default class ReservationsTable extends Vue {
-    tableArr:any[] = [];
+    tableArr = [];
+    loaderFlag = false;
+    BaseUrl = BaseUrl;
     async getlatestReservations(){
         this.tableArr = await getlatestReservations();
     }
-    confirmReservation(reservation_id:any){
-        confirmReservation(reservation_id)
-
+    async ConfirmReservation(reservation_id){
+        this.loaderFlag = true;
+        let res = await confirmReservation(reservation_id);
+        this.loaderFlag = false;
+        if(res){
+            this.$fire({
+                title: "SUCCESS!",
+                text: "This reservation confirmed",
+                type: "success",
+                timer: 2000
+            })
+            this.getlatestReservations();
+        }
     }
-    declineReservation(reservation_id:any){
+    declineReservation(reservation_id){
         declineReservation(reservation_id)
     }
     mounted(){
@@ -81,6 +100,11 @@ export default class ReservationsTable extends Vue {
     font-size: 27px;
     line-height: 1.5;
     margin-top: 5px;
+    overflow: hidden;
+}
+.profile-img img{
+    width: 100%;
+    height: 100%;
 }
 .table-row{
     overflow: hidden;

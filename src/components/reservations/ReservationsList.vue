@@ -6,8 +6,8 @@
         <div class="reservatios-item" v-for="reservation in reservationsList" :key="reservation">
             <router-link :to="'/reservations/' + reservation.id" @click="updateDetails()">
                 <div class="profile-img">
-                    <img src="" alt="">
-                    <i class="fas fa fa-user-circle"></i>
+                    <img :src="BaseUrl + reservation.image_path" alt="" v-if="reservation.image_path">
+                    <i class="fas fa fa-user-circle" v-if="reservation.image_path == null"></i>
                 </div>
                 <div class="reservatios-info">
                     <h4> {{ reservation.name }}</h4>
@@ -15,8 +15,8 @@
                 </div>
             </router-link>
             <div class="reservations-btns">
-                <button @click = "confirmReservation(reservation.id)">Confirm</button>
-                <button @click = "declineReservation(reservation.id)">Decline</button>
+                <button @click="confirmReservation(reservation.id)">Confirm</button>
+                <button @click="declineReservation(reservation.id)">Decline</button>
             </div>
         </div>
     </div>
@@ -26,7 +26,7 @@
 import { Component, Vue } from 'vue-property-decorator';
 import { getReservationsList, confirmReservation, declineReservation } from '@/endpoints/reservations';
 import {DoubleBounce} from 'vue-loading-spinner';
-
+import {BaseUrl} from '@/app.config';
 @Component({
     components: {
         DoubleBounce
@@ -36,6 +36,7 @@ export default class ReservationsList extends Vue {
     reservationsList = [];
     loaderFlag = false;
     length = 0;
+    BaseUrl = BaseUrl;
     async getReservationsList(){
         this.loaderFlag = true;
         this.reservationsList = await getReservationsList();
@@ -46,8 +47,19 @@ export default class ReservationsList extends Vue {
     checkArrayLength(){
         this.$emit('updateLength', this.length)
     }
-    confirmReservation(reservation_id){
-        confirmReservation(reservation_id)
+    async confirmReservation(reservation_id){
+        this.loaderFlag = true;
+        let res = await confirmReservation(reservation_id);
+        this.loaderFlag = false;
+        if(res){
+            this.$fire({
+                title: "SUCCESS!",
+                text: "This reservation confirmed",
+                type: "success",
+                timer: 2000
+            })
+            this.getReservationsList();
+        }
     }
 
     declineReservation(reservation_id){
@@ -94,6 +106,10 @@ export default class ReservationsList extends Vue {
     font-size: 30px;
     text-align: center;
     line-height: 1.5;
+}
+.profile-img img{
+    width: 100%;
+    height: 100%;
 }
 .reservatios-info{
     float: right;

@@ -5,7 +5,7 @@
             <i class="fas fa fa-user-circle"></i>
         </div>
         <div class="welcome-panal-info">
-            <h3>Hi "Hospital Name"</h3>
+            <h3>Hi " {{userName}} "</h3>
             <h4>Welcome Back</h4>
             <span>To Keep the body in good health is a duty .. otherwise We shall not be able to keep our mind strong and clear .</span>
         </div>
@@ -14,14 +14,21 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-
+import {getUserInfo} from '@/endpoints/user';
 @Component({
     components: {
 
     },
 })
 export default class WelcomePanal extends Vue {
-  
+    userName:any = '';
+    async getInfo(){
+        let res = await getUserInfo();
+        this.userName = res.name;
+    }
+    mounted() {
+        this.getInfo();
+    }
 }
 </script>
 

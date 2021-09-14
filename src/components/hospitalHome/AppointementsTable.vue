@@ -3,7 +3,11 @@
         <div class="table-title">
             <h4>Nearest Appointements</h4>
         </div>
-        <div class="table-body">
+        <div v-if="tableArr.length == 0" class="table-body placeholder">
+            <AppoinetementsSVG/>
+            <span>No Appointements found</span>
+        </div>
+        <div  v-if="tableArr" class="table-body">
             <div class="table-row" v-for="row in tableArr" :key="row">
                 <div class="profile-img">
                     <img :src="BaseUrl+row.image_path" alt="" v-if="row.image_path">
@@ -29,9 +33,10 @@
 import { Component, Vue } from 'vue-property-decorator';
 import {getNearestAppointment} from '@/endpoints/appoinetments';
 import {BaseUrl} from '@/app.config';
+import AppoinetementsSVG from '@/assets/icons/AppoinetmentsSVG.vue';
 @Component({
     components: {
-
+        AppoinetementsSVG,
     },
 })
 export default class AppointementsTable extends Vue {
@@ -120,5 +125,9 @@ export default class AppointementsTable extends Vue {
 }
 .navy-btn{
     background: var(--font-navy);
+}
+.placeholder{
+    text-align: center;
+    color: var(--font-navy);
 }
 </style>
