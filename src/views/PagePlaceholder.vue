@@ -3,8 +3,10 @@
         <div class="placeholder-card">
             <div class="placeholder-icon">
                 <img v-if="$router.currentRoute.name == 'Sections'" src="@/assets/images/SectionPlaceholder.png" alt="">
+                <img v-if="$router.currentRoute.name == 'messages'" src="@/assets/images/messagePlaceholder.png" alt="">
                 <Emergency v-if="$router.currentRoute.name == 'emergency'"/>
                 <AppoinetmentsSVG v-if="$router.currentRoute.name == 'appoinetments'"/>
+                <Calendar v-if="$router.currentRoute.name == 'reservations' || $router.currentRoute.name == 'reservationHistory'"/>
             </div>
             <div class="card-info">
                 <h4>{{mainTitle}}</h4>
@@ -23,10 +25,12 @@
 import { Component, Vue } from 'vue-property-decorator';
 import Emergency from '@/assets/icons/Emergency.vue';
 import AppoinetmentsSVG from '@/assets/icons/AppoinetmentsSVG.vue';
+import Calendar from '@/assets/icons/Calendar.vue';
 @Component({
     components: {
         Emergency,
         AppoinetmentsSVG,
+        Calendar,
     },
 })
 export default class PagePlaceholder extends Vue {
@@ -43,6 +47,15 @@ export default class PagePlaceholder extends Vue {
         }else if(this.$router.currentRoute.name == 'appoinetments'){
             this.mainTitle = "You Haven't Any Appointement Yet";
             this.placeholderTxt = "You Will Receive new Appointement Soon .";
+        }else if(this.$router.currentRoute.name == 'messages'){
+            this.mainTitle = "You Haven't Any Message Yet";
+            this.placeholderTxt = "You Will Receive new Message Soon .";
+        }else if(this.$router.currentRoute.name == 'reservations'){
+            this.mainTitle = "You Haven't Any Reservations Yet";
+            this.placeholderTxt = "You Will Receive your New Reservation soon .";
+        }else if(this.$router.currentRoute.name == 'reservationHistory'){
+            this.mainTitle = "You Haven't Any Reservations History Yet";
+            this.placeholderTxt = "No History Yet please confirm reservation to see your history.";
         }
     }
     mounted() {

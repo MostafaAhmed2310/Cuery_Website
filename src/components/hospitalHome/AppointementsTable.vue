@@ -6,14 +6,16 @@
         <div class="table-body">
             <div class="table-row" v-for="row in tableArr" :key="row">
                 <div class="profile-img">
-                    <img src="" alt="">
-                    <i class="fas fa fa-user-circle"></i>
+                    <img :src="BaseUrl+row.image_path" alt="" v-if="row.image_path">
+                    <i class="fas fa fa-user-circle" v-if="row.image_path == null"></i>
                 </div>
-                <span class="patient-name">Mostafa Ahmed</span>
-                <span class="section-name">Section Name</span>
-                <span class="see-more">See More</span>
+                <span class="patient-name">{{row.name}}</span>
+                <span class="section-name">{{row.section_title}}</span>
+                <router-link :to="'/normal-appoinetment-details/'+row.id">
+                    <span class="see-more">See More</span>
+                </router-link>
                 <div class="table-btns">
-                    <router-link to="/confirmation/5">
+                    <router-link :to="'/confirmation/'+row.id">
                         <button class="navy-btn">Patient Arrived</button>
                     </router-link>
                 </div>
@@ -25,14 +27,22 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-
+import {getNearestAppointment} from '@/endpoints/appoinetments';
+import {BaseUrl} from '@/app.config';
 @Component({
     components: {
 
     },
 })
 export default class AppointementsTable extends Vue {
-    tableArr:any[] = [0,1,2];
+    tableArr:any[] = [];
+    BaseUrl = BaseUrl;
+    async getNearest(){
+        this.tableArr = await getNearestAppointment();
+    }
+    mounted() {
+        this.getNearest();
+    }
 }
 </script>
 
@@ -63,6 +73,11 @@ export default class AppointementsTable extends Vue {
     font-size: 27px;
     line-height: 1.5;
     margin-top: 5px;
+    overflow: hidden;
+}
+.profile-img img{
+    width: 100%;
+    height: 100%;
 }
 .table-row{
     overflow: hidden;

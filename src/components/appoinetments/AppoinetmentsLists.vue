@@ -6,8 +6,8 @@
         <div class="appoinetments-item" v-for="item in items" :key="item">
             <router-link :to="'/normal-appoinetment-details/' + item.id">
                 <div class="profile-img">
-                    <img src="" alt="">
-                    <i class="fas fa fa-user-circle"></i>
+                    <img :src="BaseUrl+item.image_path" alt="" v-if="item.image_path">
+                    <i class="fas fa fa-user-circle" v-if="item.image_path == null"></i>
                 </div>
                 <div class="appoinetments-info">
                     <h4>{{item.name}}</h4>
@@ -22,6 +22,7 @@
 import { Component, Vue } from 'vue-property-decorator';
 import { getAppoinetmentsList, finishAppoinetment } from '@/endpoints/appoinetments';
 import {DoubleBounce} from 'vue-loading-spinner';
+import {BaseUrl} from '@/app.config';
 @Component({
     components: {
         DoubleBounce
@@ -31,6 +32,7 @@ export default class AppoinetmentsLists extends Vue {
     items = [];
     loaderFlag = false;
     length = 0;
+    BaseUrl = BaseUrl;
     async getAppoinetmentsList(){
         this.loaderFlag = true;
         this.items = await getAppoinetmentsList();
@@ -81,6 +83,10 @@ export default class AppoinetmentsLists extends Vue {
     font-size: 30px;
     text-align: center;
     line-height: 1.5;
+}
+.profile-img img{
+    width: 100%;
+    height: 100%;
 }
 .appoinetments-info{
     float: right;

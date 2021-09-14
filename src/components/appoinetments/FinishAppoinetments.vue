@@ -1,74 +1,85 @@
 <template>
     <div class="reservation-item-container">
+        <div class="loader-container" v-if="loaderFlag">
+            <DoubleBounce></DoubleBounce>
+        </div>
         <div class="reservation-item">
             <div class="block">
                 <div class="profile-img">
-                    <img :src="BaseUrl + reservationObj.image_path" alt="" v-if="reservationObj.image_path">
-                    <i class="fas fa fa-user-circle" v-if="reservationObj.image_path == null"></i>
+                    <img src="" alt="">
+                    <i class="fas fa fa-user-circle"></i>
                 </div>
                 <div class="reservation-info">
                     <h4>{{ reservationObj.name }}</h4>
                 </div>
             </div>
             <div class="block">
-                <h5>{{ reservationObj.section_title }}</h5>
-                <h5>Phone Num. : {{ reservationObj.phone }}</h5>
+                <h5><i class="fas fa fa-plus-square"></i>{{ reservationObj.section_title }}</h5>
+                <h5><i class="phone-icon fas fa fa-phone"></i>{{ reservationObj.phone }}</h5>
+                <h5><i class="fas fa-map-marker-alt"></i>15 Albert Al Awal . Smouha , Alexandria</h5>
             </div>
             <div class="block">
                 <div class="left-btn">
                     <button>{{ reservationObj.Day }}</button>
-                    <span>{{ reservationObj.reservation_date }}</span>
+                    <span>Request Time</span>
+                    <span>{{ reservationObj.reservation_date }} , {{ reservationObj.start_time }}:00</span>
                 </div>
                 <div class="right-btn">
-                    <span class="finish"></span>
-                    <!-- <span class="pending"></span>
-                    <span class="cancel"></span> -->
-                    <span class="status">Finished</span>
+                    <span>200</span><span>EGP</span>
                 </div>
             </div>
         </div>
         <div class="block">
-            <h5>limit your time</h5>
-            <h6>From <span>{{ reservationObj.start_time }}:00</span> To <span>{{ reservationObj.end_time }}:00 </span></h6>
+            <div class="reservation-btns">
+                <button @click="finishRequest()" class="arrived-btn">Service Done</button>
+            </div>
         </div>
     </div>
 </template>
 
-<script lang="ts">
-import { Component, Vue,Watch } from 'vue-property-decorator';
-import { getReservation, confirmReservation, declineReservation  } from '@/endpoints/reservations';
-import {BaseUrl} from '@/app.config';
-
+<script>
+import { Component, Vue, Watch } from 'vue-property-decorator';
+import { getReservation } from '@/endpoints/reservations';
+import {DoubleBounce} from 'vue-loading-spinner';
+import {finishAppoinetment} from '@/endpoints/appoinetments';
 @Component({
     components: {
-
+        DoubleBounce
     },
 })
-export default class ReservationHistoryItem extends Vue {
-    reservationObj = {}
-    resId =this.$route.params.id
-    BaseUrl = BaseUrl
+export default class FinishAppoinetments extends Vue {
+  
+    reservationObj = {};
+    resId =this.$route.params.id;
+    loaderFlag = false;
     @Watch('$route', { immediate: true, deep: true })
-    onUrlChange(newVal: any) {
+    onUrlChange(newVal) {
         this.resId =this.$route.params.id
         this.getReservation(this.resId)
     }
-    async getReservation(resId:any){
+    async getReservation(resId){
+        this.loaderFlag = true;
         this.reservationObj = await getReservation(resId);
+        this.loaderFlag = false;
     }
-     confirmReservation(reservation_id:any){
-        confirmReservation(reservation_id)
-
-    }
-    declineReservation(reservation_id:any){
-        declineReservation(reservation_id)
-    }
-    updateDetailsFun(){
-        this.getReservation(this.resId)
+    async finishRequest(){
+        this.loaderFlag = true;
+        let res = await finishAppoinetment(this.$route.params.id);
+        this.loaderFlag = false;
+        if(res){
+            this.$fire({
+                title: "SUCCESS!",
+                text: "Service is done successfully",
+                type: "success",
+                timer: 2000
+            })
+            this.$router.push('/appoinetments'); 
+        }
     }
     mounted(){
         this.getReservation(this.resId)
     }
+
 }
 </script>
 
@@ -94,10 +105,6 @@ export default class ReservationHistoryItem extends Vue {
     font-size: 30px;
     text-align: center;
     line-height: 1.5;
-}
-.profile-img img{
-    width: 100%;
-    height: 100%;
 }
 .reservation-info{
     float: left;
@@ -126,6 +133,9 @@ export default class ReservationHistoryItem extends Vue {
 }
 .block .reservation-btns{
     float: right;
+    clear: both;
+    display: block;
+    margin-top: 40px;
 }
 .left-btn{
     float: left;
@@ -151,6 +161,16 @@ export default class ReservationHistoryItem extends Vue {
 }
 .right-btn{
     float: right;
+    font-size: 20px;
+    line-height: 2.5;
+    font-weight: bold;
+}
+.right-btn span:nth-of-type(1){
+    color: var(--main-green);
+    margin-right: 5px;
+}
+.right-btn span:nth-of-type(2){
+    color: var(--font-navy);
 }
 .right-btn button{
     background: var(--main-green);
@@ -169,46 +189,25 @@ export default class ReservationHistoryItem extends Vue {
     border: none;
     cursor: pointer;
     border-radius: var(--sm-radius);
-    padding: 10px 20px;
+    padding: 10px 35px;
     color: #fff;
 }
 .reservation-btns button:hover{
     opacity: 0.8;
 }
-.reservation-btns button:nth-of-type(1){
+.arrived-btn{
     background: var(--main-green);
     margin-right: 20px;
 }
-.reservation-btns button:nth-of-type(2){
-    background: var(--alert-color);
+.decline-btn{
+    background: var(--alert-color) !important;
 }
-.finish{
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    display: inline-block;
-    background: green;
+.block h5 i{
+    color: var(--main-green);
     margin-right: 10px;
+    margin-left: 10px;
 }
-.pending{
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    display: inline-block;
-    background: yellow;
-    margin-right: 10px;
-}
-.cancel{
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    display: inline-block;
-    background: red;
-    margin-right: 10px;
-}
-.status{
-    color: var(--font-navy);
-    font-size: 12px;
-    font-weight: bold;
+.phone-icon{
+    transform: rotate(90deg);
 }
 </style>

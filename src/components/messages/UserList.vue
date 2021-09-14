@@ -6,8 +6,8 @@
         <div class="user-item" v-for="headChat in chatList" :key="headChat">
             <router-link :to="'/messages/' + headChat.sender_id" active-class="active-chat">
                 <div class="profile-img">
-                    <img src="" alt="">
-                    <i class="fas fa fa-user-circle"></i>
+                    <img :src="BaseUrl + headChat.sender_image_path" alt="" v-if="headChat.sender_image_path">
+                    <i class="fas fa fa-user-circle" v-if="headChat.sender_image_path == null"></i>
                 </div>
                 <div class="user-info">
                     <h4>{{headChat.sender_name}}</h4>
@@ -25,6 +25,7 @@ import { Component, Vue } from 'vue-property-decorator';
 import {getMyConversations} from  '@/endpoints/messages';
 import {getUserInfo} from '@/endpoints/user';
 import {DoubleBounce} from 'vue-loading-spinner';
+import {BaseUrl} from '@/app.config';
 @Component({
     components: {
         DoubleBounce,
@@ -35,17 +36,24 @@ export default class UserList extends Vue {
     currentUser = {};
     currentUserId = '';
     loaderFlag = false;
+    length = 0;
+    BaseUrl = BaseUrl;
     updateUserList(){
         this.getChatList();
     }
     async getChatList(){
         this.loaderFlag = true;
         this.chatList = await getMyConversations();
+        this.length = this.chatList.length;
+        this.checkArrayLength();
         this.loaderFlag = false;
     }
     async getCurrentUser(){
         this.currentUser = await getUserInfo();
         this.currentUserId = this.currentUser.id;
+    }
+    checkArrayLength(){
+        this.$emit('updateLength', this.length)
     }
     mounted(){
         this.getChatList();
@@ -88,6 +96,10 @@ export default class UserList extends Vue {
     font-size: 35px;
     text-align: center;
     line-height: 1.5;
+}
+.profile-img img{
+    width: 100%;
+    height: 100%;
 }
 .user-info{
     float: right;

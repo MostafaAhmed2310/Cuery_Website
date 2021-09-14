@@ -35,7 +35,7 @@ import {DoubleBounce} from 'vue-loading-spinner';
     },
 })
 export default class EmergencyList extends Vue {
-    EmergencyList = [0,1,2,3];
+    EmergencyList = [];
     length = 0;
     loaderFlag = false;
     async getEmergencyList(){

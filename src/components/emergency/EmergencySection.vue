@@ -6,7 +6,12 @@
         <div class="sections-body">
             <div class="cover-img">
                 <img src="@/assets/images/profile-cover.png" alt="">
-                <h2>Emergency</h2>
+                <h2>
+                    <router-link to="/emergency">
+                        <i class="fas fa-chevron-left"></i> 
+                    </router-link>
+                    Emergency
+                </h2>
                 <div class="section-btns">
                     <router-link to="/add-emergency-section">
                         <button class="add-section"><i class="fas fa-plus-circle"></i>Add New Section</button>
@@ -168,5 +173,10 @@ export default class EmergencySection extends Vue {
     top: -55px;
     font-size: 11px;
     right: 15px;
+}
+.cover-img h2 i{
+    cursor: pointer;
+    margin-right: 10px;
+    color: var(--font-navy) !important;
 }
 </style>

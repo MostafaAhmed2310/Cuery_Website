@@ -6,12 +6,12 @@
         <div class="reservatios-item" v-for="reservation in reservationsList" :key="reservation">
             <router-link :to="'/reservation-history/' + reservation.id">
                 <div class="profile-img">
-                    <img src="" alt="">
-                    <i class="fas fa fa-user-circle"></i>
+                    <img :src="BaseUrl + reservation.image_path" alt="" v-if="reservation.image_path">
+                    <i class="fas fa fa-user-circle" v-if="reservation.image_path == null"></i>
                 </div>
                 <div class="reservatios-info">
-                    <h4> Reservation Name</h4>
-                    <span>Section Title</span>
+                    <h4> {{reservation.name}}</h4>
+                    <span>{{reservation.section_title}}</span>
                 </div>
             </router-link>
         </div>
@@ -22,7 +22,7 @@
 import { Component, Vue } from 'vue-property-decorator';
 import {getReservationsHistory} from '@/endpoints/reservations';
 import {DoubleBounce} from 'vue-loading-spinner';
-
+import {BaseUrl} from '@/app.config';
 @Component({
     components: {
         DoubleBounce,
@@ -31,11 +31,17 @@ import {DoubleBounce} from 'vue-loading-spinner';
 export default class ReservationsHistoryList extends Vue {
     reservationsList = [];
     loaderFlag = false;
-
+    length = 0;
+    BaseUrl = BaseUrl
     async getHistoryList(){
         this.loaderFlag = true;
         this.reservationsList = await getReservationsHistory();
+        this.length = this.reservationsList.length;
+        this.checkArrayLength();
         this.loaderFlag = false;
+    }
+    checkArrayLength(){
+        this.$emit('updateLength', this.length)
     }
     mounted() {
         this.getHistoryList();
@@ -74,6 +80,10 @@ export default class ReservationsHistoryList extends Vue {
     font-size: 30px;
     text-align: center;
     line-height: 1.5;
+}
+.profile-img img{
+    width: 100%;
+    height: 100%;
 }
 .reservatios-info{
     float: right;

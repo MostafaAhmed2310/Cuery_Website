@@ -13,9 +13,12 @@
                     Messages
                 </h2>
             </div>
-            <div class="messages-inputs-body">
+            <div v-if="placeHolderFlag && !loaderFlag">
+                <PagePlaceholder/>
+            </div>
+            <div class="messages-inputs-body" v-if="messageBodyFlag">
                 <div class="messages-panal">
-                    <UserList ref="updateUserList"/>
+                    <UserList @updateLength="updateLength" ref="updateUserList"/>
                 </div>
                 <div :class="'chat-body '+chatWidth">
                     <Placeholder v-if="$router.currentRoute.name == 'messages'"/>
@@ -37,19 +40,23 @@ import UserList from '@/components/messages/UserList.vue';
 import Placeholder from '@/components/messages/Placeholder.vue';
 import InfoPanal from '@/components/messages/InfoPanal.vue';
 import CloseIcon from '@/assets/icons/CloseIcon.vue';
+import PagePlaceholder from '@/views/PagePlaceholder.vue';
 @Component({
     components: {
         DoubleBounce,
         UserList,
         Placeholder,
         InfoPanal,
-        CloseIcon
+        CloseIcon,
+        PagePlaceholder
     },
 })
 export default class Messages extends Vue {
     loaderFlag = false;
     openInfoAnimate = '';
     chatWidth = '';
+    messageBodyFlag = true;
+    placeHolderFlag = false;
     openInfo(){
         this.openInfoAnimate = 'open-info-animate';
         this.chatWidth = 'chat-width';
@@ -60,6 +67,15 @@ export default class Messages extends Vue {
     }
     updateHeadChat(){
         this.$refs.updateUserList.updateUserList();
+    }
+    updateLength(len){
+        if(len == 0){
+            this.placeHolderFlag = true;
+            this.messageBodyFlag = false;
+        }else{
+            this.placeHolderFlag = false;
+            this.messageBodyFlag = true;
+        }
     }
 }
 </script>

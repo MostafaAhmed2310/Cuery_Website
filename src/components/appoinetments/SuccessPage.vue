@@ -3,7 +3,7 @@
         <div class="success-page-body">
             <h4>SUCCESS</h4>
             <p>You Have Successfully Verified your Patient Request</p>
-            <router-link to="/appoinetments">
+            <router-link :to="'/finish-appoinetments/'+ $route.params.id">
                 <button>Continue</button>
             </router-link>
         </div>

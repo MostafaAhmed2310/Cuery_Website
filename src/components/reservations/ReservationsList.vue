@@ -1,5 +1,8 @@
 <template>
     <div class="reservatios-list-container">
+        <div class="loader-container" v-if="loaderFlag">
+            <DoubleBounce></DoubleBounce>
+        </div>
         <div class="reservatios-item" v-for="reservation in reservationsList" :key="reservation">
             <router-link :to="'/reservations/' + reservation.id" @click="updateDetails()">
                 <div class="profile-img">
@@ -19,26 +22,35 @@
     </div>
 </template>
 
-<script lang="ts">
+<script>
 import { Component, Vue } from 'vue-property-decorator';
 import { getReservationsList, confirmReservation, declineReservation } from '@/endpoints/reservations';
+import {DoubleBounce} from 'vue-loading-spinner';
 
 @Component({
     components: {
-
+        DoubleBounce
     },
 })
 export default class ReservationsList extends Vue {
     reservationsList = [];
+    loaderFlag = false;
+    length = 0;
     async getReservationsList(){
+        this.loaderFlag = true;
         this.reservationsList = await getReservationsList();
+        this.length = this.reservationsList.length;
+        this.checkArrayLength();
+        this.loaderFlag = false;
     }
-    confirmReservation(reservation_id:any){
+    checkArrayLength(){
+        this.$emit('updateLength', this.length)
+    }
+    confirmReservation(reservation_id){
         confirmReservation(reservation_id)
-
     }
 
-    declineReservation(reservation_id:any){
+    declineReservation(reservation_id){
         declineReservation(reservation_id)
     }
     updateDetails(){

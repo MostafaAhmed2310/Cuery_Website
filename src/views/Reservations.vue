@@ -14,9 +14,12 @@
                 </h2>
                 <Calendar class="calendar"/>
             </div>
-            <div class="reservations-inputs-body">
+            <div v-if="placeHolderFlag && !loaderFlag">
+                <PagePlaceHolder/>
+            </div>
+            <div class="reservations-inputs-body" v-if="reservationBodyFlag">
                 <div class="reservations-panal">
-                    <ReservationsList @updateDetails="updateReservationDetails"/>
+                    <ReservationsList @updateLength="updateLength" @updateDetails="updateReservationDetails"/>
                 </div>
                 <div class="reservation-body">
                     <router-view ref="updatePage"></router-view>
@@ -30,16 +33,29 @@
 import { Component, Vue } from 'vue-property-decorator';
 import ReservationsList from '@/components/reservations/ReservationsList.vue';
 import Calendar from '@/assets/icons/Calendar.vue';
+import PagePlaceHolder from '@/views/PagePlaceholder.vue';
 @Component({
     components: {
         ReservationsList,
-        Calendar
+        Calendar,
+        PagePlaceHolder
     },
 })
 export default class Reservations extends Vue {
     loaderFlag:Boolean = false;
+    placeHolderFlag:Boolean = false;
+    reservationBodyFlag:Boolean = true;
     updateReservationDetails(){
         (<any>this.$refs.updatePage).updateDetailsFun();
+    }
+    updateLength(len:any){
+        if(len == 0){
+            this.placeHolderFlag = true;
+            this.reservationBodyFlag = false;
+        }else{
+            this.placeHolderFlag = false;
+            this.reservationBodyFlag = true;
+        }
     }
 }
 </script>

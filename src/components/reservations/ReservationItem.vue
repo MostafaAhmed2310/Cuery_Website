@@ -1,5 +1,8 @@
 <template>
     <div class="reservation-item-container">
+        <div class="loader-container" v-if="loaderFlag">
+            <DoubleBounce></DoubleBounce>
+        </div>
         <div class="reservation-item">
             <div class="block">
                 <div class="profile-img">
@@ -20,7 +23,7 @@
                     <span>{{ reservationObj.reservation_date }}</span>
                 </div>
                 <div class="right-btn">
-                    <router-link :to="'/messages/'+ $route.params.id">
+                    <router-link :to="'/messages/'+ reservationObj.user_id">
                         <button>Start Conversation</button>
                     </router-link>
                 </div>
@@ -39,32 +42,35 @@
     </div>
 </template>
 
-<script lang="ts">
+<script>
 import { Component, Vue,Watch } from 'vue-property-decorator';
 import { getReservation, confirmReservation, declineReservation  } from '@/endpoints/reservations';
-
+import {DoubleBounce} from 'vue-loading-spinner';
 
 @Component({
     components: {
-
+        DoubleBounce,
     },
 })
 export default class ReservationItem extends Vue {
-    reservationObj = {}
+    reservationObj = {};
+    loaderFlag = false;
     resId =this.$route.params.id
     @Watch('$route', { immediate: true, deep: true })
-    onUrlChange(newVal: any) {
+    onUrlChange(newVal) {
         this.resId =this.$route.params.id
         this.getReservation(this.resId)
     }
-    async getReservation(resId:any){
+    async getReservation(resId){
+        this.loaderFlag = true;
         this.reservationObj = await getReservation(resId);
+        this.loaderFlag = false;
     }
-     confirmReservation(reservation_id:any){
+     confirmReservation(reservation_id){
         confirmReservation(reservation_id)
 
     }
-    declineReservation(reservation_id:any){
+    declineReservation(reservation_id){
         declineReservation(reservation_id)
     }
     updateDetailsFun(){

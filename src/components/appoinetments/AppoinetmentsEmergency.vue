@@ -6,8 +6,8 @@
         <div class="appoinetments-item" v-for="item in emergencyItems" :key="item">
             <router-link :to="'/emergency-appoinetment-details/' + item.id">
                 <div class="profile-img">
-                    <img src="" alt="">
-                    <i class="fas fa fa-user-circle"></i>
+                    <img :src="BaseUrl+item.image_path" alt="" v-if="item.image_path">
+                    <i class="fas fa fa-user-circle" v-if="item.image_path == null"></i>
                 </div>
                 <div class="appoinetments-info">
                     <h4>{{item.name}}</h4>
@@ -22,7 +22,7 @@
 import { Component, Vue } from 'vue-property-decorator';
 import { getEmergencyAppoinetmentsList, finishAppoinetment } from '@/endpoints/appoinetments';
 import {DoubleBounce} from 'vue-loading-spinner';
-
+import {BaseUrl} from '@/app.config';
 @Component({
     components: {
         DoubleBounce,
@@ -32,6 +32,7 @@ export default class AppoinetmentsEmergency extends Vue {
     emergencyItems=[];
     loaderFlag = false;
     length = 0;
+    BaseUrl = BaseUrl;
     async getEmergencyAppoinetmentsList(){
         this.loaderFlag = true;
         this.emergencyItems = await getEmergencyAppoinetmentsList();
@@ -80,6 +81,10 @@ export default class AppoinetmentsEmergency extends Vue {
     font-size: 30px;
     text-align: center;
     line-height: 1.5;
+}
+.profile-img img{
+    width: 100%;
+    height: 100%;
 }
 .appoinetments-info{
     float: right;

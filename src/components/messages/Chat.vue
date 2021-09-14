@@ -5,7 +5,7 @@
         </div>
         <div class="chat-head">
             <div class="profile-img">
-                <img src="" alt="">
+                <img :src="BaseUrl+conversation.sender_image_path" alt="">
                 <i class="fas fa fa-user-circle"></i>
             </div>
             <div class="user-info">
@@ -212,6 +212,10 @@ export default class Chat extends Vue {
     font-size: 35px;
     text-align: center;
     line-height: 1.5;
+}
+.profile-img img{
+    width: 100%;
+    height: 100%;
 }
 .user-info{
     float: left;

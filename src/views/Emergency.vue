@@ -14,7 +14,7 @@
                 </h2>
                 <Emergency class="calendar"/>
             </div>
-            <div class="placeholder-body" v-if="placeholderFlag">
+            <div class="placeholder-body" v-if="placeholderFlag && !loaderFlag">
                 <PagePlaceholder/>
             </div>
             <div class="reservations-inputs-body" v-if="bodyFlag">

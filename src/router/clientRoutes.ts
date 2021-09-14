@@ -26,6 +26,7 @@ import EmergencyItem from '@/components/emergency/EmergencyItem.vue'
 import EmergencySection from '@/components/emergency/EmergencySection.vue'
 import AddEmergencySections from '@/components/emergency/AddEmergencySections.vue'
 import EmergencySectionDetails from '@/components/emergency/EmergencySectionDetails.vue'
+import FinishAppoinetments from '@/components/appoinetments/FinishAppoinetments.vue'
 const routes = [
     {
         path: '/',
@@ -161,7 +162,7 @@ const routes = [
                 component: Confirmation
             },
             {
-                path: '/success_page',
+                path: '/success_page/:id',
                 name: 'SuccessPage',
                 component: SuccessPage
             },
@@ -174,6 +175,11 @@ const routes = [
                 path: '/emergency-appoinetment-details/:id',
                 name: 'emergencyDetails',
                 component: AppoinetmentsItemEmergency
+            },
+            {
+                path: '/finish-appoinetments/:id',
+                name: 'FinishAppoinetments',
+                component: FinishAppoinetments
             },
         ]
     },

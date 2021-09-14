@@ -6,8 +6,8 @@
         <div class="reservation-item">
             <div class="block">
                 <div class="profile-img">
-                    <img src="" alt="">
-                    <i class="fas fa fa-user-circle"></i>
+                    <img :src="BaseUrl+reservationObj.image_path" alt="" v-if="reservationObj.image_path">
+                    <i class="fas fa fa-user-circle" v-if="reservationObj.image_path == null"></i>
                 </div>
                 <div class="reservation-info">
                     <h4>{{ reservationObj.name }}</h4>
@@ -42,7 +42,7 @@
 import { Component, Vue, Watch } from 'vue-property-decorator';
 import { getReservation } from '@/endpoints/reservations';
 import {DoubleBounce} from 'vue-loading-spinner';
-
+import {BaseUrl} from '@/app.config';
 @Component({
     components: {
         DoubleBounce
@@ -53,6 +53,7 @@ export default class AppoinetmentsItem extends Vue {
     reservationObj = {};
     resId =this.$route.params.id;
     loaderFlag = false;
+    BaseUrl = BaseUrl;
     @Watch('$route', { immediate: true, deep: true })
     onUrlChange(newVal) {
         this.resId =this.$route.params.id
@@ -92,6 +93,10 @@ export default class AppoinetmentsItem extends Vue {
     font-size: 30px;
     text-align: center;
     line-height: 1.5;
+}
+.profile-img img{
+    width: 100%;
+    height: 100%;
 }
 .reservation-info{
     float: left;

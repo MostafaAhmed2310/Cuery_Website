@@ -6,11 +6,19 @@
         <div class="reservations-body">
             <div class="cover-img">
                 <img src="@/assets/images/profile-cover.png" alt="">
-                <h2>Reservation History</h2>
+                <h2>
+                    <router-link to="/hospital_home">
+                        <i class="fas fa-chevron-left"></i> 
+                    </router-link>
+                    Reservation History
+                </h2>
             </div>
-            <div class="reservations-inputs-body">
+            <div v-if="placeHolderFlag">
+                <PagePlaceholder/>
+            </div>
+            <div class="reservations-inputs-body" v-if="reservationBodyFlag">
                 <div class="reservations-panal">
-                    <ReservationsHistoryList/>
+                    <ReservationsHistoryList @updateLength="updateLength"/>
                 </div>
                 <div class="reservation-body">
                     <router-view></router-view>
@@ -23,13 +31,26 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 import ReservationsHistoryList from '@/components/reservationHistory/ReservationsHistoryList.vue';
+import PagePlaceholder from '@/views/PagePlaceholder.vue';
 @Component({
     components: {
         ReservationsHistoryList,
+        PagePlaceholder,
     },
 })
 export default class ReservationHistory extends Vue {
     loaderFlag:Boolean = false;
+    placeHolderFlag:Boolean = false;
+    reservationBodyFlag:Boolean = true;
+    updateLength(len:any){
+        if(len == 0){
+            this.placeHolderFlag = true;
+            this.reservationBodyFlag = false;
+        }else{
+            this.placeHolderFlag = false;
+            this.reservationBodyFlag = true;
+        }
+    }
     
 }
 </script>
@@ -73,5 +94,10 @@ export default class ReservationHistory extends Vue {
     background: rgba(249, 253, 251, 1);
     height: 110vh;
     padding: 20% 50px 0px 50px;
+}
+.cover-img h2 i{
+    cursor: pointer;
+    margin-right: 10px;
+    color: var(--font-navy) !important;
 }
 </style>

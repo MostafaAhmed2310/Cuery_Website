@@ -18,3 +18,9 @@ export async function finishAppoinetment(id:any){
     if (res) return res.data
     else return false
 }
+export async function getNearestAppointment(){
+  let res = await api
+  .get('api/nearest_appointments');
+  if (res) return res.data
+  else return false
+}

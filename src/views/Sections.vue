@@ -21,7 +21,7 @@
                     </router-link>
                 </div>
             </div>
-            <div class="placeholder-body" v-if="sections.length == 0">
+            <div class="placeholder-body" v-if="sections.length == 0 && !loaderFlag">
                 <PagePlaceholder/>
             </div>
             <div class="sections-inputs-body" v-if="sections.length != 0">
