@@ -36,7 +36,7 @@
 
 <script lang="ts">
 import { Component, Vue,Watch } from 'vue-property-decorator';
-import { getReservation, confirmReservation, declineReservation  } from '@/endpoints/reservations';
+import { getReservation, confirmReservation } from '@/endpoints/reservations';
 import {BaseUrl} from '@/app.config';
 
 @Component({
@@ -59,9 +59,6 @@ export default class ReservationHistoryItem extends Vue {
      confirmReservation(reservation_id:any){
         confirmReservation(reservation_id)
 
-    }
-    declineReservation(reservation_id:any){
-        declineReservation(reservation_id)
     }
     updateDetailsFun(){
         this.getReservation(this.resId)

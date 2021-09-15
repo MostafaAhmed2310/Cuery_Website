@@ -28,9 +28,9 @@ export async function confirmReservation(id:any){
     else return false
 }
 
-export async function declineReservation(id:any){
+export async function declineReservation(id:any, data:any){
     let res = await api
-    .put('api/reservations/reject_reservation/'+id);
+    .put('api/reservations/reject_reservation/'+id, data);
     if (res) return res.data
     else return false
 }

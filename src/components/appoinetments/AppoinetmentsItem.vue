@@ -3,6 +3,9 @@
         <div class="loader-container" v-if="loaderFlag">
             <DoubleBounce></DoubleBounce>
         </div>
+        <div class="popup-overlay" v-if="declinePopup">
+            <DeclinePopup @updateAppointmentList="updateAppointmentList" @closePopup="closePopup"/>
+        </div>
         <div class="reservation-item">
             <div class="block">
                 <div class="profile-img">
@@ -32,7 +35,7 @@
         <div class="block">
             <div class="reservation-btns">
                 <router-link :to="'/confirmation/'+ $route.params.id"><button class="arrived-btn">Arrived</button></router-link>
-                <button class="decline-btn">Decline</button>
+                <button @click="openDeclinePopup()" class="decline-btn">Decline</button>
             </div>
         </div>
     </div>
@@ -43,9 +46,11 @@ import { Component, Vue, Watch } from 'vue-property-decorator';
 import { getReservation } from '@/endpoints/reservations';
 import {DoubleBounce} from 'vue-loading-spinner';
 import {BaseUrl} from '@/app.config';
+import DeclinePopup from '@/components/appoinetments/DeclinePopup.vue';
 @Component({
     components: {
-        DoubleBounce
+        DoubleBounce,
+        DeclinePopup
     },
 })
 export default class AppoinetmentsItem extends Vue {
@@ -54,6 +59,7 @@ export default class AppoinetmentsItem extends Vue {
     resId =this.$route.params.id;
     loaderFlag = false;
     BaseUrl = BaseUrl;
+    declinePopup = false;
     @Watch('$route', { immediate: true, deep: true })
     onUrlChange(newVal) {
         this.resId =this.$route.params.id
@@ -63,6 +69,15 @@ export default class AppoinetmentsItem extends Vue {
         this.loaderFlag = true;
         this.reservationObj = await getReservation(resId);
         this.loaderFlag = false;
+    }
+    openDeclinePopup(){
+        this.declinePopup = true;
+    }
+    closePopup(){
+        this.declinePopup = false;
+    }
+    updateAppointmentList(){
+        this.$emit('updateAppointmentList');
     }
     mounted(){
         this.getReservation(this.resId)
@@ -201,5 +216,14 @@ export default class AppoinetmentsItem extends Vue {
 }
 .phone-icon{
     transform: rotate(90deg);
+}
+.popup-overlay{
+    position: fixed;
+    z-index: 9999;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.5);
 }
 </style>

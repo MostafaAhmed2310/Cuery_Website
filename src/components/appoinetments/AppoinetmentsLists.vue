@@ -43,7 +43,9 @@ export default class AppoinetmentsLists extends Vue {
     checkArrayLength(){
         this.$emit('updateLength', this.length);
     }
-
+    updateList(){
+        this.getAppoinetmentsList();
+    }
     mounted(){
         this.getAppoinetmentsList();
     }

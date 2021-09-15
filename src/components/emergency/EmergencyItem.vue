@@ -63,7 +63,7 @@ export default class EmergencyItem extends Vue {
 
     }
     declineReservation(reservation_id:any){
-        declineReservation(reservation_id)
+        // declineReservation(reservation_id)
     }
     updateDetailsFun(){
         this.getReservation(this.resId)
