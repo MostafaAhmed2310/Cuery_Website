@@ -6,7 +6,7 @@
             </div>
             <div class="medical-content">
                 <div class="medical-team-info">
-                    <h1>Medical Team</h1>
+                    <h1>{{ $t("medical_team.title") }}</h1>
                     <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam facilis iure obcaecati ducimus, assumenda quidem cupiditate quae consectetur iusto magnam provident sint laboriosam cumque atque vitae voluptas perspiciatis voluptatum laudantium!</p>
                 </div>
                 <div class="medical-team-img">
@@ -14,7 +14,7 @@
                 </div>
             </div>
             <div class="hospitals-body">
-                <h1>Hospitals We Works With</h1>
+                <h1>{{ $t("medical_team.hospitals") }}</h1>
                 <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium reiciendis qui impedit pariatur nobis eos, magnam cumque debitis, cupiditate ab eius, velit perspiciatis laborum. Repudiandae quam ea dolorem sequi commodi. Lorem ipsum dolor sit amet consectetur adipisicing elit. Placeat, numquam ipsum sapiente dolores suscipit dicta amet, impedit debitis facilis provident non qui pariatur vel assumenda veritatis! Et dolorem dolore cumque.</p>
                 <div class="hospitals-items" v-for="hospital in hospitals" :key="hospital">
                     <div class="hospital-item">
@@ -24,7 +24,7 @@
                         <p>{{hospital.name}}</p>
                     </div>
                 </div>
-                <p class="join-now">All of these are part of our entity .. <span @click="pushToSignup()">Join us now .</span></p>
+                <p class="join-now">{{ $t("medical_team.all") }} <span @click="pushToSignup()">{{ $t("medical_team.join_us") }}</span></p>
             </div>
         </div>
     </div>

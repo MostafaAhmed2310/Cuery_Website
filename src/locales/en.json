@@ -81,5 +81,11 @@
     "add_another_location": "Add Another Location",
     "save": "Save",
     "field_required": "This field is required"
+  },
+  "medical_team": {
+    "title": "Medical Team",
+    "hospitals": "Hospitals We Works With",
+    "all": "All of these are part of our entity ..",
+    "join_us": "Join us now ."
   }
 }

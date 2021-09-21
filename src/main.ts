@@ -2,10 +2,21 @@ import Vue from 'vue';
 import App from './App.vue';
 import router from './router/mainRouter';
 import './registerServiceWorker';
-import i18n from './i18n';
+import VueI18n from 'vue-i18n';
+import { messages, defaultLocale } from "@/i18n";
 
 
 import VueSimpleAlert from "vue-simple-alert";
+
+Vue.use(VueI18n)
+
+
+const i18n = new VueI18n({
+  messages,
+  locale: defaultLocale,
+  fallbackLocale: defaultLocale
+});
+
 
 Vue.use(VueSimpleAlert);
 Vue.use(require('vue-moment'));
