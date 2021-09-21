@@ -8,27 +8,27 @@
                 <img src="@/assets/images/login/login-img.png" alt="" />
             </div>
             <div class="login-form">
-                <h2>Create New Account</h2>
-                <p>Already Have an account ?<span @click="pushToSignin()">Sign in.</span></p>
+                <h2>{{ $t("sign_up.create_new_account") }}</h2>
+                <p>{{ $t("sign_up.have_account") }}<span @click="pushToSignin()">{{ $t("sign_up.sign_in") }}</span></p>
                 <div class="profile-pic">
                     <div class="profile-img-body">
                         <img v-if="fileData" :src="fileData" alt="" />
                         <i v-if="fileData == ''" class="fas fa fa-user-circle"></i>
                     </div>
                     <label>
-                        Add Your Profile Picture
+                        {{ $t("sign_up.add_profile_picture") }}
                         <input class="loadedFiles" @change="uploadFileFun($event)" type="file" accept="image/*">
                     </label>
                 </div>
                 <form>
                     <div class="input-field">
-                        <input type="text" placeholder="User Name" v-model="username" />
-                        <span v-if="usernameMsg"> Username is required </span>
+                        <input type="text" :placeholder='$t("sign_up.username_placeholder")' v-model="username" />
+                        <span v-if="usernameMsg">  {{ $t("sign_up.username_required") }} </span>
                     </div>
                     <div class="input-field">
-                        <input type="text" placeholder="Email" v-model="email" />
-                        <span v-if="emailMsg"> Email is required </span>
-                        <span v-if="validEmailMsg"> Email is not valid </span>
+                        <input type="text" :placeholder='$t("sign_up.email_placeholder")' v-model="email" />
+                        <span v-if="emailMsg">  {{ $t("sign_up.email_required") }}</span>
+                        <span v-if="validEmailMsg">  {{ $t("sign_up.email_not_vaild") }}</span>
                     </div>
                     <div class="input-field">
                         <span class="add-hover"><span class="circle"></span>{{hoverMethod()}}</span>
@@ -36,17 +36,17 @@
                         <i class="fas fa fa-minus" @click="num1 = !num1" v-if="num1"></i>
                         <input
                             type="number"
-                            placeholder="First Number Phone (Required)"
+                            :placeholder='$t("sign_up.first_num_placeholder")'
                             v-model="phone[0]"
                         />
-                        <span v-if="phoneMsg"> At least one phone number is required </span>
+                        <span v-if="phoneMsg">  {{ $t("sign_up.one_phone_at_least") }}</span>
                     </div>
                     <div class="input-field" v-if="num1">
                         <i class="fas fa fa-plus" @click="num2 = !num2" v-if="!num2"></i>
                         <i class="fas fa fa-minus" @click="num2 = !num2" v-if="num2"></i>
                         <input
                             type="number"
-                            placeholder="Second Number Phone (Optional)"
+                            :placeholder='$t("sign_up.sec_num_placeholder")'
                             v-model="phone[1]"
                         />
                     </div>
@@ -55,7 +55,7 @@
                         <i class="fas fa fa-minus" @click="num3 = !num3" v-if="num3"></i>
                         <input
                             type="number"
-                            placeholder="Third Number Phone (Optional)"
+                            :placeholder= '$t("sign_up.third_num_placeholder")'
                             v-model="phone[2]"
                         />
                     </div>
@@ -64,57 +64,56 @@
                         <i class="fas fa fa-minus" @click="num4 = !num4" v-if="num4"></i>
                         <input
                             type="number"
-                            placeholder="Fourth Number Phone (Optional)"
+                            :placeholder= '$t("sign_up.for_num_placeholder")'
                             v-model="phone[3]"
                         />
                     </div>
                     <div class="input-field" v-if="num4">
                         <input
                             type="number"
-                            placeholder="Fifth Number Phone (Optional)"
+                            :placeholder= '$t("sign_up.fifth_num_placeholder")'
                             v-model="phone[4]"
                         />
                     </div>
                     <div class="input-field">
-                        <input :type="passType" placeholder="Password" v-model="password" />
+                        <input :type="passType" :placeholder='$t("sign_up.password_placeholder")' v-model="password" />
                         <i class="fas fa fa-eye" @click="showPassword()" v-if="passType == 'password' && password"></i>
                         <i class="fas fa fa-eye-slash" @click="hidePassword()" v-if="passType == 'text' && password"></i>
-                        <span v-if="passwordMsg"> Password is required </span>
+                        <span v-if="passwordMsg"> {{ $t("sign_up.password_required") }} </span>
                         <span v-if="validPasswordMsg">
-                            Minimum eight characters, at least one letter, one number and one
-                            special character(@ $ ! % * # ? &)
+                            {{ $t("sign_up.password_validations") }}
                         </span>
                     </div>
                     <div class="input-field">
                         <input
                             :type="c_passType"
-                            placeholder="Confirm Password"
+                            :placeholder='$t("sign_up.confirm_password_placeholder")'
                             v-model="confirmPassword"
                         />
                         <i class="fas fa fa-eye" @click="showConfirmPass()" v-if="c_passType == 'password' && confirmPassword "></i>
                         <i class="fas fa fa-eye-slash" @click="hideConfirmPass()" v-if="c_passType == 'text' && confirmPassword "></i>
-                        <span v-if="confirmPasswordMsg"> Confirm password is required</span>
-                        <span v-if="machingMsg">Confirm password does not match the password</span>
+                        <span v-if="confirmPasswordMsg"> {{ $t("sign_up.confirm_password_required") }}</span>
+                        <span v-if="machingMsg">{{ $t("sign_up.confirm_password_not_match") }}</span>
                     </div>
                     <div class="signup-actions">
                         <h4 @click="openMapBody()">
-                            Enter Your Location
+                            {{ $t("sign_up.enter_location") }}
                             <i class="fas fa fa-map-marker-alt"></i>
                         </h4>
-                        <span class="error-location" v-if="locationMsg">Please pickup your location</span>
+                        <span class="error-location" v-if="locationMsg">{{ $t("sign_up.pickup_location") }}</span>
                         <div>
                             <input type="checkbox" name="privacy" id="" v-model="privacy" />
-                            <label for="privacy"><span>I Accept</span>Privacy Policy</label>
-                            <span class="check-empty" v-if="privacyMsg">Please accept our privacy policy</span>
+                            <label for="privacy"><span>{{ $t("sign_up.accept") }}</span>{{ $t("sign_up.privacy_policy") }}</label>
+                            <span class="check-empty" v-if="privacyMsg">{{ $t("sign_up.accept_privacy_policy") }}</span>
                         </div>
                         <div>
                             <input type="checkbox" name="terms" id="" v-model="terms" />
-                            <label for="terms"><span>I Accept</span>Term Of Service</label>
-                            <span class="check-empty" v-if="termsMsg">Please accept our term of service</span>
+                            <label for="terms"><span>{{ $t("sign_up.accept") }}</span>T{{ $t("sign_up.terms") }}</label>
+                            <span class="check-empty" v-if="termsMsg">{{ $t("sign_up.accept_terms") }}</span>
                         </div>
                     </div>
                     <div class="login-btn">
-                        <button type="button" @click="signupFun()">Sign Up</button>
+                        <button type="button" @click="signupFun()">{{ $t("sign_up.sign_up") }}</button>
                     </div>
                 </form>
             </div>

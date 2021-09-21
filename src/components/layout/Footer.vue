@@ -11,20 +11,20 @@
                 <span><i class="fab fa-twitter"></i></span>
             </div>
             <div class="footer-links">
-                <span>About Us</span>
-                <span>Medical Team</span>
-                <span>Careers</span>
+                <span>{{ $t("nav.about") }}</span>
+                <span>{{ $t("nav.medical_team") }}</span>
+                <span>{{ $t("footer.careers") }}</span>
             </div>
             <div class="footer-help">
-                <p>Are You a Patient ?</p>
-                <span>Join Our Patient App</span>
+                <p>{{ $t("footer.are_you_a_patient") }}</p>
+                <span>{{ $t("footer.join_our_patient_app") }}</span>
             </div>
             <div class="footer-help">
-                <p>Need Help ?</p>
-                <router-link to="/contact_us"><span>Contact Us</span></router-link>
-                <span>Privacy Policy</span>
-                <span>Terms Of Us</span>
-                <span>Patients Privacy Policy</span>
+                <p>{{ $t("footer.need_help") }}</p>
+                <router-link to="/contact_us"><span> {{ $t("nav.contact_us") }}</span></router-link>
+                <span>{{ $t("footer.privacy_policy") }}</span>
+                <span>{{ $t("footer.terms") }}</span>
+                <span>{{ $t("footer.patients_privacy_policy") }}</span>
             </div>
             <div class="footer-apps">
                 <div>

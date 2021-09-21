@@ -1,0 +1,85 @@
+{
+  "slogan": "صحة جيدة تؤدى لحياة رائعة",
+  "more": "اقرأ المزيد ",
+  "services": "خدمات",
+  "we_provides":  "نقدمها",
+  "specialized_hospitals": "مستشفياتنا المتخصصة",
+  "nav": {
+    "home": "الرئيسية",
+    "about": "نبذة عنا",
+    "medical_team": "الفريق الطبى",
+    "sign_in": "تسجيل الدخول",
+    "contact_us": "تواصل معنا",
+    "reservation_history": "الأرشيف",
+    "profile": "الملف الشخصى ",
+    "more": "المزيد",
+    "view_your_rate": "المعدل الخاص بك ",
+    "sign_out": "تسجيل الخروج"
+  },
+  "footer": {
+    "careers": "وظائف",
+    "are_you_a_patient": "هل انت مريض  ؟",
+    "join_our_patient_app": "انضم إلى تطبيق المريض الخاص بنا",
+    "need_help": "تحتاج مساعدة ؟",
+    "privacy_policy": "سياسة الخصوصية",
+    "terms": "شروط الخدمة",
+    "patients_privacy_policy": "سياسة خصوصية المرضى"
+  },
+  "login": {
+      "sign_in": "سجل دخول",
+      "have_not_account": "هل ليس لديك حساب ؟",
+      "sign_up": "انشاء حساب ",
+      "forget_password": "هل نسيت كلمة المرور ؟",
+      "wrong_data": "اسم المستخدم أو كلمة المرور خاطئة",
+      "enter_password": "الرجاء إدخال كلمة المرور",
+      "enter_username": "الرجاء إدخال اسم المستخدم"
+  },
+  "sign_up": {
+    "create_new_account": "انشاء حساب جديد",
+    "have_account": "هل لديك حساب ؟",
+    "sign_in": "سجل الدخول",
+    "add_profile_picture": "أضف صورة ملفك الشخصي",
+    "username_required": "اسم المستخدم مطلوب",
+    "email_required": "البريد الالكتروني مطلوب",
+    "email_not_vaild": "البريد الإلكتروني غير صالح",
+    "one_phone_at_least": "مطلوب رقم هاتف واحد على الأقل",
+    "password_required": "كلمة المرور مطلوبة",
+    "password_validations": "ثمانية أحرف على الأقل ، حرف واحد على الأقل ورقم واحد وواحد حرف خاص (@ $ ! % * # ? &)",
+    "confirm_password_required": "تأكيد كلمة المرور مطلوب",
+    "confirm_password_not_match": "تأكيد كلمة المرور لا يطابق كلمة المرور",
+    "enter_location": "أدخل موقعك",
+    "pickup_location": "يرجى التقاط موقعك",
+    "accept": "أوافق على ",
+    "privacy_policy": "سياسة الخصوصية",
+    "terms": "شروط الخدمة",
+    "accept_privacy_policy": "الرجاء قبول سياسة الخصوصية الخاصة بنا",
+    "accept_terms": "الرجاء قبول شروط الخدمة",
+    "sign_up": "انشاء حساب",
+    "username_placeholder": "اسم المستخدم",
+    "email_placeholder": "بريد إلكتروني",
+    "first_num_placeholder": "رقم الهاتف الأول (مطلوب)",
+    "sec_num_placeholder": "رقم الهاتف الثاني (اختياري)",
+    "third_num_placeholder": "رقم الهاتف الثالث (اختياري)",
+    "for_num_placeholder": "رقم الهاتف الرابع (اختياري)",
+    "fifth_num_placeholder": "رقم الهاتف الخامس (اختياري)",
+    "password_placeholder": "كلمة المرور",
+    "confirm_password_placeholder": "تأكيد كلمة المرور"
+  },
+  "map": {
+    "current_loc": "الموقع الحالي",
+    "pick_loc": "اختر موقعك"
+  },
+  "contact_us": {
+    "contact_us": "تواصل معنا",
+    "get_in_touch": "ابقى على تواصل",
+    "always_within_your_reach": "دائما حولك",
+    "send_msg": "أرسل رسالة"
+  },
+  "profile": {
+    "profile": "ملفك الشخصي",
+    "change_pic": "تغيير صورة ملفك الشخصي",
+    "add_another_location": "أضف موقعًا آخر",
+    "save": "حفظ",
+    "field_required": "هذه الخانة مطلوبة"
+  }
+}

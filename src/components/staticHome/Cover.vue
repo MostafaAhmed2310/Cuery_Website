@@ -2,9 +2,9 @@
     <div class="cover-container">
         <div class="cover-body">
             <div class="info-cover">
-                <h1>Great Health Lead a Great Life</h1>
+                <h1>{{ $t("slogan") }}</h1>
                 <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Repellat veritatis hic exercitationem ex odio,</p>
-                <button>Learn More</button>
+                <button>{{ $t("more") }}</button>
             </div>
             <div class="cover-mockup">
                 <img src="@/assets/images/cover-mockup.png" alt="">

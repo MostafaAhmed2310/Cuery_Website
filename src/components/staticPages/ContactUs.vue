@@ -8,9 +8,9 @@
                 <img src="@/assets/images/contact-img.png" alt="" />
             </div>
             <div class="contact-form">
-                <h2>Contact Us</h2>
-                <h3>GET IN TOUCH</h3>
-                <p>Always Within Your Reach</p>
+                <h2>{{ $t("contact_us.contact_us") }}</h2>
+                <h3>{{ $t("contact_us.get_in_touch") }}</h3>
+                <p>{{ $t("contact_us.always_within_your_reach") }}</p>
                 <form>
                     <div class="input-field">
                         <input type="text" placeholder="Name"/>
@@ -22,7 +22,7 @@
                         <textarea placeholder="Message"></textarea>
                     </div>
                     <div class="contact-btn">
-                        <button type="button">Send Message</button>
+                        <button type="button">{{ $t("contact_us.send_msg") }}Send Message</button>
                     </div>
                 </form>
             </div>

@@ -6,7 +6,7 @@
         <div class="profile-body">
             <div class="cover-img">
                 <img src="@/assets/images/profile-cover.png" alt="">
-                <h2>Profile</h2>
+                <h2>{{ $t("profile.profile") }}</h2>
             </div>
             <div class="profile-inputs-body">
                 <div class="profile-img-panal">
@@ -16,43 +16,43 @@
                         <img v-if="fileData" :src="fileData" alt="">
                     </div>
                     <label>
-                        Change Your Profile Picture
+                        {{ $t("profile.change_pic") }}
                         <input class="loadedFiles" @change="uploadFileFun($event)" type="file" accept="image/*">
                     </label>
                 </div>
                 <div class="inputs-container">
                     <form>
                         <div class="input-field">
-                            <input type="text" placeholder="User Name" v-model="username">
+                            <input type="text" :placeholder='$t("sign_up.username_placeholder")' v-model="username">
                         </div>
                         <div class="input-field">
-                            <input type="email" placeholder="Email" v-model="email">
+                            <input type="email" :placeholder='$t("sign_up.email_placeholder")' v-model="email">
                         </div>
                         <div class="input-field">
-                            <input type="number" placeholder="First Number Phone (Required)" v-model="phone[0].number" v-if="phone[0]">
-                            <span v-if="phoneMsg"> This field is required </span>
+                            <input type="number" :placeholder='$t("sign_up.first_num_placeholder")' v-model="phone[0].number" v-if="phone[0]">
+                            <span v-if="phoneMsg">  {{ $t("profile.field_required") }} </span>
                         </div>
                         <div class="input-field">
-                            <input type="number" placeholder="Second Number Phone (Optional)" v-model="phone[1].number" v-if="phone[1]">
+                            <input type="number" :placeholder='$t("sign_up.sec_num_placeholder")' v-model="phone[1].number" v-if="phone[1]">
                         </div>
                         <div class="input-field">
-                            <input type="number" placeholder="Third Number Phone (Optional)" v-model="phone[2].number" v-if="phone[2]">
+                            <input type="number" :placeholder= '$t("sign_up.third_num_placeholder")' v-model="phone[2].number" v-if="phone[2]">
                         </div>
                         <div class="input-field">
-                            <input type="number" placeholder="Fourth Number Phone (Optional)" v-model="phone[3].number" v-if="phone[3]">
+                            <input type="number" :placeholder= '$t("sign_up.for_num_placeholder")' v-model="phone[3].number" v-if="phone[3]">
                         </div>
                         <div class="input-field">
-                            <input type="number" placeholder="Fifth Number Phone (Optional)" v-model="phone[4].number" v-if="phone[4]">
+                            <input type="number" :placeholder= '$t("sign_up.fifth_num_placeholder")' v-model="phone[4].number" v-if="phone[4]">
                         </div>
                         <div class="input-field">
-                            <textarea class="currLocation" placeholder="Current Location" v-model="address"></textarea>
+                            <textarea class="currLocation" :placeholder='$t("map.current_loc")' v-model="address"></textarea>
                         </div>
                         <div class="profile-actions">
-                            <h4 @click="openMapBody()">Add Another Location <i class="fas fa fa-map-marker-alt"></i></h4>
+                            <h4 @click="openMapBody()">{{ $t("profile.add_another_location") }} <i class="fas fa fa-map-marker-alt"></i></h4>
                         </div>
                     </form>
                     <div class="btn-body">
-                        <button @click="submitEditProfile()">Save</button>
+                        <button @click="submitEditProfile()">{{ $t("profile.save") }}</button>
                     </div>
                 </div>
                 <div class="map" v-if="mapContainer">

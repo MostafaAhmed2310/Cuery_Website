@@ -2,12 +2,12 @@
   <div class="google-map-container">
     <div class="map-body">
       <div class="current-location-body">
-        <h4>Current Location</h4>
+        <h4>{{ $t("map.current_loc") }}</h4>
         <div class="current-address">
           <i class="fas fa fa-circle"></i>
           <textarea v-model="address" placeholder="address"></textarea>
           <button type="button" v-on:click="pickLocation">
-            Pick Your Location
+            {{ $t("map.pick_loc") }}
           </button>
         </div>
       </div>

@@ -1,0 +1,85 @@
+{
+  "slogan": "Great Health Lead a Great Life",
+  "more": "Learn More",
+  "services": "Services",
+  "we_provides": "We Provides",
+  "specialized_hospitals": "Our Specialized Hospitals",
+  "nav": {
+    "home": "Home",
+    "about": "About Us",
+    "medical_team": "Medical Team",
+    "sign_in": "Sign in",
+    "contact_us": "Contact Us",
+    "reservation_history": "Reservation History",
+    "profile": "Profile",
+    "more": "More",
+    "view_your_rate": "View Your Rate",
+    "sign_out": "Sign Out"
+  },
+  "footer": {
+      "careers": "Careers",
+      "are_you_a_patient": "Are You a Patient ?",
+      "join_our_patient_app": "Join Our Patient App",
+      "need_help": "Need Help ?",
+      "privacy_policy": "Privacy Policy",
+      "terms": "Terms Of Us",
+      "patients_privacy_policy": "Patients Privacy Policy"
+  },
+  "login": {
+      "sign_in": "Sign In",
+      "have_not_account": "Don't Have An Account ?",
+      "sign_up": "Sign Up",
+      "forget_password": "Forget Your Password ?",
+      "wrong_data": "Wrong username or password",
+      "enter_password": "Please enter password",
+      "enter_username": "Please enter username"
+  },
+  "sign_up": {
+    "create_new_account": "Create New Account",
+    "have_account": "Already Have an account ?",
+    "sign_in": "Sign In",
+    "add_profile_picture": "Add Your Profile Picture",
+    "username_required": "Username is required",
+    "email_required": "Email is required",
+    "email_not_vaild": "Email is not valid",
+    "one_phone_at_least": "At least one phone number is required",
+    "password_required": "Password is required",
+    "password_validations": "Minimum eight characters, at least one letter, one number and one special character(@ $ ! % * # ? &)",
+    "confirm_password_required": "Confirm password is required",
+    "confirm_password_not_match": "Confirm password does not match the password",
+    "enter_location": "Enter Your Location",
+    "pickup_location": "Please pickup your location",
+    "accept": "I Accept",
+    "privacy_policy": "Privacy Policy",
+    "terms": "Terms Of Service",
+    "accept_privacy_policy": "Please accept our privacy policy",
+    "accept_terms": "Please accept our terms of service",
+    "sign_up": "Sign Up",
+    "username_placeholder": "User Name",
+    "email_placeholder": "Email",
+    "first_num_placeholder": "First Number Phone (Required)",
+    "sec_num_placeholder": "Second Number Phone (Optional)",
+    "third_num_placeholder": "Third Number Phone (Optional)",
+    "for_num_placeholder": "Fourth Number Phone (Optional)",
+    "fifth_num_placeholder": "Fifth Number Phone (Optional)",
+    "password_placeholder": "Password",
+    "confirm_password_placeholder": "Confirm Password"
+  },
+  "map": {
+    "current_loc": "Current Location",
+    "pick_loc": "Pick Your Location"
+  },
+  "contact_us": {
+    "contact_us": "Contact Us",
+    "get_in_touch": "GET IN TOUCH",
+    "always_within_your_reach": "Always Within Your Reach",
+    "send_msg": "Send Message"
+  },
+  "profile": {
+    "profile": "Profile",
+    "change_pic": "Change Your Profile Picture",
+    "add_another_location": "Add Another Location",
+    "save": "Save",
+    "field_required": "This field is required"
+  }
+}

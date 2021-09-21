@@ -4,21 +4,26 @@
             <div class="logo-body">
                 <img class="logo-img" src="@/assets/logo.png"/>
             </div>
+            <div class="locale-switcher">
+                    <select v-model="$i18n.locale">
+                    <option value="en">English</option>
+                    <option value="ar">Arabic</option>
+                    </select>
+            </div>
             <ul class="nav-bar-list" v-if="auth_state == false">
-                <li><router-link to="/home" active-class="active">Home</router-link></li>
-                <li><router-link to="/medical_team" active-class="active">Medical Team</router-link></li>
-                <li>About Us</li>
-                <li>عربي</li>
-                <li class="login-btn"><router-link to="/login">Sign in</router-link></li>
+                <li><router-link to="/home" active-class="active">{{ $t("nav.home") }}</router-link></li>
+                <li><router-link to="/medical_team" active-class="active">{{ $t("nav.medical_team") }}</router-link></li>
+                <li>{{ $t("nav.about") }}</li>
+                <li class="login-btn"><router-link to="/login">{{ $t("nav.sign_in") }}</router-link></li>
             </ul>
             <ul class="nav-bar-list-hospital" v-if="auth_state == true">
-                <li><router-link to="/hospital_home" active-class="active">Home</router-link></li>
-                <li><router-link to="/contact_us" active-class="active">Contact Us</router-link></li>
-                <li><router-link to="/reservation-history" active-class="active">Reservation History</router-link></li>
+                <li><router-link to="/hospital_home" active-class="active">{{ $t("nav.home") }}</router-link></li>
+                <li><router-link to="/contact_us" active-class="active">{{ $t("nav.contact_us") }}</router-link></li>
+                <li><router-link to="/reservation-history" active-class="active">{{ $t("nav.reservation_history") }}</router-link></li>
                 <li>
                     <router-link to="/profile" active-class="active">
                         <i class="profile-icon far fa fa-user-circle"></i>
-                        <span>Profile</span>
+                        <span>{{ $t("nav.profile") }}</span>
                     </router-link>
                 </li>
                 <li class="global-li">
@@ -29,7 +34,7 @@
                 </li>
                 <li @click="moreMenu = !moreMenu">
                     <i class="profile-icon fas fa fa-ellipsis-v"></i>
-                    <span>More</span>
+                    <span>{{ $t("nav.more") }}</span>
                 </li>
             </ul>
         </div>
@@ -37,12 +42,12 @@
             <router-link to="/ratings">
                 <span>
                     <i class="fas fa fa-star"></i>
-                    View Your Rate
+                    {{ $t("nav.view_your_rate") }}
                 </span>
             </router-link>
             <span @click="logout()">
                 <i class="fas fa fa-sign-out-alt"></i>
-                Sign Out
+                {{ $t("nav.sign_out") }}
             </span>
         </div>
     </div>

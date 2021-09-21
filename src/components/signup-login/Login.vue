@@ -5,22 +5,22 @@
                 <img src="@/assets/images/login/login-img.png" alt="">
             </div>
             <div class="login-form">
-                <h2>Sign In</h2>
-                <p>Dont Have An Account ? <span @click="pushToSignup()">Sign up.</span></p>
+                <h2>{{ $t("nav.sign_in") }}</h2>
+                <p>{{ $t("login.have_not_account") }} <span @click="pushToSignup()">{{ $t("login.sign_up") }} </span></p>
                 <form>
                     <div class="input-field">
                         <input type="text" placeholder="User Name" v-model="username">
-                        <span v-if="usernameMsg">Please enter username</span>
+                        <span v-if="usernameMsg">{{ $t("login.enter_username") }}</span>
                     </div>
                     <div class="input-field">
                         <input type="password" placeholder="Password" v-model="password">
-                        <span v-if="passwordMsg">Please enter password</span>
-                        <span v-if="errorMsg">Wrong username or password</span>
+                        <span v-if="passwordMsg">{{ $t("login.enter_password") }}</span>
+                        <span v-if="errorMsg"> {{ $t("login.wrong_data") }}</span>
                     </div>
                     <div class="login-btn">
-                        <button type="button" @click="loginFun()">Sign in</button>
+                        <button type="button" @click="loginFun()">{{ $t("login.sign_in") }} </button>
                     </div>
-                    <span class="forget-password">Forget Your Password ?</span>
+                    <span class="forget-password">{{ $t("login.forget_password") }}</span>
                 </form>
             </div>
         </div>

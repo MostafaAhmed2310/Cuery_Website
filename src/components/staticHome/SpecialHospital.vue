@@ -1,13 +1,13 @@
 <template>
     <div class="special-hospital-container">
         <div class="special-hospital-body">
-            <h1>Our Specialized Hospitals</h1>
+            <h1> {{ $t("specialized_hospitals") }}</h1>
             <div class="hospital-info">
                 <h2>{{highestHospital.name}}</h2>
                 <p v-if="highestHospital.description">{{highestHospital.description}}</p>
                 <p v-if="!highestHospital.description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium magni, architecto temporibus adipisci distinctio, quae labore doloremque fugiat necessitatibus tempore illo. Autem, et ipsum! Quisquam similique deserunt minus exercitationem delectus?Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium magni, architecto temporibus adipisci distinctio, quae labore doloremque fugiat necessitatibus tempore illo. Autem, et ipsum! Quisquam similique deserunt minus exercitationem delectus?Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium magni, architecto temporibus adipisci distinctio, quae labore doloremque fugiat necessitatibus tempore illo. Autem, et ipsum! Quisquam similique deserunt minus exercitationem delectus?</p>
                 <router-link to="/medical_team">
-                    <button>See More</button>
+                    <button>{{ $t("more") }}</button>
                 </router-link>
             </div>
             <div class="hospital-img">

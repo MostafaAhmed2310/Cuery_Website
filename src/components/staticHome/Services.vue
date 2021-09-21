@@ -1,6 +1,6 @@
 <template>
     <div class="services-container">
-        <h1>Services<br> We Provides</h1>
+        <h1>{{ $t("services") }}<br> {{ $t("we_provides") }}</h1>
         <div class="cards-container">
             <div class="cards-info">
                 <div v-if="service1">
