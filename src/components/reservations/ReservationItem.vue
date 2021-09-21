@@ -3,6 +3,9 @@
         <div class="loader-container" v-if="loaderFlag">
             <DoubleBounce></DoubleBounce>
         </div>
+        <div class="popup-overlay" v-if="declinePopup">
+            <DeclinePopup @updateReservationsList="updateReservationsList" @closePopup="closePopup"/>
+        </div>
         <div class="reservation-item">
             <div class="block">
                 <div class="profile-img">
@@ -36,7 +39,7 @@
         <div class="block">
             <div class="reservation-btns">
                 <button @click="confirmReservation(reservationObj.id)">Confirm</button>
-                <button @click="declineReservation(reservationObj.id)">Decline</button>
+                <button @click="openDeclinePopup()">Decline</button>
             </div>
         </div>
     </div>
@@ -47,9 +50,11 @@ import { Component, Vue,Watch } from 'vue-property-decorator';
 import { getReservation, confirmReservation, declineReservation  } from '@/endpoints/reservations';
 import {DoubleBounce} from 'vue-loading-spinner';
 import {BaseUrl} from '@/app.config';
+import DeclinePopup from '@/components/appoinetments/DeclinePopup.vue';
 @Component({
     components: {
         DoubleBounce,
+        DeclinePopup,
     },
 })
 export default class ReservationItem extends Vue {
@@ -57,6 +62,7 @@ export default class ReservationItem extends Vue {
     loaderFlag = false;
     resId =this.$route.params.id;
     BaseUrl = BaseUrl;
+    declinePopup = false;
     @Watch('$route', { immediate: true, deep: true })
     onUrlChange(newVal) {
         this.resId =this.$route.params.id
@@ -81,11 +87,17 @@ export default class ReservationItem extends Vue {
             this.$router.push('/reservations');
         }
     }
-    declineReservation(reservation_id){
-        declineReservation(reservation_id)
+    openDeclinePopup(){
+        this.declinePopup = true;
+    }
+    closePopup(){
+        this.declinePopup = false;
     }
     updateDetailsFun(){
         this.getReservation(this.resId)
+    }
+    updateReservationsList(){
+        this.$emit('updateReservationsList');
     }
     mounted(){
         this.getReservation(this.resId)
@@ -202,5 +214,14 @@ export default class ReservationItem extends Vue {
 }
 .reservation-btns button:nth-of-type(2){
     background: var(--alert-color);
+}
+.popup-overlay{
+    position: fixed;
+    z-index: 9999;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.5);
 }
 </style>

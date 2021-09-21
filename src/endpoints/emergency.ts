@@ -48,3 +48,10 @@ export async function unassignService(id:any){
   if (res) return res.data
   else return false
 }
+
+export async function declineEmergency(id:any){
+  let res = await api
+  .post('api/reject_emergency/'+id);
+  if (res) return res.data.id
+  else return false
+}

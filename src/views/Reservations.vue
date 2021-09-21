@@ -19,10 +19,10 @@
             </div>
             <div class="reservations-inputs-body" v-if="reservationBodyFlag">
                 <div class="reservations-panal">
-                    <ReservationsList @updateLength="updateLength" @updateDetails="updateReservationDetails"/>
+                    <ReservationsList @updateLength="updateLength" @updateDetails="updateReservationDetails" ref="updateList"/>
                 </div>
                 <div class="reservation-body">
-                    <router-view ref="updatePage"></router-view>
+                    <router-view @updateReservationsList="updateReservationsList" ref="updatePage"></router-view>
                 </div>
             </div>
         </div>
@@ -56,6 +56,9 @@ export default class Reservations extends Vue {
             this.placeHolderFlag = false;
             this.reservationBodyFlag = true;
         }
+    }
+    updateReservationsList(){
+        (<any>this.$refs.updateList).updateReservationsList()
     }
 }
 </script>

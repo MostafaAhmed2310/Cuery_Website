@@ -21,13 +21,13 @@
                         <span @click="openEmergency()" :class="activeTabEmergency">Emergency</span>
                     </div>
                     <AppoinetmentsLists @updateLength="updateLength" v-if="normalList" ref="updateAppointmentList"/>
-                    <AppoinetmentsEmergency @updateEmergencyLength="updateEmergencyLength" v-if="emergencyList"/>
+                    <AppoinetmentsEmergency @updateEmergencyLength="updateEmergencyLength" v-if="emergencyList" ref="updateEmergencyAppointment"/>
                 </div>
                 <div class="placeholder-body" v-if="placeholderFlag">
                     <PagePlaceholder/>
                 </div>
                 <div class="reservation-body">
-                    <router-view @updateAppointmentList="updateAppointmentList"></router-view>
+                    <router-view @updateEmergencyAppointment="updateEmergencyAppointment" @updateAppointmentList="updateAppointmentList"></router-view>
                 </div>
             </div>
         </div>
@@ -57,6 +57,10 @@ export default class Appoinetments extends Vue {
     normalLength = 0;
     emergencyLength = 0;
     placeholderFlag = false;
+    updateEmergencyAppointment(){
+        this.openEmergency();
+        (<any>this.$refs.updateEmergencyAppointment).updateEmergencyAppointment();
+    }
     updateLength(len:any){
         this.normalLength = len;
         if(this.normalLength == 0){

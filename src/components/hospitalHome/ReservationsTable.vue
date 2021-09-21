@@ -3,6 +3,9 @@
         <div class="loader-container" v-if="loaderFlag">
             <DoubleBounce></DoubleBounce>
         </div>
+        <div class="popup-overlay" v-if="declinePopup">
+            <DeclinePopup @updateLatestReservations="updateLatestReservations" @closePopup="closePopup" ref="updateId"/>
+        </div>
         <div class="table-title">
             <h4>Latest Reservations</h4>
         </div>
@@ -23,7 +26,7 @@
                 </router-link>
                 <div class="table-btns">
                     <button class="green-btn" @click="ConfirmReservation(row.id)">Confirm</button>
-                    <button class="red-btn" @click="declineReservation(row.id)">Decline</button>
+                    <button class="red-btn" @click="openDeclinePopup(row.id)">Decline</button>
                 </div>
                 <hr>
             </div>
@@ -33,20 +36,23 @@
 
 <script>
 import { Component, Vue } from 'vue-property-decorator';
-import { getlatestReservations, confirmReservation, declineReservation } from '@/endpoints/reservations';
+import { getlatestReservations, confirmReservation} from '@/endpoints/reservations';
 import Calendar from '@/assets/icons/Calendar.vue';
 import {DoubleBounce} from 'vue-loading-spinner';
 import {BaseUrl} from '@/app.config';
+import DeclinePopup from '@/components/appoinetments/DeclinePopup.vue';
 @Component({
     components: {
         Calendar,
         DoubleBounce,
+        DeclinePopup
     },
 })
 export default class ReservationsTable extends Vue {
     tableArr = [];
     loaderFlag = false;
     BaseUrl = BaseUrl;
+    declinePopup = false;
     async getlatestReservations(){
         this.tableArr = await getlatestReservations();
     }
@@ -64,8 +70,17 @@ export default class ReservationsTable extends Vue {
             this.getlatestReservations();
         }
     }
-    declineReservation(reservation_id){
-        declineReservation(reservation_id)
+    updateLatestReservations(){
+        this.getlatestReservations();
+    }
+    openDeclinePopup(declineId){
+        this.declinePopup = true;
+        setTimeout(() => {
+            this.$refs.updateId.updateDeclineId(declineId);
+        }, 300);
+    }
+    closePopup(){
+        this.declinePopup = false;
     }
     mounted(){
         this.getlatestReservations()
@@ -155,5 +170,14 @@ export default class ReservationsTable extends Vue {
 .placeholder{
     text-align: center;
     color: var(--font-navy);
+}
+.popup-overlay{
+    position: fixed;
+    z-index: 9999;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.5);
 }
 </style>

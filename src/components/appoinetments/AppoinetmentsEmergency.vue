@@ -40,6 +40,9 @@ export default class AppoinetmentsEmergency extends Vue {
         this.checkArrayLength();
         this.loaderFlag = false;
     }
+    updateEmergencyAppointment(){
+        this.getEmergencyAppoinetmentsList();
+    }
     checkArrayLength(){
         this.$emit('updateEmergencyLength', this.length);
     }

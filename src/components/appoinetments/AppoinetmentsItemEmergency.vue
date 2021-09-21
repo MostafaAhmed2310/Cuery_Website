@@ -38,7 +38,7 @@
         <div class="block">
             <div class="reservation-btns">
                 <router-link :to="'/confirmation/'+ $route.params.id"><button class="arrived-btn">Arrived</button></router-link>
-                <button class="decline-btn">Decline</button>
+                <button class="decline-btn" @click="declineemergency($route.params.id)">Decline</button>
             </div>
         </div>
     </div>
@@ -49,6 +49,7 @@ import { Component, Vue, Watch } from 'vue-property-decorator';
 import { getEmergencyReservation } from '@/endpoints/reservations';
 import {DoubleBounce} from 'vue-loading-spinner';
 import {BaseUrl} from '@/app.config';
+import {declineEmergency} from '@/endpoints/emergency';
 @Component({
     components: {
         DoubleBounce,
@@ -68,6 +69,14 @@ export default class AppoinetmentsItemEmergency extends Vue {
         this.loaderFlag = true;
         this.reservationObj = await getEmergencyReservation(resId);
         this.loaderFlag = false;
+    }
+    async declineemergency(id){
+        this.loaderFlag = true;
+        let res = await declineEmergency(id);
+        this.loaderFlag = false;
+        if(res){
+            this.$emit('updateEmergencyAppointment');
+        }
     }
     mounted(){
         this.getEmergencyReservation(this.resId)

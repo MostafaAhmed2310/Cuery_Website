@@ -3,6 +3,9 @@
         <div class="loader-container" v-if="loaderFlag">
             <DoubleBounce></DoubleBounce>
         </div>
+        <div class="popup-overlay" v-if="declinePopup">
+            <DeclinePopup @updateReservationsList="updateReservationsList" @closePopup="closePopup" ref="updateId"/>
+        </div>
         <div class="reservatios-item" v-for="reservation in reservationsList" :key="reservation">
             <router-link :to="'/reservations/' + reservation.id" @click="updateDetails()">
                 <div class="profile-img">
@@ -16,7 +19,7 @@
             </router-link>
             <div class="reservations-btns">
                 <button @click="confirmReservation(reservation.id)">Confirm</button>
-                <button @click="declineReservation(reservation.id)">Decline</button>
+                <button @click="openDeclinePopup(reservation.id)">Decline</button>
             </div>
         </div>
     </div>
@@ -24,12 +27,14 @@
 
 <script>
 import { Component, Vue } from 'vue-property-decorator';
-import { getReservationsList, confirmReservation, declineReservation } from '@/endpoints/reservations';
+import { getReservationsList, confirmReservation} from '@/endpoints/reservations';
 import {DoubleBounce} from 'vue-loading-spinner';
 import {BaseUrl} from '@/app.config';
+import DeclinePopup from '@/components/appoinetments/DeclinePopup.vue';
 @Component({
     components: {
-        DoubleBounce
+        DoubleBounce,
+        DeclinePopup
     },
 })
 export default class ReservationsList extends Vue {
@@ -37,6 +42,7 @@ export default class ReservationsList extends Vue {
     loaderFlag = false;
     length = 0;
     BaseUrl = BaseUrl;
+    declinePopup = false;
     async getReservationsList(){
         this.loaderFlag = true;
         this.reservationsList = await getReservationsList();
@@ -45,7 +51,7 @@ export default class ReservationsList extends Vue {
         this.loaderFlag = false;
     }
     checkArrayLength(){
-        this.$emit('updateLength', this.length)
+        this.$emit('updateLength', this.length);
     }
     async confirmReservation(reservation_id){
         this.loaderFlag = true;
@@ -61,16 +67,23 @@ export default class ReservationsList extends Vue {
             this.getReservationsList();
         }
     }
-
-    declineReservation(reservation_id){
-        declineReservation(reservation_id)
-    }
     updateDetails(){
         this.$emit('updateDetails');
     }
-
+    updateReservationsList(){
+        this.getReservationsList();
+    }
+    openDeclinePopup(declineId){
+        this.declinePopup = true;
+        setTimeout(() => {
+            this.$refs.updateId.updateDeclineId(declineId);
+        }, 300);
+    }
+    closePopup(){
+        this.declinePopup = false;
+    }
     mounted(){
-        this.getReservationsList()
+        this.getReservationsList();
     }
 }
 </script>
@@ -138,5 +151,14 @@ export default class ReservationsList extends Vue {
 }
 .reservations-btns button:nth-of-type(2){
     background: var(--alert-color);
+}
+.popup-overlay{
+    position: fixed;
+    z-index: 9999;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.5);
 }
 </style>

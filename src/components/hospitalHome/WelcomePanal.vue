@@ -1,8 +1,11 @@
 <template>
     <div class="welcome-panal-container">
+        <div class="loader-container" v-if="loaderFlag">
+            <DoubleBounce></DoubleBounce>
+        </div>
         <div class="panal-profile-img">
-            <img src="" alt="">
-            <i class="fas fa fa-user-circle"></i>
+            <img :src="BaseUrl+imagePath" alt="" v-if="imagePath">
+            <i class="fas fa fa-user-circle" v-if="imagePath == null || !imagePath"></i>
         </div>
         <div class="welcome-panal-info">
             <h3>Hi " {{userName}} "</h3>
@@ -12,19 +15,27 @@
     </div>
 </template>
 
-<script lang="ts">
+<script>
 import { Component, Vue } from 'vue-property-decorator';
 import {getUserInfo} from '@/endpoints/user';
+import {BaseUrl} from '@/app.config';
+import {DoubleBounce} from 'vue-loading-spinner';
 @Component({
     components: {
-
+        DoubleBounce,
     },
 })
 export default class WelcomePanal extends Vue {
-    userName:any = '';
+    userName = '';
+    imagePath = '';
+    BaseUrl = BaseUrl;
+    loaderFlag = false;
     async getInfo(){
+        this.loaderFlag = true;
         let res = await getUserInfo();
         this.userName = res.name;
+        this.imagePath = res.image_path;
+        this.loaderFlag = false;
     }
     mounted() {
         this.getInfo();
@@ -58,6 +69,11 @@ export default class WelcomePanal extends Vue {
     font-size: 48px;
     line-height: 1.5;
     margin-top: 20px;
+    overflow: hidden;
+}
+.panal-profile-img img{
+    width: 100%;
+    height: 100%;
 }
 .welcome-panal-info{
     float: right;
