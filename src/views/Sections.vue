@@ -10,14 +10,14 @@
                     <router-link to="/hospital_home">
                         <i class="fas fa-chevron-left"></i> 
                     </router-link>
-                    My Sections
+                   {{ $t("sections.my_sections") }}
                 </h2>
                 <div class="section-btns" v-if="sections.length != 0">
                     <router-link to="/add-section">
-                        <button class="add-section"><i class="fas fa-plus-circle"></i>Add New Section</button>
+                        <button class="add-section"><i class="fas fa-plus-circle"></i>{{ $t("sections.add_new") }}</button>
                     </router-link>
                     <router-link to="/suggest-sections">
-                        <button class="suggest-section"><i class="fas fa-plus-circle"></i>Suggest New Section</button>
+                        <button class="suggest-section"><i class="fas fa-plus-circle"></i>{{ $t("sections.suggest_section") }}</button>
                     </router-link>
                 </div>
             </div>
@@ -32,7 +32,7 @@
                     <div class="section-items" v-for="section in sections" :key="section">
                         <router-link :to="'/section-details/' + section.id">
                             <div class="item">
-                                <div v-if="section.is_verified == 'n' && titleHover == true && sectionId == section.id" class="pending-title">This Section Not Verified Yet</div>
+                                <div v-if="section.is_verified == 'n' && titleHover == true && sectionId == section.id" class="pending-title">{{ $t("sections.not_verified") }}</div>
                                 <i @mouseover="showTitle(section.id)" @mouseleave="hideTitle()" v-if="section.is_verified == 'n'" class="fas fa-exclamation-circle"></i>
                                 <div class="section-item-img">
                                     <img v-if="section.icon_id == 1" src="@/assets/images/sectionIcons/blood.png" alt="">

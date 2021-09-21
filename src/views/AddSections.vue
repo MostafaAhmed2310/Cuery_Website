@@ -10,7 +10,7 @@
                     <router-link to="/sections">
                         <i class="fas fa-chevron-left"></i> 
                     </router-link>
-                    Add New Section
+                    {{ $t("sections.add_new") }}
                 </h2>
             </div>
             <div class="sections-inputs-body">
@@ -18,9 +18,9 @@
                     <img src="@/assets/images/section-img.png" alt="">
                 </div>
                 <div class="left-side">
-                    <multiselect v-model="selectedSection" :options="sections" label="section_title" :close-on-select="true" track-by="section_title" :searchable="true"  :show-labels="false" placeholder="Select New Section"></multiselect>
+                    <multiselect v-model="selectedSection" :options="sections" label="section_title" :close-on-select="true" track-by="section_title" :searchable="true"  :show-labels="false" :placeholder='$t("sections.select_section")'></multiselect>
                     <div class="add-section-btn">
-                        <button @click="openSectionPanal()"><i class="fas fa-plus-circle"></i> Add Section</button>
+                        <button @click="openSectionPanal()"><i class="fas fa-plus-circle"></i> {{ $t("sections.add_section") }}</button>
                     </div>
                 </div>
             </div>

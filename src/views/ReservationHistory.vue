@@ -10,7 +10,7 @@
                     <router-link to="/hospital_home">
                         <i class="fas fa-chevron-left"></i> 
                     </router-link>
-                    Reservation History
+                    {{ $t("nav.reservation_history") }}
                 </h2>
             </div>
             <div v-if="placeHolderFlag">

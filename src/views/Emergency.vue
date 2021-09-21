@@ -10,7 +10,7 @@
                     <router-link to="/hospital_home">
                         <i class="fas fa-chevron-left"></i> 
                     </router-link>
-                    Emergency
+                    {{ $t("appoinetments.emergency") }}
                 </h2>
                 <Emergency class="calendar"/>
             </div>

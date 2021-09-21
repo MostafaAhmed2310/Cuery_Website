@@ -4,6 +4,7 @@
   "services": "خدمات",
   "we_provides":  "نقدمها",
   "specialized_hospitals": "مستشفياتنا المتخصصة",
+  "messages": "الرسائل",
   "nav": {
     "home": "الرئيسية",
     "about": "نبذة عنا",
@@ -87,5 +88,27 @@
     "hospitals": "المستشفيات التي نعمل معها",
     "all": "كل هؤلاء جزء من كياننا ..",
     "join_us": "انضم إلينا الآن."
+  },
+  "sections": {
+    "add_new": "إضافة قسم جديد",
+    "add_section": "إضافة قسم",
+    "select_section": "حدد قسم جديد",
+    "edit_schedule": "تعديل الموعد",
+    "delete_section": "حذف القسم",
+    "prev_app": "المواعيد السابقة",
+    "my_sections": "أقسامي",
+    "suggest_section": "أقترح قسم جديد",
+    "not_verified": "هذا القسم لم يتم التحقق منه بعد"
+  },
+  "appoinetments": {
+    "title": "المواعيد",
+    "general": "العام",
+    "emergency": "الطوارئ"
+  },
+  "reservations": {
+    "title": "الحجوزات"
+  },
+  "ratings": {
+    "title": "التقييمات"
   }
 }

@@ -6,7 +6,7 @@
         <div class="messages-body">
             <div class="cover-img">
                 <img src="@/assets/images/profile-cover.png" alt="">
-                <h2>Ratings</h2>
+                <h2> {{ $t("ratings.title") }}</h2>
             </div>
             <div class="ratings-body">
                 <div class="rating-list">

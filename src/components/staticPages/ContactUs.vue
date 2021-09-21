@@ -22,7 +22,7 @@
                         <textarea placeholder="Message"></textarea>
                     </div>
                     <div class="contact-btn">
-                        <button type="button">{{ $t("contact_us.send_msg") }}Send Message</button>
+                        <button type="button">{{ $t("contact_us.send_msg") }}</button>
                     </div>
                 </form>
             </div>

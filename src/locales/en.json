@@ -4,6 +4,7 @@
   "services": "Services",
   "we_provides": "We Provides",
   "specialized_hospitals": "Our Specialized Hospitals",
+  "messages": "Messages",
   "nav": {
     "home": "Home",
     "about": "About Us",
@@ -87,5 +88,28 @@
     "hospitals": "Hospitals We Works With",
     "all": "All of these are part of our entity ..",
     "join_us": "Join us now ."
+  },
+  "sections": {
+    "add_new": "Add New Section",
+    "add_section": "Add Section",
+    "select_section" : "Select New Section",
+    "edit_schedule": "Edit Your Schedule",
+    "delete_section": "Delete Section",
+    "prev_app": "Previous Appointments",
+    "my_sections": "My Sections",
+    "suggest_section": "Suggest New Section",
+    "not_verified": "This Section Not Verified Yet"
+  },
+  "appoinetments": {
+    "title": "Appoinetments",
+    "general": "General",
+    "emergency": "Emergency"
+  },
+  "reservations": {
+    "title": "Reservations"
+  },
+  "ratings": {
+    "title": "Ratings"
   }
+  
 }

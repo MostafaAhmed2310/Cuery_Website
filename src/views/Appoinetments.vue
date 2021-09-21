@@ -10,15 +10,15 @@
                     <router-link to="/hospital_home">
                         <i class="fas fa-chevron-left"></i> 
                     </router-link>
-                    Appoinetments
+                    {{ $t("appoinetments.title") }}
                 </h2>
                 <AppoinetmentsSVG class="calendar"/>
             </div>
             <div class="reservations-inputs-body">
                 <div class="reservations-panal">
                     <div class="appoinetments-tabs">
-                        <span @click="openGeneral()" :class="activeTabGeneral">General</span>
-                        <span @click="openEmergency()" :class="activeTabEmergency">Emergency</span>
+                        <span @click="openGeneral()" :class="activeTabGeneral">{{ $t("appoinetments.general") }}</span>
+                        <span @click="openEmergency()" :class="activeTabEmergency">{{ $t("appoinetments.emergency") }}</span>
                     </div>
                     <AppoinetmentsLists @updateLength="updateLength" v-if="normalList" ref="updateAppointmentList"/>
                     <AppoinetmentsEmergency @updateEmergencyLength="updateEmergencyLength" v-if="emergencyList" ref="updateEmergencyAppointment"/>

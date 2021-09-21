@@ -10,7 +10,7 @@
                     <router-link to="/sections">
                         <i class="fas fa-chevron-left"></i> 
                     </router-link>
-                    Suggest New Section
+                    {{ $t("sections.suggest_section") }}
                 </h2>
             </div>
             <div class="sections-inputs-body">

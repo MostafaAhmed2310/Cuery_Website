@@ -10,7 +10,7 @@
                     <router-link to="/hospital_home">
                         <i class="fas fa-chevron-left"></i> 
                     </router-link>
-                    Reservations
+                    {{ $t("reservations.title") }}
                 </h2>
                 <Calendar class="calendar"/>
             </div>
