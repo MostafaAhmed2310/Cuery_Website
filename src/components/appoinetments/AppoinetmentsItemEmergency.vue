@@ -21,24 +21,24 @@
             <div class="block">
                 <div class="left-btn">
                     <button>{{ reservationObj.Day }}</button>
-                    <span>Request Time</span>
+                    <span>{{ $t("appoinetments.req_time") }}</span>
                     <span>At {{ reservationObj.call_time }}</span>
                 </div>
             </div>
             <div class="block emergency-block">
                 <div class="left-btn">
-                    <h6>Ambulance</h6>
-                    <h5>Max Time Arrived 02:15 Am</h5>
+                    <h6>{{ $t("appoinetments.ambulance") }}</h6>
+                    <h5>{{ $t("appoinetments.max_time") }} 02:15 Am</h5>
                 </div>
                 <div class="right-btn">
-                    <span>{{ reservationObj.charge }}</span><span>EGP</span>
+                    <span>{{ reservationObj.charge }}</span><span>{{ $t("sections.egp") }}</span>
                 </div>
             </div>
         </div>
         <div class="block">
             <div class="reservation-btns">
-                <router-link :to="'/confirmation/'+ $route.params.id"><button class="arrived-btn">Arrived</button></router-link>
-                <button class="decline-btn" @click="declineemergency($route.params.id)">Decline</button>
+                <router-link :to="'/confirmation/'+ $route.params.id"><button class="arrived-btn">{{ $t("appoinetments.arrived") }}</button></router-link>
+                <button class="decline-btn" @click="declineemergency($route.params.id)">{{ $t("reservations.decline") }}</button>
             </div>
         </div>
     </div>

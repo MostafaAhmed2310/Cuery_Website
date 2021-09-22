@@ -21,17 +21,17 @@
             <div class="block">
                 <div class="left-btn">
                     <button>{{ reservationObj.Day }}</button>
-                    <span>Request Time</span>
+                    <span>{{ $t("appoinetments.req_time") }}</span>
                     <span>{{ reservationObj.reservation_date }} , {{ reservationObj.start_time }}:00</span>
                 </div>
                 <div class="right-btn">
-                    <span>200</span><span>EGP</span>
+                    <span>200</span><span>{{ $t("sections.egp") }}</span>
                 </div>
             </div>
         </div>
         <div class="block">
             <div class="reservation-btns">
-                <button @click="finishRequest()" class="arrived-btn">Service Done</button>
+                <button @click="finishRequest()" class="arrived-btn">{{ $t("appoinetments.service_done") }}</button>
             </div>
         </div>
     </div>

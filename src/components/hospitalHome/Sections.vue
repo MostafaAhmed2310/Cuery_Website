@@ -1,7 +1,7 @@
 <template>
     <div class="sections-container">
         <div class="sections-title">
-            <h2>My Sections</h2>
+            <h2>{{ $t("sections.my_sections") }}</h2>
         </div>
         <div class="sections-body">
             <div class="section-item" v-for="section in sectionsList" :key="section">
@@ -22,7 +22,7 @@
                 <p>{{ section.section_title }}</p>
             </div>
             <router-link to="/sections">
-                <span>More <i class="fas fa fa-sort-up"></i></span>
+                <span>{{ $t("more") }} <i class="fas fa fa-sort-up"></i></span>
             </router-link>
         </div>
     </div>

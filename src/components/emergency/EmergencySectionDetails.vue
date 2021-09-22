@@ -19,16 +19,16 @@
             </div>
             <div class="sections-inputs-body">
                 <div class="right-side">
-                    <button @click="openSectionPanal()" class="edit-btn"><i class="fas fa-pen"></i>Edit Your Schedule</button>
-                    <button @click="removeSection()" class="delete-btn"><i class="fas fa-trash"></i>Delete Section</button>
+                    <button @click="openSectionPanal()" class="edit-btn"><i class="fas fa-pen"></i>{{ $t("sections.edit_schedule") }}</button>
+                    <button @click="removeSection()" class="delete-btn"><i class="fas fa-trash"></i>{{ $t("sections.delete_section") }}</button>
                 </div>
                 <div class="left-side">
-                    <h4>Previous Appointments</h4>
+                    <h4>{{ $t("sections.prev_app") }}</h4>
                     <div class="appointment-body">
                         <div class="item" v-for="day in days" :key="day">
                             <div class="day-square">{{getDayName(day)}}</div>
-                            <span class="time-body">From {{sectionDetailsObj.details.from}}</span>
-                            <span class="time-body">To {{sectionDetailsObj.details.to}}</span>
+                            <span class="time-body">{{ $t("sections.from") }} {{sectionDetailsObj.details.from}}</span>
+                            <span class="time-body">{{ $t("sections.to") }} {{sectionDetailsObj.details.to}}</span>
                         </div>
                     </div>
                 </div>

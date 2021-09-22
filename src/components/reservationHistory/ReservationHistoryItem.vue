@@ -12,7 +12,7 @@
             </div>
             <div class="block">
                 <h5>{{ reservationObj.section_title }}</h5>
-                <h5>Phone Num. : {{ reservationObj.phone }}</h5>
+                <h5>{{ $t("reservations.phone_num") }} {{ reservationObj.phone }}</h5>
             </div>
             <div class="block">
                 <div class="left-btn">
@@ -23,13 +23,13 @@
                     <span class="finish"></span>
                     <!-- <span class="pending"></span>
                     <span class="cancel"></span> -->
-                    <span class="status">Finished</span>
+                    <span class="status">{{ $t("reservations.finished") }}</span>
                 </div>
             </div>
         </div>
         <div class="block">
-            <h5>limit your time</h5>
-            <h6>From <span>{{ reservationObj.start_time }}:00</span> To <span>{{ reservationObj.end_time }}:00 </span></h6>
+            <h5>{{ $t("reservations.limit_your_time") }}</h5>
+            <h6>{{ $t("reservations.from") }} <span>{{ reservationObj.start_time }}:00</span> {{ $t("reservations.to") }} <span>{{ reservationObj.end_time }}:00 </span></h6>
         </div>
     </div>
 </template>

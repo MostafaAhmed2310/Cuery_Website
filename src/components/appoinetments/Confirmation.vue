@@ -3,13 +3,13 @@
         <div class="confirmation-code-body">
             <div class="card-title">
                 <i class="fas fa fa-check"></i>
-                <h4>CONFIRMATION</h4>
+                <h4>{{ $t("appoinetments.confirmation") }}</h4>
             </div>
             <div class="card-info">
                 <svg xmlns="http://www.w3.org/2000/svg" width="28.27" height="21.339" viewBox="0 0 38.27 31.339">
                     <path id="mobile_icon_" data-name="mobile icon " d="M26.639,31.339H12.065a2.88,2.88,0,0,1-2.087-.834,2.731,2.731,0,0,1-.856-2.033V2.868A2.734,2.734,0,0,1,9.979.833,2.874,2.874,0,0,1,12.065,0H26.639a2.878,2.878,0,0,1,2.087.834,2.726,2.726,0,0,1,.855,2.034v25.6a2.73,2.73,0,0,1-.856,2.034,2.871,2.871,0,0,1-2.083.833ZM12.065,27.072H26.639V4.268H12.065ZM34.1,20.2a6.421,6.421,0,0,0,1.984-4.667A6,6,0,0,0,34.1,11l1.437-1.467A8.192,8.192,0,0,1,38.27,15.67a7.784,7.784,0,0,1-2.737,6ZM0,15.67A8.19,8.19,0,0,1,2.737,9.535L4.174,11A6,6,0,0,0,2.19,15.537,6.421,6.421,0,0,0,4.174,20.2L2.737,21.671A7.782,7.782,0,0,1,0,15.67ZM31.018,17.2a2.474,2.474,0,0,0,0-3.267l1.437-1.4a4.383,4.383,0,0,1,1.369,3.134,3.959,3.959,0,0,1-1.369,3ZM4.448,15.67a4.384,4.384,0,0,1,1.369-3.134l1.437,1.4a2.474,2.474,0,0,0,0,3.267L5.816,18.67A3.959,3.959,0,0,1,4.448,15.67Z" fill="#2e3a60"/>
                 </svg>
-                <span>Please Type The Verification Code We Sent to User</span>
+                <span>{{ $t("appoinetments.enter_code") }}r</span>
             </div>
             <div class="numbers-panal">
                 <input type="number" v-model="num1" placeholder="-">
@@ -17,9 +17,9 @@
                 <input type="number" v-model="num3" placeholder="-">
                 <input type="number" v-model="num4" placeholder="-">
             </div>
-            <span class="err-msg" v-if="errorFlag" >Code is wrong</span>
+            <span class="err-msg" v-if="errorFlag" >{{ $t("appoinetments.wrong_code") }}</span>
             <div class="confirm-btn">
-                <button @click="confirmPatient()">Confirm <i class="fas fa fa-sort-up"></i></button>
+                <button @click="confirmPatient()">{{ $t("appoinetments.confirm") }} <i class="fas fa fa-sort-up"></i></button>
             </div>
         </div>
     </div>

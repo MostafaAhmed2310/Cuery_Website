@@ -18,7 +18,7 @@
             </div>
             <div class="block">
                 <h5>{{ reservationObj.section_title }}</h5>
-                <h5>Phone Num. : {{ reservationObj.phone }}</h5>
+                <h5>{{ $t("reservations.phone_num") }} {{ reservationObj.phone }}</h5>
             </div>
             <div class="block">
                 <div class="left-btn">
@@ -27,19 +27,19 @@
                 </div>
                 <div class="right-btn">
                     <router-link :to="'/messages/'+ reservationObj.user_id">
-                        <button>Start Conversation</button>
+                        <button>{{ $t("reservations.start_conversation") }}</button>
                     </router-link>
                 </div>
             </div>
         </div>
         <div class="block">
-            <h5>limit your time</h5>
-            <h6>From <span>{{ reservationObj.start_time }}:00</span> To <span>{{ reservationObj.end_time }}:00 </span></h6>
+            <h5>{{ $t("reservations.limit_your_time") }}</h5>
+            <h6>{{ $t("reservations.from") }} <span>{{ reservationObj.start_time }}:00</span> {{ $t("reservations.to") }} <span>{{ reservationObj.end_time }}:00 </span></h6>
         </div>
         <div class="block">
             <div class="reservation-btns">
-                <button @click="confirmReservation(reservationObj.id)">Confirm</button>
-                <button @click="openDeclinePopup()">Decline</button>
+                <button @click="confirmReservation(reservationObj.id)">{{ $t("reservations.confirm") }}</button>
+                <button @click="openDeclinePopup()">{{ $t("reservations.decline") }}</button>
             </div>
         </div>
     </div>

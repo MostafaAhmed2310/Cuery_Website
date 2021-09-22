@@ -15,19 +15,19 @@
             </div>
             <div class="sections-inputs-body">
                 <div class="input-body">
-                    <input type="text" v-model="sectionEn" placeholder="Write Section Name EN">
-                    <span v-if="enSectionErr">Please enter English section</span>
+                    <input type="text" v-model="sectionEn" :placeholder='$t("sections.en_section_placeholder")'>
+                    <span v-if="enSectionErr">{{ $t("sections.enter_en_section") }}n</span>
                 </div>
                 <div class="input-body">
-                    <input type="text" v-model="sectionAr" placeholder="Write Section Name AR">
-                    <span v-if="arSectionErr">Please enter Arabic section</span>
+                    <input type="text" v-model="sectionAr" :placeholder='$t("sections.ar_section_placeholder")'>
+                    <span v-if="arSectionErr">{{ $t("sections.enter_ar_section") }}</span>
                 </div>
                 <div class="input-body">
-                    <input type="text" v-model="description" placeholder="Description">
-                    <span v-if="descriptionErr">Please enter the description</span>
+                    <input type="text" v-model="description" :placeholder='$t("sections.desc_placeholder")'>
+                    <span v-if="descriptionErr">{{ $t("sections.enter_desc") }}</span>
                 </div>
                 <div class="section-icons-body">
-                    <h4>Select The Suggestion Icon </h4>
+                    <h4> {{ $t("sections.select_icon") }} </h4>
                     <div :class="'section-icon '+ activeBorder1" @click="addIcon(1)">
                         <img src="@/assets/images/sectionIcons/blood.png" alt="">
                     </div>
@@ -64,10 +64,10 @@
                     <div :class="'section-icon '+ activeBorder12" @click="addIcon(9)">
                         <img src="@/assets/images/sectionIcons/stomach.png" alt="">
                     </div>
-                    <span v-if="iconErr">Please select icon for your section</span>
+                    <span v-if="iconErr">{{ $t("sections.pls_select_icon") }}</span>
                 </div>
                 <div class="suggest-section-btn">
-                    <button @click="suggestSection()">Submit</button>
+                    <button @click="suggestSection()">{{ $t("sections.submit") }}</button>
                 </div>
             </div>
         </div>

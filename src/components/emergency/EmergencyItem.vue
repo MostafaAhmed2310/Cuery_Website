@@ -12,26 +12,26 @@
             </div>
             <div class="block">
                 <h5><i class="fas fa fa-plus-square"></i>Section Title</h5>
-                <h5><i class="phone-icon fas fa fa-phone"></i>Phone Num. : 01112545858</h5>
+                <h5><i class="phone-icon fas fa fa-phone"></i>{{ $t("reservations.phone_num") }} 01112545858</h5>
                 <h5><i class="fas fa-map-marker-alt"></i>15 Albert Al Awal . Smouha , Alexandria</h5>
             </div>
             <div class="block">
                 <div class="left-btn">
                     <button>Mon</button>
-                    <span>Request Time</span>
-                    <span>Time 10:22</span>
+                    <span>{{ $t("appoinetments.req_time") }}</span>
+                    <span>{{ $t("sections.time") }} 10:22</span>
                 </div>
                 <div class="right-btn">
                     <router-link :to="'/messages/'+ $route.params.id">
-                        <button>Start Conversation</button>
+                        <button>{{ $t("reservations.start_conversation") }}</button>
                     </router-link>
                 </div>
             </div>
         </div>
         <div class="block">
             <div class="reservation-btns">
-                <button>Confirm</button>
-                <button>Decline</button>
+                <button>{{ $t("reservations.confirm") }}</button>
+                <button>{{ $t("reservations.decline") }}</button>
             </div>
         </div>
     </div>

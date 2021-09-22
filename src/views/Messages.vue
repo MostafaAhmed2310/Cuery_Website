@@ -10,7 +10,7 @@
                     <router-link to="/hospital_home">
                         <i class="fas fa-chevron-left"></i> 
                     </router-link>
-                    {{ $t("messages") }}
+                    {{ $t("messages.title") }}
                 </h2>
             </div>
             <div v-if="placeHolderFlag && !loaderFlag">

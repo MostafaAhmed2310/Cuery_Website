@@ -12,8 +12,8 @@
                 <div class="user-info">
                     <h4>{{headChat.sender_name}}</h4>
                     <span v-if="headChat.latest_message.body && !headChat.latest_message.attachments[0]">{{headChat.latest_message.body}}</span>
-                    <span v-if="headChat.latest_message.attachments[0] && headChat.latest_message.user_id != currentUserId">{{headChat.sender_name}} send an attachment</span>
-                    <span v-if="headChat.latest_message.attachments[0] && headChat.latest_message.user_id == currentUserId">You send an attachment</span>
+                    <span v-if="headChat.latest_message.attachments[0] && headChat.latest_message.user_id != currentUserId">{{headChat.sender_name}} {{ $t("messages.sent_att") }}</span>
+                    <span v-if="headChat.latest_message.attachments[0] && headChat.latest_message.user_id == currentUserId">{{ $t("messages.you_sent_att") }}</span>
                 </div>
             </router-link>
         </div>

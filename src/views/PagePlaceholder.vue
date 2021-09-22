@@ -10,12 +10,12 @@
             </div>
             <div class="card-info">
                 <h4>{{mainTitle}}</h4>
-                <span>Please Wait ..</span>
+                <span>{{ $t("page_placeholder.wait") }}</span>
                 <span>{{placeholderTxt}}</span>
             </div>
             <div class="placeholder-btns">
-                <router-link v-if="$router.currentRoute.name == 'Sections'" to="/add-section"><button>Add Sections</button></router-link>
-                <router-link v-if="$router.currentRoute.name == 'emergency'" to="/add-emergency-section"><button>Add Sections</button></router-link>
+                <router-link v-if="$router.currentRoute.name == 'Sections'" to="/add-section"><button>{{ $t("page_placeholder.add_sections") }}</button></router-link>
+                <router-link v-if="$router.currentRoute.name == 'emergency'" to="/add-emergency-section"><button>{{ $t("page_placeholder.add_sections") }}</button></router-link>
             </div>
         </div>
     </div>

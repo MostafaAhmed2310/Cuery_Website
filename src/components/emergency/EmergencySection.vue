@@ -10,11 +10,11 @@
                     <router-link to="/emergency">
                         <i class="fas fa-chevron-left"></i> 
                     </router-link>
-                    Emergency
+                    {{ $t("appoinetments.emergency") }}
                 </h2>
                 <div class="section-btns">
                     <router-link to="/add-emergency-section">
-                        <button class="add-section"><i class="fas fa-plus-circle"></i>Add New Section</button>
+                        <button class="add-section"><i class="fas fa-plus-circle"></i>{{ $t("sections.add_new") }}</button>
                     </router-link>
                 </div>
             </div>

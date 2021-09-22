@@ -8,9 +8,9 @@
             <i class="fas fa fa-user-circle" v-if="imagePath == null || !imagePath"></i>
         </div>
         <div class="welcome-panal-info">
-            <h3>Hi " {{userName}} "</h3>
-            <h4>Welcome Back</h4>
-            <span>To Keep the body in good health is a duty .. otherwise We shall not be able to keep our mind strong and clear .</span>
+            <h3>{{ $t("hospital_home.hi") }} " {{userName}} "</h3>
+            <h4>{{ $t("hospital_home.welcome") }}</h4>
+            <span>{{ $t("hospital_home.welcome_msg") }}</span>
         </div>
     </div>
 </template>

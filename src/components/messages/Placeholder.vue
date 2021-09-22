@@ -44,7 +44,7 @@
                 </g>
             </svg>
         </div>
-        <p>Select Your Message</p>
+        <p>{{ $t("messages.select_msg") }}</p>
     </div>
 </template>
 

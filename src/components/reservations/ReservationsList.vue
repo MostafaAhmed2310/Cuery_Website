@@ -18,8 +18,8 @@
                 </div>
             </router-link>
             <div class="reservations-btns">
-                <button @click="confirmReservation(reservation.id)">Confirm</button>
-                <button @click="openDeclinePopup(reservation.id)">Decline</button>
+                <button @click="confirmReservation(reservation.id)">{{ $t("reservations.confirm") }}</button>
+                <button @click="openDeclinePopup(reservation.id)">{{ $t("reservations.decline") }}</button>
             </div>
         </div>
     </div>

@@ -1,11 +1,11 @@
 <template>
     <div class="table-container">
         <div class="table-title">
-            <h4>Nearest Appointements</h4>
+            <h4>{{ $t("hospital_home.nearest_appointements") }}</h4>
         </div>
         <div v-if="tableArr.length == 0" class="table-body placeholder">
             <AppoinetementsSVG/>
-            <span>No Appointements found</span>
+            <span>{{ $t("hospital_home.no_appointements_found") }}</span>
         </div>
         <div  v-if="tableArr" class="table-body">
             <div class="table-row" v-for="row in tableArr" :key="row">
@@ -16,11 +16,11 @@
                 <span class="patient-name">{{row.name}}</span>
                 <span class="section-name">{{row.section_title}}</span>
                 <router-link :to="'/normal-appoinetment-details/'+row.id">
-                    <span class="see-more">See More</span>
+                    <span class="see-more">{{ $t("more") }}</span>
                 </router-link>
                 <div class="table-btns">
                     <router-link :to="'/confirmation/'+row.id">
-                        <button class="navy-btn">Patient Arrived</button>
+                        <button class="navy-btn">{{ $t("hospital_home.patient_arrived") }}</button>
                     </router-link>
                 </div>
                 <hr>

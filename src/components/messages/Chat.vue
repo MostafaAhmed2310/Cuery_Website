@@ -83,7 +83,7 @@
                     <path id="send" d="M23.136,11.932l-.007,0L2.719,3.463a1.126,1.126,0,0,0-1.062.1,1.178,1.178,0,0,0-.532.984V9.965a1.147,1.147,0,0,0,.933,1.126L13.19,13.149a.191.191,0,0,1,0,.376L2.058,15.583a1.147,1.147,0,0,0-.933,1.126v5.415a1.126,1.126,0,0,0,.506.941,1.144,1.144,0,0,0,.632.191,1.173,1.173,0,0,0,.455-.092l20.409-8.417.009,0a1.529,1.529,0,0,0,0-2.81Z" transform="translate(13.028 10.569)" fill="#fff"/>
                 </svg>
             </div>
-            <textarea placeholder="Send Your Message" v-model="msgBody"></textarea>
+            <textarea :placeholder='$t("messages.send_msg")' v-model="msgBody"></textarea>
         </div>
     </div>
 </template>

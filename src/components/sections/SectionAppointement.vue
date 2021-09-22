@@ -25,47 +25,47 @@
         </div>
         <div class="section-body">
             <div class="date-container">
-                <h5>Date</h5>
-                <span :class="activeDay1"  @click="addOrDeleteDay(1)">Saturday</span>
-                <span :class="activeDay2"  @click="addOrDeleteDay(2)">Sunday</span>
-                <span :class="activeDay3"  @click="addOrDeleteDay(3)">Monday</span>
-                <span :class="activeDay4"  @click="addOrDeleteDay(4)">Tuesday</span>
-                <span :class="activeDay5"  @click="addOrDeleteDay(5)">Wednesday</span>
-                <span :class="activeDay6"  @click="addOrDeleteDay(6)">Thursday</span>
-                <span :class="activeDay7"  @click="addOrDeleteDay(7)">Friday</span>
+                <h5>{{ $t("sections.date") }}</h5>
+                <span :class="activeDay1"  @click="addOrDeleteDay(1)">{{ $t("sections.saturday") }}</span>
+                <span :class="activeDay2"  @click="addOrDeleteDay(2)">{{ $t("sections.sunday") }}</span>
+                <span :class="activeDay3"  @click="addOrDeleteDay(3)">{{ $t("sections.monday") }}</span>
+                <span :class="activeDay4"  @click="addOrDeleteDay(4)">{{ $t("sections.tuesday") }}</span>
+                <span :class="activeDay5"  @click="addOrDeleteDay(5)">{{ $t("sections.wednesday") }}</span>
+                <span :class="activeDay6"  @click="addOrDeleteDay(6)">{{ $t("sections.thursday") }}</span>
+                <span :class="activeDay7"  @click="addOrDeleteDay(7)">{{ $t("sections.friday") }}</span>
             </div>
             <div class="time-container">
-                <h5>Time</h5>
+                <h5>{{ $t("sections.time") }}</h5>
                 <div class="from-time">
-                    <span class="time-label">From</span>
-                    <vue-timepicker @change="getFromTime" format="hh:mm A" placeholder="From" v-model="FromTime"></vue-timepicker>
+                    <span class="time-label">{{ $t("sections.from") }}</span>
+                    <vue-timepicker @change="getFromTime" format="hh:mm A" :placeholder='$t("sections.from")' v-model="FromTime"></vue-timepicker>
                     <div class="filter-bar">
                         <div class="filter-btns">
-                            <span @click="selectAmFrom()">AM</span>
-                            <span @click="selectPmFrom()">PM</span>
+                            <span @click="selectAmFrom()">{{ $t("sections.am") }}</span>
+                            <span @click="selectPmFrom()">{{ $t("sections.pm") }}</span>
                             <span :class="'toggle-active '+toggleToPmFrom"></span>
                         </div>
                     </div>
                 </div>
                 <div class="to-time">
-                    <span class="time-label">To</span>
-                    <vue-timepicker @change="getToTime" format="hh:mm A" placeholder="To" v-model="ToTime"></vue-timepicker>
+                    <span class="time-label">{{ $t("sections.to") }}</span>
+                    <vue-timepicker @change="getToTime" format="hh:mm A" :placeholder='$t("sections.to")' v-model="ToTime"></vue-timepicker>
                     <div class="filter-bar">
                         <div class="filter-btns">
-                            <span @click="selectAmTo()">AM</span>
-                            <span @click="selectPmTo()">PM</span>
+                            <span @click="selectAmTo()">{{ $t("sections.am") }}</span>
+                            <span @click="selectPmTo()">{{ $t("sections.pm") }}</span>
                             <span :class="'toggle-active '+toggleToPmTo"></span>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="price-container">
-                <span>Price</span>
-                <label for="price">EGP</label>
+                <span>{{ $t("sections.price") }}</span>
+                <label for="price">{{ $t("sections.egp") }}</label>
                 <input type="text" id="price" v-model="price">
             </div>
             <div class="save-btn">
-                <button @click="addDetails()">Save</button>
+                <button @click="addDetails()">{{ $t("sections.save") }}</button>
             </div>
         </div>
     </div>

@@ -4,7 +4,7 @@
             <DoubleBounce></DoubleBounce>
         </div>
         <router-link to="/emergency-sections">
-            <button class="my-section-btn">My Sections</button>
+            <button class="my-section-btn"> {{ $t("sections.my_sections") }}</button>
         </router-link>
         <div class="reservatios-item" v-for="emergency in EmergencyList" :key="emergency">
             <router-link :to="'/emergency/' + emergency.id">
@@ -18,8 +18,8 @@
                 </div>
             </router-link>
             <div class="reservations-btns">
-                <button>Confirm</button>
-                <button >Decline</button>
+                <button>{{ $t("reservations.confirm") }}</button>
+                <button >{{ $t("reservations.decline") }}</button>
             </div>
         </div>
     </div>

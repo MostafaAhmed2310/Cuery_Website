@@ -24,18 +24,18 @@
             <div class="block">
                 <div class="left-btn">
                     <button>{{ reservationObj.Day }}</button>
-                    <span>Request Time</span>
+                    <span>{{ $t("appoinetments.req_time") }}</span>
                     <span>{{ reservationObj.reservation_date }} {{ reservationObj.start_time }}:00</span>
                 </div>
                 <div class="right-btn">
-                    <span>200</span><span>EGP</span>
+                    <span>200</span><span>{{ $t("sections.egp") }}</span>
                 </div>
             </div>
         </div>
         <div class="block">
             <div class="reservation-btns">
-                <router-link :to="'/confirmation/'+ $route.params.id"><button class="arrived-btn">Arrived</button></router-link>
-                <button @click="openDeclinePopup()" class="decline-btn">Decline</button>
+                <router-link :to="'/confirmation/'+ $route.params.id"><button class="arrived-btn">{{ $t("appoinetments.arrived") }}</button></router-link>
+                <button @click="openDeclinePopup()" class="decline-btn">{{ $t("reservations.decline") }}</button>
             </div>
         </div>
     </div>

@@ -7,11 +7,11 @@
             <DeclinePopup @updateLatestReservations="updateLatestReservations" @closePopup="closePopup" ref="updateId"/>
         </div>
         <div class="table-title">
-            <h4>Latest Reservations</h4>
+            <h4>{{ $t("hospital_home.latest_reservations") }}</h4>
         </div>
         <div v-if="tableArr.length == 0" class="table-body placeholder">
             <Calendar/>
-            <span>No reservations found</span>
+            <span>{{ $t("hospital_home.no_reservations_found") }}</span>
         </div>
         <div v-if="tableArr" class="table-body">
             <div class="table-row" v-for="row in tableArr" :key="row">
@@ -22,11 +22,11 @@
                 <span class="patient-name">{{ row.name}}</span>
                 <span class="section-name">{{ row.section_title}}</span>
                 <router-link :to="'/reservations/'+row.id">
-                    <span class="see-more">See More</span>
+                    <span class="see-more">{{ $t("more") }}</span>
                 </router-link>
                 <div class="table-btns">
-                    <button class="green-btn" @click="ConfirmReservation(row.id)">Confirm</button>
-                    <button class="red-btn" @click="openDeclinePopup(row.id)">Decline</button>
+                    <button class="green-btn" @click="ConfirmReservation(row.id)">{{ $t("reservations.confirm") }}</button>
+                    <button class="red-btn" @click="openDeclinePopup(row.id)">{{ $t("reservations.decline") }}</button>
                 </div>
                 <hr>
             </div>

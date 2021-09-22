@@ -1,10 +1,10 @@
 <template>
     <div class="success-page-container">
         <div class="success-page-body">
-            <h4>SUCCESS</h4>
-            <p>You Have Successfully Verified your Patient Request</p>
+            <h4>{{ $t("appoinetments.success") }}</h4>
+            <p>{{ $t("appoinetments.success_msg") }}</p>
             <router-link :to="'/finish-appoinetments/'+ $route.params.id">
-                <button>Continue</button>
+                <button>{{ $t("appoinetments.continue") }}</button>
             </router-link>
         </div>
     </div>

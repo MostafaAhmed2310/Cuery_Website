@@ -4,32 +4,32 @@
             <DoubleBounce></DoubleBounce>
         </div>
         <div class="popup-header">
-            <h3>What Do You Want To Report?</h3>
+            <h3>{{ $t("appoinetments.what_report") }}</h3>
             <i @click="closeDecline()" class="fas fa fa-times"></i>
         </div>
         <div class="popup-body">
             <div class="reason-body">
                 <input type="radio" id="1" value="1" v-model="rejectionId">
-                <label for="1">The service provider has not arrived</label>
+                <label for="1">{{ $t("appoinetments.not_arrived") }}</label>
             </div>
             <div class="reason-body">
                 <input type="radio" id="2" value="2" v-model="rejectionId">
-                <label for="2">He did not take his money for the service provided</label>
+                <label for="2">{{ $t("appoinetments.money") }}</label>
             </div>
             <div class="reason-body">
                 <input type="radio" id="3" value="3" v-model="rejectionId">
-                <label for="3">Bad service provider</label>
+                <label for="3">{{ $t("appoinetments.bad_service") }}</label>
             </div>
             <div class="reason-body">
                 <input type="radio" id="4" value="4" v-model="rejectionId">
-                <label for="4">Other</label>
+                <label for="4">{{ $t("appoinetments.other") }}</label>
             </div>
             <div class="input-body">
-                <textarea placeholder="Comment" v-model="comment"></textarea>
-                <span v-if="commentErr">Please Leave a comment</span>
+                <textarea :placeholder='$t("appoinetments.comment")' v-model="comment"></textarea>
+                <span v-if="commentErr">{{ $t("appoinetments.leave_comment") }}</span>
             </div>
             <div class="submit-btn">
-                <button @click="declineWithReason()">Submit</button>
+                <button @click="declineWithReason()">{{ $t("appoinetments.submit") }}</button>
             </div>
         </div>
     </div>

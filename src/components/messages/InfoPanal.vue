@@ -8,10 +8,10 @@
                 </div>
                 <p>Mostafa Ahmed</p>
             </div>
-            <button @click="closeInfo()">Back To Conversation</button>
+            <button @click="closeInfo()">{{ $t("messages.back_to_con") }}</button>
             <div class="personal-info">
                 <p>Section Name</p>
-                <p>Phone Num. : 0123456789</p>
+                <p>{{ $t("messages.phone") }} 0123456789</p>
             </div>
         </div>
     </div>

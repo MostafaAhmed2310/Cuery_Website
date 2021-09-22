@@ -13,11 +13,11 @@
             </svg>
         </div>
         <div class="upgrade-panal-info">
-            <h4>We're Getting Better !</h4>
-            <h5>Upgrade Your Account To Unlock New Features</h5>
+            <h4>{{ $t("hospital_home.get_better") }}</h4>
+            <h5>{{ $t("hospital_home.upgrade_msg") }}</h5>
         </div>
         <div class="upgrade-btn">
-            <button>Upgrade To Premimum</button>
+            <button>{{ $t("hospital_home.upgrade") }}</button>
         </div>
     </div>
 </template>

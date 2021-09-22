@@ -4,7 +4,6 @@
   "services": "Services",
   "we_provides": "We Provides",
   "specialized_hospitals": "Our Specialized Hospitals",
-  "messages": "Messages",
   "nav": {
     "home": "Home",
     "about": "About Us",
@@ -98,18 +97,98 @@
     "prev_app": "Previous Appointments",
     "my_sections": "My Sections",
     "suggest_section": "Suggest New Section",
-    "not_verified": "This Section Not Verified Yet"
+    "not_verified": "This Section Not Verified Yet",
+    "enter_en_section": "Please enter English section",
+    "enter_ar_section": "Please enter Arabic section",
+    "enter_desc": "Please enter the description",
+    "select_icon": "Select The Suggestion Icon",
+    "pls_select_icon": "Please select icon for your section",
+    "submit": "Submit",
+    "en_section_placeholder": "Write Section Name EN",
+    "ar_section_placeholder": "Write Section Name AR",
+    "desc_placeholder": "Description",
+    "saturday": "Saturday",
+    "sunday": "Sunday",
+    "monday": "Monday",
+    "tuesday": "Tuesday",
+    "wednesday": "Wednesday",
+    "thursday": "Thursday",
+    "friday": "Friday",
+    "from": "From",
+    "am": "AM",
+    "pm": "PM",
+    "to": "To",
+    "price": "Price",
+    "time": "Time",
+    "time_required": "Time required",
+    "mins": "Mins",
+    "date": "Date",
+    "egp": "EGP",
+    "save": "Save"
   },
   "appoinetments": {
     "title": "Appoinetments",
     "general": "General",
-    "emergency": "Emergency"
+    "emergency": "Emergency",
+    "req_time": "Request Time",
+    "arrived": "Arrived",
+    "service_done": "Service Done",
+    "ambulance": "Ambulance",
+    "max_time": "Max Time Arrived",
+    "confirmation": "CONFIRMATION",
+    "enter_code": "Please Type The Verification Code We Sent to User",
+    "wrong_code": "Code is wrong",
+    "confirm": "Confirm",
+    "what_report": "What Do You Want To Report?",
+    "not_arrived": "The service provider has not arrived",
+    "money": "He did not take his money for the service provided",
+    "bad_service": "Bad service provider",
+    "other": "Other",
+    "leave_comment": "Please Leave a comment",
+    "comment": "Comment",
+    "submit": "Submit",
+    "success": "SUCCESS",
+    "success_msg": "You Have Successfully Verified your Patient Request",
+    "continue": "Continue"
   },
   "reservations": {
-    "title": "Reservations"
+    "title": "Reservations",
+    "confirm": "Confirm",
+    "decline": "Decline",
+    "from": "From",
+    "to": "To",
+    "limit_your_time": "limit your time",
+    "start_conversation": "Start Conversation",
+    "phone_num": "Phone Num. :",
+    "finished": "Finished"
   },
   "ratings": {
-    "title": "Ratings"
+    "title": "My Rate"
+  },
+  "page_placeholder": {
+    "wait": "Please Wait ..",
+    "add_sections": "Add Sections"
+  },
+  "messages": {
+    "title": "Messages",
+    "sent_att": "sent an attachment",
+    "you_sent_att": "You sent an attachment",
+    "select_msg": "Select Your Message",
+    "back_to_con": "Back To Conversation",
+    "phone": "Phone Num. :",
+    "send_msg": "Send Your Message"
+  },
+  "hospital_home": {
+    "welcome": "Welcome Back",
+    "welcome_msg": "To Keep the body in good health is a duty .. otherwise We shall not be able to keep our mind strong and clear",
+    "hi": "Hi",
+    "upgrade": "Upgrade To Premimum",
+    "upgrade_msg": "Upgrade Your Account To Unlock New Feature",
+    "get_better": "We're Getting Better !",
+    "no_reservations_found": "No reservations found",
+    "latest_reservations": "Latest Reservations",
+    "patient_arrived": "Patient Arrived",
+    "no_appointements_found": "No Appointements found",
+    "nearest_appointements": "Nearest Appointements"
   }
-  
 }
