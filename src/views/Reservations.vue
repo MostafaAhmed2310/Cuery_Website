@@ -60,6 +60,12 @@ export default class Reservations extends Vue {
     updateReservationsList(){
         (<any>this.$refs.updateList).updateReservationsList()
     }
+    scrollToTop(){
+        window.scrollTo({top: 0, behavior: 'smooth'});
+    }
+    mounted() {
+        this.scrollToTop();
+    }
 }
 </script>
 

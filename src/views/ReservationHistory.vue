@@ -51,6 +51,12 @@ export default class ReservationHistory extends Vue {
             this.reservationBodyFlag = true;
         }
     }
+    scrollToTop(){
+        window.scrollTo({top: 0, behavior: 'smooth'});
+    }
+    mounted() {
+        this.scrollToTop();
+    }
     
 }
 </script>

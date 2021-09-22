@@ -5,11 +5,14 @@
         </div>
         <div class="chat-head">
             <div class="profile-img">
-                <img :src="BaseUrl+conversation.sender_image_path" alt="">
-                <i class="fas fa fa-user-circle"></i>
+                <img v-if="conversation.sender_image_path && conversation.send_to_id == currentId" :src="BaseUrl+conversation.sender_image_path" alt="">
+                <i class="fas fa fa-user-circle"  v-if="conversation.sender_image_path == null && conversation.send_to_id == currentId"></i>
+                <img v-if="conversation.send_to_user_image_path && conversation.sender_id == currentId" :src="BaseUrl+conversation.send_to_user_image_path" alt="">
+                <i class="fas fa fa-user-circle"  v-if="conversation.send_to_user_image_path == null && conversation.sender_id == currentId"></i>
             </div>
             <div class="user-info">
-                <h4>{{this.conversation.sender_name}}</h4>
+                <h4 v-if="conversation.send_to_id == currentId">{{conversation.sender_name}}</h4>
+                <h4 v-if="conversation.sender_id == currentId">{{conversation.send_to_user}}</h4>
             </div>
             <div class="info-icon" @click="openInfo">
                 <svg xmlns="http://www.w3.org/2000/svg" id="info-circle" width="30" height="30" viewBox="0 0 43.867 43.867">
@@ -119,8 +122,9 @@ export default class Chat extends Vue {
     loaderFlag = false;
     @Watch('$route', { immediate: true, deep: true })
     onUrlChange() {
-        let id =this.$route.params.id
-        this.getUserConversation(id)
+        let id =this.$route.params.id;
+        this.getUserConversation(id);
+        this.scrollToTop();
     }
     openInfo(){
         this.$emit('openInfo');
@@ -191,9 +195,12 @@ export default class Chat extends Vue {
         this.getUserConversation(this.$route.params.id);
         this.$emit('updateHeadChat');
     }
-
+    scrollToTop(){
+        window.scrollTo({top: 0, behavior: 'smooth'});
+    }
     mounted(){
         this.getUserConversation(this.$route.params.id);
+        this.scrollToTop();
     }
 
 }

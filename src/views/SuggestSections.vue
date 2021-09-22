@@ -302,6 +302,12 @@ export default class SuggestSections extends Vue {
             }
         }
     }
+    scrollToTop(){
+        window.scrollTo({top: 0, behavior: 'smooth'});
+    }
+    mounted() {
+        this.scrollToTop();
+    }
 }
 </script>
 

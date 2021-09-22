@@ -58,8 +58,12 @@ export default class AddSections extends Vue {
     async getAllSections(){
         this.sections = await getAllSections();
     }
+    scrollToTop(){
+        window.scrollTo({top: 0, behavior: 'smooth'});
+    }
     async mounted(){
-        await this.getAllSections()
+        await this.getAllSections();
+        this.scrollToTop();
     }
 }
 </script>

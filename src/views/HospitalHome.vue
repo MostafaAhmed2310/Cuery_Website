@@ -35,6 +35,14 @@ import News from "@/components/hospitalHome/News.vue";
     },
 })
 export default class HospitalHome extends Vue {
+
+    scrollToTop(){
+        window.scrollTo({top: 0, behavior: 'smooth'});
+    }
+
+    mounted() {
+        this.scrollToTop();
+    }
     
 }
 </script>

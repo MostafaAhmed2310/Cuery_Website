@@ -65,8 +65,9 @@ export default class ReservationItem extends Vue {
     declinePopup = false;
     @Watch('$route', { immediate: true, deep: true })
     onUrlChange(newVal) {
-        this.resId =this.$route.params.id
-        this.getReservation(this.resId)
+        this.resId =this.$route.params.id;
+        this.getReservation(this.resId);
+        this.scrollToTop();
     }
     async getReservation(resId){
         this.loaderFlag = true;
@@ -99,8 +100,12 @@ export default class ReservationItem extends Vue {
     updateReservationsList(){
         this.$emit('updateReservationsList');
     }
+    scrollToTop(){
+        window.scrollTo({top: 0, behavior: 'smooth'});
+    }
     mounted(){
-        this.getReservation(this.resId)
+        this.getReservation(this.resId);
+        this.scrollToTop();
     }
 }
 </script>

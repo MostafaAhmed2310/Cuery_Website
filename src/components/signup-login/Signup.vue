@@ -365,8 +365,12 @@ export default class Signup extends Vue {
             return 'Remove number';
         }
     }
+    scrollToTop(){
+        window.scrollTo({top: 0, behavior: 'smooth'});
+    }
     mounted() {
-        this.hoverMethod()   
+        this.hoverMethod();
+        this.scrollToTop();   
     }
 }
 </script>

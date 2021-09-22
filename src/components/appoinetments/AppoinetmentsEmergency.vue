@@ -46,9 +46,12 @@ export default class AppoinetmentsEmergency extends Vue {
     checkArrayLength(){
         this.$emit('updateEmergencyLength', this.length);
     }
-
+    scrollToTop(){
+        window.scrollTo({top: 0, behavior: 'smooth'});
+    }
     mounted(){
         this.getEmergencyAppoinetmentsList();
+        this.scrollToTop();
     }
 }
 </script>

@@ -4,18 +4,42 @@
             <DoubleBounce></DoubleBounce>
         </div>
         <div class="user-item" v-for="headChat in chatList" :key="headChat">
-            <router-link :to="'/messages/' + headChat.sender_id" active-class="active-chat">
-                <div class="profile-img">
-                    <img :src="BaseUrl + headChat.sender_image_path" alt="" v-if="headChat.sender_image_path">
-                    <i class="fas fa fa-user-circle" v-if="headChat.sender_image_path == null"></i>
-                </div>
-                <div class="user-info">
-                    <h4>{{headChat.sender_name}}</h4>
-                    <span v-if="headChat.latest_message.body && !headChat.latest_message.attachments[0]">{{headChat.latest_message.body}}</span>
-                    <span v-if="headChat.latest_message.attachments[0] && headChat.latest_message.user_id != currentUserId">{{headChat.sender_name}} {{ $t("messages.sent_att") }}</span>
-                    <span v-if="headChat.latest_message.attachments[0] && headChat.latest_message.user_id == currentUserId">{{ $t("messages.you_sent_att") }}</span>
-                </div>
-            </router-link>
+            <div v-if="headChat.send_to_id == currentUserId">
+                <span v-if="headChat.unseen_messages != 0" class="unseen-count">{{headChat.unseen_messages}}</span>
+                <router-link :to="'/messages/' + headChat.sender_id" active-class="active-chat">
+                    <div class="profile-img">
+                        <img v-if="headChat.sender_image_path && headChat.send_to_id == currentUserId" :src="BaseUrl+headChat.sender_image_path" alt="">
+                        <i class="fas fa fa-user-circle"  v-if="headChat.sender_image_path == null && headChat.send_to_id == currentUserId"></i>
+                        <img v-if="headChat.send_to_user_image_path && headChat.sender_id == currentUserId" :src="BaseUrl+headChat.send_to_user_image_path" alt="">
+                        <i class="fas fa fa-user-circle"  v-if="headChat.send_to_user_image_path == null && headChat.sender_id == currentUserId"></i>
+                    </div>
+                    <div class="user-info">
+                        <h4 v-if="headChat.send_to_id == currentUserId">{{headChat.sender_name}}</h4>
+                        <h4 v-if="headChat.sender_id == currentUserId">{{headChat.send_to_user}}</h4>
+                        <span :class="{'latest-msg' : headChat.unseen_messages != 0}" v-if="headChat.latest_message && headChat.latest_message.body && !headChat.latest_message.attachments[0]">{{headChat.latest_message.body}}</span>
+                        <span :class="{'latest-msg' : headChat.unseen_messages != 0}" v-if="headChat.latest_message && headChat.latest_message.attachments[0] && headChat.latest_message.user_id != currentUserId">{{headChat.sender_name}} {{ $t("messages.sent_att") }}</span>
+                        <span :class="{'latest-msg' : headChat.unseen_messages != 0}" v-if="headChat.latest_message && headChat.latest_message.attachments[0] && headChat.latest_message.user_id == currentUserId">{{ $t("messages.you_sent_att") }}</span>
+                    </div>
+                </router-link>
+            </div>
+            <div v-if="headChat.sender_id == currentUserId">
+                <span v-if="headChat.unseen_messages != 0" class="unseen-count">{{headChat.unseen_messages}}</span>
+                <router-link :to="'/messages/' + headChat.send_to_id" active-class="active-chat">
+                    <div class="profile-img">
+                        <img v-if="headChat.sender_image_path && headChat.send_to_id == currentUserId" :src="BaseUrl+headChat.sender_image_path" alt="">
+                        <i class="fas fa fa-user-circle"  v-if="headChat.sender_image_path == null && headChat.send_to_id == currentUserId"></i>
+                        <img v-if="headChat.send_to_user_image_path && headChat.sender_id == currentUserId" :src="BaseUrl+headChat.send_to_user_image_path" alt="">
+                        <i class="fas fa fa-user-circle"  v-if="headChat.send_to_user_image_path == null && headChat.sender_id == currentUserId"></i>
+                    </div>
+                    <div class="user-info">
+                        <h4 v-if="headChat.send_to_id == currentUserId">{{headChat.sender_name}}</h4>
+                        <h4 v-if="headChat.sender_id == currentUserId">{{headChat.send_to_user}}</h4>
+                        <span :class="{'latest-msg' : headChat.unseen_messages != 0}" v-if="headChat.latest_message && headChat.latest_message.body && !headChat.latest_message.attachments[0]">{{headChat.latest_message.body}}</span>
+                        <span :class="{'latest-msg' : headChat.unseen_messages != 0}" v-if="headChat.latest_message && headChat.latest_message.attachments[0] && headChat.latest_message.user_id != currentUserId">{{headChat.sender_name}} {{ $t("messages.sent_att") }}</span>
+                        <span :class="{'latest-msg' : headChat.unseen_messages != 0}" v-if="headChat.latest_message && headChat.latest_message.attachments[0] && headChat.latest_message.user_id == currentUserId">{{ $t("messages.you_sent_att") }}</span>
+                    </div>
+                </router-link>
+            </div>
         </div>
     </div>
 </template>
@@ -80,6 +104,7 @@ export default class UserList extends Vue {
     overflow: hidden;
     cursor: pointer;
     margin-bottom: 20px;
+    position: relative;
 }
 .user-item:hover{
     opacity: 0.9;
@@ -116,5 +141,22 @@ export default class UserList extends Vue {
     background: var(--font-navy);
     color: #fff;
     transition: 0.7s;
+}
+.unseen-count{
+    position: absolute;
+    width: 17px;
+    height: 17px;
+    display: inline-block;
+    background: var(--font-navy);
+    color: #fff;
+    right: 15px;
+    border-radius: 50%;
+    text-align: center;
+    font-size: 12px;
+    line-height: 1.5;
+}
+.latest-msg{
+    font-weight: bold !important;
+    color: #000 !important;
 }
 </style>

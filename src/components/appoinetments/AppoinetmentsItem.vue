@@ -19,7 +19,7 @@
             <div class="block">
                 <h5><i class="fas fa fa-plus-square"></i>{{ reservationObj.section_title }}</h5>
                 <h5><i class="phone-icon fas fa fa-phone"></i>{{ reservationObj.phone }}</h5>
-                <h5><i class="fas fa-map-marker-alt"></i>15 Albert Al Awal . Smouha , Alexandria</h5>
+                <h5><i class="fas fa-map-marker-alt"></i>{{reservationObj.address}}</h5>
             </div>
             <div class="block">
                 <div class="left-btn">
@@ -28,7 +28,7 @@
                     <span>{{ reservationObj.reservation_date }} {{ reservationObj.start_time }}:00</span>
                 </div>
                 <div class="right-btn">
-                    <span>200</span><span>{{ $t("sections.egp") }}</span>
+                    <span>{{reservationObj.charge}}</span><span>{{ $t("sections.egp") }}</span>
                 </div>
             </div>
         </div>
@@ -62,8 +62,9 @@ export default class AppoinetmentsItem extends Vue {
     declinePopup = false;
     @Watch('$route', { immediate: true, deep: true })
     onUrlChange(newVal) {
-        this.resId =this.$route.params.id
-        this.getReservation(this.resId)
+        this.resId =this.$route.params.id;
+        this.getReservation(this.resId);
+        this.scrollToTop();
     }
     async getReservation(resId){
         this.loaderFlag = true;
@@ -79,8 +80,12 @@ export default class AppoinetmentsItem extends Vue {
     updateAppointmentList(){
         this.$emit('updateAppointmentList');
     }
+    scrollToTop(){
+        window.scrollTo({top: 0, behavior: 'smooth'});
+    }
     mounted(){
-        this.getReservation(this.resId)
+        this.getReservation(this.resId);
+        this.scrollToTop();
     }
 
 }

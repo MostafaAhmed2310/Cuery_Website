@@ -4,6 +4,7 @@
             <div class="placeholder-icon">
                 <img v-if="$router.currentRoute.name == 'Sections'" src="@/assets/images/SectionPlaceholder.png" alt="">
                 <img v-if="$router.currentRoute.name == 'messages'" src="@/assets/images/messagePlaceholder.png" alt="">
+                <img v-if="$router.currentRoute.name == 'ratings'" src="@/assets/images/Rate.png" alt="">
                 <Emergency v-if="$router.currentRoute.name == 'emergency'"/>
                 <AppoinetmentsSVG v-if="$router.currentRoute.name == 'appoinetments'"/>
                 <Calendar v-if="$router.currentRoute.name == 'reservations' || $router.currentRoute.name == 'reservationHistory'"/>
@@ -56,10 +57,17 @@ export default class PagePlaceholder extends Vue {
         }else if(this.$router.currentRoute.name == 'reservationHistory'){
             this.mainTitle = "You Haven't Any Reservations History Yet";
             this.placeholderTxt = "No History Yet please confirm reservation to see your history.";
+        }else if(this.$router.currentRoute.name == 'ratings'){
+            this.mainTitle = "You Haven't Any Rate Review Yet";
+            this.placeholderTxt = "You Will Receive Your Greatest Reviews Soon .";
         }
+    }
+    scrollToTop(){
+        window.scrollTo({top: 0, behavior: 'smooth'});
     }
     mounted() {
         this.checkPages();
+        this.scrollToTop();
     }
 }
 </script>

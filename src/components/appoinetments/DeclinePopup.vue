@@ -57,28 +57,24 @@ export default class DeclinePopup extends Vue {
         this.declineId = declineId;
     }
     async declineWithReason(){
-        if(this.comment == '' || this.comment.trim() == ''){
-            this.commentErr = true;
-        }else{
-            let declineObj = {
-                rejection_reason_id: this.rejectionId,
-                rejection_reason: this.comment,
-            }
-            this.loaderFlag = true;
-            let res = await declineReservation(this.declineId, declineObj);
-            this.loaderFlag = false;
-            if(res){
-                this.closeDecline();
-                if(this.$router.currentRoute.name == 'ReservationItem' || this.$router.currentRoute.name == 'reservations'){
-                    this.$emit('updateReservationsList');
-                    this.$router.push('/reservations');
-                }else if(this.$router.currentRoute.name == 'hospitalHome'){
-                    this.$emit('updateLatestReservations');
-                    this.$router.push('/hospital_home');
-                }else{
-                    this.$emit('updateAppointmentList');
-                    this.$router.push('/appoinetments');
-                }
+        let declineObj = {
+            rejection_reason_id: this.rejectionId,
+            comment: this.comment,
+        }
+        this.loaderFlag = true;
+        let res = await declineReservation(this.declineId, declineObj);
+        this.loaderFlag = false;
+        if(res){
+            this.closeDecline();
+            if(this.$router.currentRoute.name == 'ReservationItem' || this.$router.currentRoute.name == 'reservations'){
+                this.$emit('updateReservationsList');
+                this.$router.push('/reservations');
+            }else if(this.$router.currentRoute.name == 'hospitalHome'){
+                this.$emit('updateLatestReservations');
+                this.$router.push('/hospital_home');
+            }else{
+                this.$emit('updateAppointmentList');
+                this.$router.push('/appoinetments');
             }
         }
     }

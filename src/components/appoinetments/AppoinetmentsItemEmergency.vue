@@ -27,8 +27,8 @@
             </div>
             <div class="block emergency-block">
                 <div class="left-btn">
-                    <h6>{{ $t("appoinetments.ambulance") }}</h6>
-                    <h5>{{ $t("appoinetments.max_time") }} 02:15 Am</h5>
+                    <h6>{{reservationObj.service_title}}</h6>
+                    <h5>{{ $t("appoinetments.max_time") }} : {{reservationObj.waiting_time_in_mins}}</h5>
                 </div>
                 <div class="right-btn">
                     <span>{{ reservationObj.charge }}</span><span>{{ $t("sections.egp") }}</span>
@@ -62,8 +62,9 @@ export default class AppoinetmentsItemEmergency extends Vue {
   BaseUrl = BaseUrl;
     @Watch('$route', { immediate: true, deep: true })
     onUrlChange(newVal) {
-        this.resId =this.$route.params.id
-        this.getEmergencyReservation(this.resId)
+        this.resId =this.$route.params.id;
+        this.getEmergencyReservation(this.resId);
+        this.scrollToTop();
     }
     async getEmergencyReservation(resId){
         this.loaderFlag = true;
@@ -78,8 +79,12 @@ export default class AppoinetmentsItemEmergency extends Vue {
             this.$emit('updateEmergencyAppointment');
         }
     }
+    scrollToTop(){
+        window.scrollTo({top: 0, behavior: 'smooth'});
+    }
     mounted(){
-        this.getEmergencyReservation(this.resId)
+        this.getEmergencyReservation(this.resId);
+        this.scrollToTop();
     }
 
 }

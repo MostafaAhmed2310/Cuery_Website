@@ -256,8 +256,12 @@ export default class Profile extends Vue {
             }
         }
     }
+    scrollToTop(){
+        window.scrollTo({top: 0, behavior: 'smooth'});
+    }
     mounted(){
         this.getProfile();
+        this.scrollToTop();
     }
 }
 </script>

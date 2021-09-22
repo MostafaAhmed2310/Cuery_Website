@@ -52,8 +52,12 @@ export default class MedicalTeam extends Vue {
     pushToSignup(){
         this.$router.push('/signup')
     }
+    scrollToTop(){
+        window.scrollTo({top: 0, behavior: 'smooth'});
+    }
     mounted(){
-        this.getMedicalTeam()
+        this.getMedicalTeam();
+        this.scrollToTop();
     }
 }
 </script>

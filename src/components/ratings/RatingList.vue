@@ -1,9 +1,12 @@
 <template>
     <div class="user-list-container">
+        <div class="loader-container" v-if="loaderFlag">
+            <DoubleBounce></DoubleBounce>
+        </div>
         <div class="rating-item" v-for="rating in ratingList" :key="rating">
                 <div class="block">
                     <div class="left-btn">
-                        <button>{{rating.section_title}}</button>
+                        <button>{{rating.user_rating}}</button>
                     </div>
                 </div>
                 <div class="stars-container">
@@ -13,30 +16,49 @@
                   <i class="fas fa-star"></i>
                   <i class="fas fa-star"></i>
                 </div>
-                <div class="rating-info">
+                <!-- <div class="rating-info">
                     <p v-if="rating.section_title">{{rating.section_title}}</p>
-                </div>
+                </div> -->
         </div>
     </div>
 </template>
 
-<script lang="ts">
+<script>
 import { Component, Vue } from 'vue-property-decorator';
 import {getRatingList} from  '@/endpoints/ratings';
-
+import {getUserInfo} from '@/endpoints/user';
+import {DoubleBounce} from 'vue-loading-spinner';
 @Component({
     components: {
-
+        DoubleBounce,
     },
 })
 export default class RatingList extends Vue {
-    ratingList:any[] = []
+    ratingList = [];
+    user_id = '';
+    loaderFlag = false;
+    length = '';
+    async getUserId(){
+        let res = await getUserInfo();
+        this.user_id = res.id;
+        this.getRatingList();
+    }
     async getRatingList(){
-        this.ratingList = await getRatingList();
+        let userObj = {
+            SP_id: this.user_id
+        }
+        this.loaderFlag = true;
+        let res = await getRatingList(userObj);
+        this.ratingList = res.ratings;
+        this.length = this.ratingList.length;
+        this.checkArrayLength();
+        this.loaderFlag = false;
+    }
+    checkArrayLength(){
+        this.$emit('updateLength', this.length);
     }
     mounted(){
-        this.getRatingList()
-        console.log(this.ratingList )
+        this.getUserId();
     }
 }
 </script>

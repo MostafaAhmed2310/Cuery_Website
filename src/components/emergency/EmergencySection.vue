@@ -67,8 +67,12 @@ export default class EmergencySection extends Vue {
         this.emergencySections = await getMyServices();
         this.loaderFlag = false;
     }
+    scrollToTop(){
+        window.scrollTo({top: 0, behavior: 'smooth'});
+    }
     mounted(){
-        this.getMySections()
+        this.getMySections();
+        this.scrollToTop();
     }
 }
 </script>
