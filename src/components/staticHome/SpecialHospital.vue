@@ -5,7 +5,7 @@
             <div class="hospital-info">
                 <h2>{{highestHospital.name}}</h2>
                 <p v-if="highestHospital.description">{{highestHospital.description}}</p>
-                <p v-if="!highestHospital.description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium magni, architecto temporibus adipisci distinctio, quae labore doloremque fugiat necessitatibus tempore illo. Autem, et ipsum! Quisquam similique deserunt minus exercitationem delectus?Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium magni, architecto temporibus adipisci distinctio, quae labore doloremque fugiat necessitatibus tempore illo. Autem, et ipsum! Quisquam similique deserunt minus exercitationem delectus?Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium magni, architecto temporibus adipisci distinctio, quae labore doloremque fugiat necessitatibus tempore illo. Autem, et ipsum! Quisquam similique deserunt minus exercitationem delectus?</p>
+                <p v-if="!highestHospital.description">et ipsum! Quisquam similique deserunt minus exercitationem delectus?Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium magni, architecto temporibus adipisci distinctio, quae labore doloremque fugiat necessitatibus tempore illo. Autem, et ipsum! Quisquam similique deserunt minus exercitationem delectus?Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium magni, architecto temporibus adipisci distinctio, quae labore doloremque fugiat necessitatibus tempore illo. Autem, et ipsum! Quisquam similique deserunt minus exercitationem delectus?</p>
                 <router-link to="/medical_team">
                     <button>See More</button>
                 </router-link>

@@ -94,6 +94,12 @@ export default class Appoinetments extends Vue {
     updateAppointmentList(){
         (<any>this.$refs.updateAppointmentList).updateList();
     }
+    scrollToTop(){
+        window.scrollTo({top: 0, behavior: 'smooth'});
+    }
+    mounted() {
+        this.scrollToTop();
+    }
 }
 </script>
 

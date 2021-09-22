@@ -55,3 +55,10 @@ export async function declineEmergency(id:any){
   if (res) return res.data.id
   else return false
 }
+
+export async function acceptEmergencyReservation(id:any){
+  let res = await api
+  .post('api/sp_accept_emerg_reservation/'+id);
+  if (res) return res.data.id
+  else return false
+}

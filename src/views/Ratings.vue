@@ -6,11 +6,19 @@
         <div class="messages-body">
             <div class="cover-img">
                 <img src="@/assets/images/profile-cover.png" alt="">
-                <h2>Ratings</h2>
+                <h2>
+                    <router-link to="/hospital_home">
+                        <i class="fas fa-chevron-left"></i> 
+                    </router-link>
+                    Ratings
+                </h2>
             </div>
-            <div class="ratings-body">
+            <div v-if="placeHolderFlag">
+                <PagePlaceholder/>
+            </div>
+            <div class="ratings-body" v-if="ratingBody">
                 <div class="rating-list">
-                    <RatingList/>
+                    <RatingList @updateLength="updateLength"/>
                 </div>
             </div>
         </div>
@@ -21,15 +29,33 @@
 import { Component, Vue} from 'vue-property-decorator';
 import {DoubleBounce} from 'vue-loading-spinner';
 import RatingList from '@/components/ratings/RatingList.vue';
-
+import PagePlaceholder from '@/views/PagePlaceholder.vue';
 @Component({
     components: {
         DoubleBounce,
-        RatingList
+        RatingList,
+        PagePlaceholder,
     },
 })
 export default class Messages extends Vue {
     loaderFlag = false;
+    placeHolderFlag = false;
+    ratingBody = true;
+    scrollToTop(){
+        window.scrollTo({top: 0, behavior: 'smooth'});
+    }
+    updateLength(len){
+        if(len == 0){
+            this.placeHolderFlag = true;
+            this.ratingBody = false;
+        }else{
+            this.placeHolderFlag = false;
+            this.ratingBody = true;
+        }
+    }
+    mounted() {
+        this.scrollToTop();
+    }
 }
 </script>
 
@@ -58,5 +84,10 @@ export default class Messages extends Vue {
 .rating-list{
     height: 80vh;
     padding: 30px;
+}
+.cover-img h2 i{
+    cursor: pointer;
+    margin-right: 10px;
+    color: var(--font-navy) !important;
 }
 </style>

@@ -33,7 +33,7 @@
                 </li>
             </ul>
         </div>
-        <div class="more-menu" v-if="moreMenu">
+        <div class="more-menu" v-if="moreMenu" @click="moreMenu = !moreMenu">
             <router-link to="/ratings">
                 <span>
                     <i class="fas fa fa-star"></i>
@@ -157,5 +157,8 @@ ul li{
 }
 .more-menu span:hover{
     background: #ddd;
+}
+.more-menu a{
+    color: var(--main-green);
 }
 </style>

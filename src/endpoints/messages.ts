@@ -27,3 +27,10 @@ export async function deleteMsg(id:any){
   if (res) return res.data
   else return false
 }
+
+export async function getMessageInfo(id:any){
+  let res = await api
+  .get('api/userInfo/'+id);
+  if (res) return res.data
+  else return false
+}

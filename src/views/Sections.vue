@@ -86,8 +86,12 @@ export default class Sections extends Vue {
     hideTitle(){
         this.titleHover = false;
     }
-      mounted(){
-        this.getMySections()
+    scrollToTop(){
+        window.scrollTo({top: 0, behavior: 'smooth'});
+    }
+    mounted() {
+        this.getMySections();
+        this.scrollToTop();
     }
 }
 </script>

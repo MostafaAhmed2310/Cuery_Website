@@ -1,28 +1,31 @@
 <template>
     <div class="reservation-item-container">
+        <div class="loader-container" v-if="loaderFlag">
+            <DoubleBounce></DoubleBounce>
+        </div>
         <div class="reservation-item">
             <div class="block">
                 <div class="profile-img">
-                    <img src="" alt="">
-                    <i class="fas fa fa-user-circle"></i>
+                    <img :src="BaseUrl + reservationObj.image_path" alt="" v-if="reservationObj.image_path">
+                    <i class="fas fa fa-user-circle" v-if="reservationObj.image_path == null"></i>
                 </div>
                 <div class="reservation-info">
-                    <h4>Patient Name</h4>
+                    <h4>{{reservationObj.name}}</h4>
                 </div>
             </div>
             <div class="block">
-                <h5><i class="fas fa fa-plus-square"></i>Section Title</h5>
-                <h5><i class="phone-icon fas fa fa-phone"></i>Phone Num. : 01112545858</h5>
-                <h5><i class="fas fa-map-marker-alt"></i>15 Albert Al Awal . Smouha , Alexandria</h5>
+                <h5><i class="fas fa fa-plus-square"></i>{{reservationObj.service_title}}</h5>
+                <h5><i class="phone-icon fas fa fa-phone"></i>Phone Num. : {{reservationObj.phone}}</h5>
+                <h5><i class="fas fa-map-marker-alt"></i>{{reservationObj.address}}</h5>
             </div>
             <div class="block">
                 <div class="left-btn">
-                    <button>Mon</button>
+                    <button>{{reservationObj.Day}}</button>
                     <span>Request Time</span>
-                    <span>Time 10:22</span>
+                    <span>Time {{reservationObj.call_time}}</span>
                 </div>
                 <div class="right-btn">
-                    <router-link :to="'/messages/'+ $route.params.id">
+                    <router-link :to="'/messages/'+ reservationObj.user_id">
                         <button>Start Conversation</button>
                     </router-link>
                 </div>
@@ -30,46 +33,73 @@
         </div>
         <div class="block">
             <div class="reservation-btns">
-                <button>Confirm</button>
-                <button>Decline</button>
+                <button @click="confirmFun(reservationObj.id)">Confirm</button>
+                <button @click="declineEmergencyReservation()">Decline</button>
             </div>
         </div>
     </div>
 </template>
 
-<script lang="ts">
+<script>
 import { Component, Vue,Watch } from 'vue-property-decorator';
-import { getReservation, confirmReservation, declineReservation  } from '@/endpoints/reservations';
-
-
+import { getEmergencyReservation} from '@/endpoints/reservations';
+import {acceptEmergencyReservation, declineEmergency} from '@/endpoints/emergency';
+import {DoubleBounce} from 'vue-loading-spinner';
+import {BaseUrl} from '@/app.config';
 @Component({
     components: {
-
+        DoubleBounce,
     },
 })
 export default class EmergencyItem extends Vue {
     reservationObj = {}
     resId =this.$route.params.id
+    loaderFlag = false
+    BaseUrl = BaseUrl
     @Watch('$route', { immediate: true, deep: true })
-    onUrlChange(newVal: any) {
-        this.resId =this.$route.params.id
-        this.getReservation(this.resId)
+    onUrlChange(newVal) {
+        this.resId =this.$route.params.id;
+        this.getReservation(this.resId);
+        this.scrollToTop();
     }
-    async getReservation(resId:any){
-        this.reservationObj = await getReservation(resId);
+    async getReservation(resId){
+        this.loaderFlag = true;
+        this.reservationObj = await getEmergencyReservation(resId);
+        this.loaderFlag = false;
     }
-     confirmReservation(reservation_id:any){
-        confirmReservation(reservation_id)
-
-    }
-    declineReservation(reservation_id:any){
-        // declineReservation(reservation_id)
+    async confirmFun(id){
+        this.loaderFlag = true;
+        let res = await acceptEmergencyReservation(id);
+        this.loaderFlag = false;
+        if(res){
+            this.$fire({
+                title: "SUCCESS!",
+                text: "This reservation confirmed",
+                type: "success",
+                timer: 2000
+            })
+            this.$router.push('/emergency');
+            this.$emit('updateEmergencyList');
+        }
     }
     updateDetailsFun(){
-        this.getReservation(this.resId)
+        this.getReservation(this.resId);
+    }
+    async declineEmergencyReservation(){
+        this.loaderFlag = true;
+        let res = await declineEmergency(this.resId);
+        this.loaderFlag = false;
+        if(res){
+            this.$router.push('/emergency');
+            this.$emit('updateEmergencyList');
+        }
+    }
+    scrollToTop(){
+        window.scrollTo({top: 0, behavior: 'smooth'});
     }
     mounted(){
-        this.getReservation(this.resId)
+        this.getReservation(this.resId);
+        this.scrollToTop();
     }
 }
 </script>
@@ -96,6 +126,10 @@ export default class EmergencyItem extends Vue {
     font-size: 30px;
     text-align: center;
     line-height: 1.5;
+}
+.profile-img img{
+    width: 100%;
+    height: 100%;
 }
 .reservation-info{
     float: left;

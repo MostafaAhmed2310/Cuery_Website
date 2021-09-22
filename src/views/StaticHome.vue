@@ -3,7 +3,7 @@
         <Cover/>
         <Services/>
         <SpecialHospital/>
-        <Customers/>
+        <!-- <Customers/> -->
     </div>
 </template>
 
@@ -22,6 +22,13 @@ import Customers from "@/components/staticHome/Customers.vue";
     },
 })
 export default class StaticHome extends Vue {
+
+    scrollToTop(){
+        window.scrollTo({top: 0, behavior: 'smooth'});
+    }
+    mounted() {
+        this.scrollToTop();
+    }
   
 }
 </script>

@@ -35,6 +35,7 @@
 body{
     margin: 0;
     overflow-x: hidden;
+    scroll-behavior: smooth;
 }
 a{
     text-decoration: none !important;

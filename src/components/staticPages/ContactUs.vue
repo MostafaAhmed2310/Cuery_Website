@@ -13,16 +13,20 @@
                 <p>Always Within Your Reach</p>
                 <form>
                     <div class="input-field">
-                        <input type="text" placeholder="Name"/>
+                        <input type="text" placeholder="Name" v-model="name"/>
+                        <span v-if="nameErr">Please enter your name</span>
                     </div>
                     <div class="input-field">
-                        <input type="text" placeholder="Email"/>
+                        <input type="text" placeholder="Email" v-model="email"/>
+                        <span v-if="emailErr">Please enter your email</span>
+                        <span v-if="emailFormat">Please check email format</span>
                     </div>
                     <div class="input-field-message">
-                        <textarea placeholder="Message"></textarea>
+                        <textarea placeholder="Message" v-model="msg"></textarea>
+                        <span v-if="msgErr">Please enter your message</span>
                     </div>
                     <div class="contact-btn">
-                        <button type="button">Send Message</button>
+                        <button @click="sendMsg()" type="button">Send Message</button>
                     </div>
                 </form>
             </div>
@@ -33,7 +37,7 @@
 <script>
 import { Component, Vue } from 'vue-property-decorator';
 import {DoubleBounce} from 'vue-loading-spinner';
-
+import {contactUs} from '@/endpoints/static_pages';
 @Component({
     components: {
         DoubleBounce,
@@ -41,6 +45,79 @@ import {DoubleBounce} from 'vue-loading-spinner';
 })
 export default class ContactUs extends Vue {
     loaderFlag = false;
+    nameErr = false;
+    emailErr = false;
+    msgErr = false;
+    emailFormat = false;
+    name = '';
+    email = '';
+    msg = '';
+    async sendMsg(){
+        var emailRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        if(this.name == '' || this.name.trim() == ''){
+            this.nameErr = true;
+        }else{
+            this.nameErr = false;
+        }
+        if(!this.email.match(emailRegex) && this.email != ''){
+            this.emailFormat = true;
+        }else{
+            this.emailFormat = false;
+        }
+        if(this.email == '' || this.email.trim() == ''){
+            this.emailErr = true;
+        }else{
+            this.emailErr = false;
+        }
+        if(this.msg == '' || this.msg.trim() == ''){
+            this.msgErr = true;
+        }else{
+            this.msgErr = false;
+        }
+        if(
+            this.nameErr == false &&
+            this.emailErr == false &&
+            this.msgErr == false &&
+            this.emailFormat == false
+        ){
+            try{
+                let contactObj = {
+                    name: this.name,
+                    email: this.email,
+                    message: this.msg
+                }
+                this.loaderFlag = true;
+                let res = await contactUs(contactObj);
+                this.loaderFlag = false;
+                if(res){
+                    this.name = '';
+                    this.email = '';
+                    this.msg = '';
+                    this.$fire({
+                        title: "SUCCESS!",
+                        text: "Your Message sent successfully",
+                        type: "success",
+                        timer: 2000
+                    })
+                }
+            }catch(err){
+                this.$fire({
+                    title: "WARNING!",
+                    text: "Somthing went wrong, please try again later",
+                    type: "error",
+                    timer: 2000
+                })
+            }
+            
+        }
+        
+    }
+    scrollToTop(){
+        window.scrollTo({top: 0, behavior: 'smooth'});
+    }
+    mounted() {
+        this.scrollToTop();
+    }
 }
 </script>
 
@@ -91,7 +168,8 @@ export default class ContactUs extends Vue {
 .input-field-message {
     height: 150px;
 }
-.input-field span {
+.input-field span,
+.input-field-message span {
   font-size: 12px;
   color: var(--alert-color);
 }

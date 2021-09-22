@@ -1,8 +1,8 @@
 import { api } from '@/helpers/axios.config';
 
-export async function getRatingList(){
+export async function getRatingList(sp_id:any){
     let res = await api
-    .get('api/list_sections_to_SP'); //to be change
+    .post('api/get_sp_ratings',sp_id);
     if (res) return res.data
     else return false
 }

@@ -9,18 +9,18 @@
         <div class="reservatios-item" v-for="emergency in EmergencyList" :key="emergency">
             <router-link :to="'/emergency/' + emergency.id">
                 <div class="profile-img">
-                    <img src="" alt="">
-                    <i class="fas fa fa-user-circle"></i>
+                    <img :src="BaseUrl + emergency.image_path" alt="" v-if="emergency.image_path">
+                    <i class="fas fa fa-user-circle" v-if="emergency.image_path == null"></i>
                 </div>
                 <div class="reservatios-info">
-                    <h4> Name</h4>
-                    <span>Service Title</span>
+                    <h4>{{emergency.name}}</h4>
+                    <span>{{emergency.service_title}}</span>
                 </div>
             </router-link>
-            <div class="reservations-btns">
+            <!-- <div class="reservations-btns">
                 <button>Confirm</button>
                 <button >Decline</button>
-            </div>
+            </div> -->
         </div>
     </div>
 </template>
@@ -29,6 +29,7 @@
 import { Component, Vue } from 'vue-property-decorator';
 import {getPendingEmergencyList} from '@/endpoints/emergency';
 import {DoubleBounce} from 'vue-loading-spinner';
+import {BaseUrl} from '@/app.config';
 @Component({
     components: {
         DoubleBounce,
@@ -38,6 +39,7 @@ export default class EmergencyList extends Vue {
     EmergencyList = [];
     length = 0;
     loaderFlag = false;
+    BaseUrl = BaseUrl
     async getEmergencyList(){
         this.loaderFlag = true;
         this.EmergencyList = await getPendingEmergencyList();
@@ -47,6 +49,9 @@ export default class EmergencyList extends Vue {
     }
     checkArrayLength(){
         this.$emit('updateLength', this.length)
+    }
+    updateEmergencyList(){
+        this.getEmergencyList();
     }
     mounted() {
         this.getEmergencyList();
@@ -85,6 +90,10 @@ export default class EmergencyList extends Vue {
     font-size: 30px;
     text-align: center;
     line-height: 1.5;
+}
+.profile-img img{
+    width: 100%;
+    height: 100%;
 }
 .reservatios-info{
     float: right;

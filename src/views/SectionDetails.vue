@@ -110,8 +110,12 @@ export default class SectionDetails extends Vue {
             this.unAssignSection();
         });
     }
+    scrollToTop(){
+        window.scrollTo({top: 0, behavior: 'smooth'});
+    }
     async mounted(){
-        this.getDetails()
+        this.getDetails();
+        this.scrollToTop();
     }
 }
 </script>

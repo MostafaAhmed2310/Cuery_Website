@@ -19,10 +19,10 @@
             </div>
             <div class="reservations-inputs-body" v-if="bodyFlag">
                 <div class="reservations-panal">
-                    <EmergencyList @updateLength="updateLength"/>
+                    <EmergencyList @updateLength="updateLength" ref="updateEmergencyList"/>
                 </div>
                 <div class="reservation-body">
-                    <router-view></router-view>
+                    <router-view @updateEmergencyList="updateEmergencyList"></router-view>
                 </div>
             </div>
         </div>
@@ -53,6 +53,15 @@ export default class Eemergency extends Vue {
             this.bodyFlag = true;
             this.placeholderFlag = false;
         }
+    }
+    updateEmergencyList(){
+        this.$refs.updateEmergencyList.updateEmergencyList();
+    }
+    scrollToTop(){
+        window.scrollTo({top: 0, behavior: 'smooth'});
+    }
+    mounted() {
+        this.scrollToTop();
     }
 }
 </script>

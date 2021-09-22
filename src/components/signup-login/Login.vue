@@ -73,7 +73,12 @@ export default class Login extends Vue {
             }
         }
     }
-
+    scrollToTop(){
+        window.scrollTo({top: 0, behavior: 'smooth'});
+    }
+    mounted() {
+        this.scrollToTop();
+    }
     
 }
 </script>
