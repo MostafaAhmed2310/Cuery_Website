@@ -11,7 +11,8 @@
                 </router-link>
             </div>
             <div class="hospital-img">
-                <img :src="BaseUrl + highestHospital.image_path" alt="Image">
+                <img v-if="highestHospital.image_path" :src="BaseUrl + highestHospital.image_path" alt="Image">
+                <i class="fas fa fa-user-circle"  v-if="highestHospital.image_path == null"></i>
                 <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="150.4" viewBox="0 0 547.369 150.4">
                     <path id="path_vector_" data-name="path vector " d="M36.2,150.52H583.256S589.73,85.095,544,83.045,411.761,94.7,341.732,78.98,258.937.806,171.045.123,36.2,150.52,36.2,150.52Z" transform="translate(-36.201 -0.12)" fill="#43c079"/>
                 </svg>

@@ -19,7 +19,8 @@
                 <div class="hospitals-items" v-for="hospital in hospitals" :key="hospital">
                     <div class="hospital-item">
                         <div class="item-img">
-                            <img :src="BaseUrl + hospital.image_path" alt="Image">
+                            <img  v-if="hospital.image_path" :src="BaseUrl + hospital.image_path" alt="Image">
+                            <i class="fas fa fa-user-circle"  v-if="hospital.image_path == null"></i>
                         </div>
                         <p>{{hospital.name}}</p>
                     </div>
