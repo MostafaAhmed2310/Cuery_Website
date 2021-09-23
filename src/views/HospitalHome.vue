@@ -1,6 +1,6 @@
 <template>
     <div class="hospital-home-container">
-        <div class="home-left-side">
+        <div class="home-left-side" :class="{'float-right margin-left-side ' : $t('nav.home') === 'الرئيسية'}">
             <WelcomePanal/>
             <UpgradePanal/>
             <Tabs/>
@@ -62,5 +62,9 @@ export default class HospitalHome extends Vue {
 .home-right-side{
     width: 35%;
     float: right;
+}
+.margin-left-side{
+    margin-left: 5% !important;
+    margin-right: 0px !important;
 }
 </style>

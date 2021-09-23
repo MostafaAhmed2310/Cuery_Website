@@ -1,7 +1,7 @@
 <template>
     <div class="header-container">
         <div class="nav-bar-body">
-            <div class="logo-body">
+            <div class="logo-body" :class="{'float-right margin-logo' : $t('nav.home') === 'الرئيسية'}">
                 <img class="logo-img" src="@/assets/logo.png"/>
             </div>
             <!-- <div class="locale-switcher">
@@ -10,11 +10,11 @@
                     <option value="ar">Arabic</option>
                 </select>
             </div> -->
-            <ul class="nav-bar-list" v-if="auth_state == false">
+            <ul class="nav-bar-list" v-if="auth_state == false" :class="{'float-left rtl margin-ul' : $t('nav.home') === 'الرئيسية'}">
                 <li><router-link to="/home" active-class="active">{{ $t("nav.home") }}</router-link></li>
                 <li><router-link to="/medical_team" active-class="active">{{ $t("nav.medical_team") }}</router-link></li>
                 <li>{{ $t("nav.about") }}</li>
-                <li class="global-li" @click="openStaticLang = !openStaticLang">
+                <li class="global-li" @click="moreMenu = !moreMenu">
                     <i class="fas fa fa-globe"></i>
                 </li>
                 <li class="login-btn"><router-link to="/login">{{ $t("nav.sign_in") }}</router-link></li>
@@ -25,45 +25,53 @@
                     </select>
                 </div>
             </ul>
-            <ul class="nav-bar-list-hospital" v-if="auth_state == true">
+            <ul class="nav-bar-list-hospital" v-if="auth_state == true" :class="{'float-left rtl margin-ul' : $t('nav.home') === 'الرئيسية'}">
                 <li><router-link to="/hospital_home" active-class="active">{{ $t("nav.home") }}</router-link></li>
                 <li><router-link to="/contact_us" active-class="active">{{ $t("nav.contact_us") }}</router-link></li>
                 <li><router-link to="/reservation-history" active-class="active">{{ $t("nav.reservation_history") }}</router-link></li>
                 <li>
                     <router-link to="/profile" active-class="active">
-                        <i class="profile-icon far fa fa-user-circle"></i>
+                        <i :class="{'margin-icon' : $t('nav.home') === 'الرئيسية'}" class="profile-icon far fa fa-user-circle"></i>
                         <span>{{ $t("nav.profile") }}</span>
                     </router-link>
                 </li>
-                <li class="global-li" @click="openAuthLang = !openAuthLang">
+                <li class="global-li" @click="moreMenu = !moreMenu">
                     <i class="fas fa fa-globe"></i>
                 </li>
                 <li>
                     <i class="fas fa fa-bell"></i>
                 </li>
                 <li @click="moreMenu = !moreMenu">
-                    <i class="profile-icon fas fa fa-ellipsis-v"></i>
+                    <i :class="{'margin-icon' : $t('nav.home') === 'الرئيسية'}" class="profile-icon fas fa fa-ellipsis-v"></i>
                     <span>{{ $t("nav.more") }}</span>
                 </li>
-                <div class="locale-switcher-auth" v-if="openAuthLang">
-                    <select v-model="$i18n.locale">
+            </ul>
+        </div>
+        <div :class="{'left-menu rtl' : $t('nav.home') === 'الرئيسية'}" class="more-menu" v-if="moreMenu">
+            <div v-if="mainMenue">
+                <router-link to="/ratings" v-if="auth_state == true">
+                    <span @click="moreMenu = !moreMenu">
+                        <i class="fas fa fa-star"></i>
+                        {{ $t("nav.view_your_rate") }}
+                    </span>
+                </router-link>
+                <span @click="switchToLangPopup()">
+                    <i class="fas fa fa-globe"></i>
+                    {{$t('nav.lang')}}
+                </span>
+                <span @click="logout()" v-if="auth_state == true">
+                    <i class="fas fa fa-sign-out-alt"></i>
+                    {{ $t("nav.sign_out") }}
+                </span>
+            </div>
+            <div v-if="langMenu">
+                <div>
+                    <select v-model="$i18n.locale" @change="goToDefaultMenu()">
                         <option value="en">English</option>
                         <option value="ar">Arabic</option>
                     </select>
                 </div>
-            </ul>
-        </div>
-        <div class="more-menu" v-if="moreMenu" @click="moreMenu = !moreMenu">
-            <router-link to="/ratings">
-                <span>
-                    <i class="fas fa fa-star"></i>
-                    {{ $t("nav.view_your_rate") }}
-                </span>
-            </router-link>
-            <span @click="logout()">
-                <i class="fas fa fa-sign-out-alt"></i>
-                {{ $t("nav.sign_out") }}
-            </span>
+            </div>
         </div>
     </div>
 </template>
@@ -82,10 +90,21 @@ export default class Header extends Vue {
     moreMenu:Boolean = false;
     openStaticLang:Boolean = false;
     openAuthLang:Boolean = false;
+    mainMenue:Boolean = true;
+    langMenu:Boolean = false;
     logout(){
         clearAuthInfo()
         this.$router.push('/home');
         window.location.reload()
+    }
+    switchToLangPopup(){
+        this.mainMenue = false;
+        this.langMenu = true;
+    }
+    goToDefaultMenu(){
+        this.mainMenue = true;
+        this.langMenu = false;
+        this.moreMenu = false;
     }
     mounted() {
         this.auth_state = getAuthState();   
@@ -156,7 +175,7 @@ ul li{
 }
 .more-menu{
     width: 180px;
-    height: 110px;
+    /* height: 155px; */
     position: fixed;
     right: 50px;
     top: 75px;
@@ -166,6 +185,7 @@ ul li{
     color: var(--main-green);
     z-index: 999;
     padding-top: 10px;
+    padding-bottom: 10px;
 }
 .more-menu span{
     display: block;
@@ -204,5 +224,38 @@ ul li{
 .locale-switcher-static select option,
 .locale-switcher-auth select option{
     height: 30px;
+}
+.margin-logo{
+    margin-right: 65px !important;
+}
+.margin-icon{
+    margin-left: 10px !important;
+}
+.margin-ul{
+    margin-left: 45px;
+}
+.left-menu{
+    left: 40px !important;
+}
+.left-menu span{
+    padding-right: 20px;
+    padding-left: 0px !important;
+}
+.more-menu select{
+    width: 95%;
+    height: 40px;
+    background: transparent;
+    border-radius: 4px;
+    border: 1px solid var(--main-green);
+    cursor: pointer;
+    color: var(--main-green);
+    margin: auto;
+    display: block;
+    margin-top: 10px;
+    outline: none;
+}
+.more-menu select option{
+    font-size: 15px;
+    cursor: pointer !important;
 }
 </style>

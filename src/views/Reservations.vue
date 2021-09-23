@@ -5,23 +5,23 @@
         </div>
         <div class="reservations-body">
             <div class="cover-img">
-                <img src="@/assets/images/profile-cover.png" alt="">
-                <h2>
+                <img :class="{'mirror-img' : $t('nav.home') === 'الرئيسية'}" src="@/assets/images/profile-cover.png" alt="">
+                <h2 :class="{'rtl pages-title-ar' : $t('nav.home') === 'الرئيسية'}">
                     <router-link to="/hospital_home">
-                        <i class="fas fa-chevron-left"></i> 
+                        <i :class="{'rotate-icon' : $t('nav.home') === 'الرئيسية'}"  class="fas fa-chevron-left"></i> 
                     </router-link>
                     {{ $t("reservations.title") }}
                 </h2>
-                <Calendar class="calendar"/>
+                <Calendar :class="{'left-icon-ar' : $t('nav.home') === 'الرئيسية'}" class="calendar"/>
             </div>
             <div v-if="placeHolderFlag && !loaderFlag">
                 <PagePlaceHolder/>
             </div>
             <div class="reservations-inputs-body" v-if="reservationBodyFlag">
-                <div class="reservations-panal">
+                <div class="reservations-panal" :class="{'float-right pages-panal' : $t('nav.home') === 'الرئيسية'}">
                     <ReservationsList @updateLength="updateLength" @updateDetails="updateReservationDetails" ref="updateList"/>
                 </div>
-                <div class="reservation-body">
+                <div class="reservation-body" :class="{'float-right' : $t('nav.home') === 'الرئيسية'}">
                     <router-view @updateReservationsList="updateReservationsList" ref="updatePage"></router-view>
                 </div>
             </div>

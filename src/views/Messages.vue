@@ -5,10 +5,10 @@
         </div>
         <div class="messages-body">
             <div class="cover-img">
-                <img src="@/assets/images/profile-cover.png" alt="">
-                <h2>
+                <img :class="{'mirror-img' : $t('nav.home') === 'الرئيسية'}" src="@/assets/images/profile-cover.png" alt="">
+                <h2 :class="{'rtl pages-title-ar' : $t('nav.home') === 'الرئيسية'}">
                     <router-link to="/hospital_home">
-                        <i class="fas fa-chevron-left"></i> 
+                        <i :class="{'rotate-icon' : $t('nav.home') === 'الرئيسية'}" class="fas fa-chevron-left"></i> 
                     </router-link>
                     {{ $t("messages.title") }}
                 </h2>
@@ -17,14 +17,14 @@
                 <PagePlaceholder/>
             </div>
             <div class="messages-inputs-body" v-if="messageBodyFlag">
-                <div class="messages-panal">
+                <div class="messages-panal" :class="{'float-right pages-panal' : $t('nav.home') === 'الرئيسية'}">
                     <UserList @updateLength="updateLength" ref="updateUserList"/>
                 </div>
-                <div :class="'chat-body '+chatWidth">
+                <div :class="['chat-body '+chatWidth, {'float-right' : $t('nav.home') === 'الرئيسية'}]" >
                     <Placeholder v-if="$router.currentRoute.name == 'messages'"/>
                     <router-view @updateHeadChat="updateHeadChat" @openInfo="openInfo"></router-view>
                 </div>
-                <div :class="'info-panal '+openInfoAnimate">
+                <div :class="['info-panal '+openInfoAnimate, {'msg-info-ar' : $t('nav.home') === 'الرئيسية'}]" >
                     <CloseIcon class="close-icon" @closeAction="closeInfo"/>
                     <InfoPanal @closeInfo="closeInfo"/>
                 </div>
@@ -171,5 +171,9 @@ export default class Messages extends Vue {
     cursor: pointer;
     margin-right: 10px;
     color: var(--font-navy) !important;
+}
+.msg-info-ar{
+    left: 0;
+    right: unset !important;
 }
 </style>

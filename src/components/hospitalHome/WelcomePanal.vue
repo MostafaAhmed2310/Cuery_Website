@@ -1,13 +1,13 @@
 <template>
-    <div class="welcome-panal-container">
+    <div class="welcome-panal-container" :class="{'rtl' : $t('nav.home') === 'الرئيسية'}">
         <div class="loader-container" v-if="loaderFlag">
             <DoubleBounce></DoubleBounce>
         </div>
-        <div class="panal-profile-img">
+        <div class="panal-profile-img" :class="{'float-right panal-profile-margin' : $t('nav.home') === 'الرئيسية'}">
             <img :src="BaseUrl+imagePath" alt="" v-if="imagePath">
             <i class="fas fa fa-user-circle" v-if="imagePath == null || !imagePath"></i>
         </div>
-        <div class="welcome-panal-info">
+        <div class="welcome-panal-info" :class="{'info-line-height' : $t('nav.home') === 'الرئيسية'}">
             <h3>{{ $t("hospital_home.hi") }} " {{userName}} "</h3>
             <h4>{{ $t("hospital_home.welcome") }}</h4>
             <span>{{ $t("hospital_home.welcome_msg") }}</span>
@@ -86,5 +86,12 @@ export default class WelcomePanal extends Vue {
     display: block;
     width: 70%;
     font-size: 13px;
+}
+.panal-profile-margin{
+    margin-left: 2%;
+    margin-right: 0px !important;
+}
+.info-line-height{
+    line-height: 1.5;
 }
 </style>

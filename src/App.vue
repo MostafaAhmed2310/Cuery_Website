@@ -175,6 +175,48 @@ input[type=number] {
     width: 150px !important;
     height: 150px !important;
 }
+// localization style
+
+.float-left{
+    float: left !important;
+}
+.float-right{
+    float: right !important;
+}
+.ltr{
+    direction: ltr !important;
+}
+.rtl{
+    direction: rtl !important;
+}
+.img-margin-left{
+    margin-left: 2% !important;
+    margin-right: 0px !important;
+}
+.mirror-img{
+    transform: scaleX(-1);
+}
+.pages-panal{
+    margin-left: 5%;
+    margin-right: 0px !important;
+}
+.pages-title-ar{
+    right: 10%;
+    left: unset !important;
+}
+.rotate-icon{
+    margin-left: 10px;
+    margin-right: 0px !important;
+    transform: rotate(180deg);
+}
+.left-icon-ar{
+    left: 190px;
+    right: unset !important;
+}
+.actions-btns-ar{
+    left: 100px;
+    right: unset !important;
+}
 </style>
 
 

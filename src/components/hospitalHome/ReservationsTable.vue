@@ -1,5 +1,5 @@
 <template>
-    <div class="table-container">
+    <div class="table-container"  :class="{'rtl' : $t('nav.home') === 'الرئيسية'}">
         <div class="loader-container" v-if="loaderFlag">
             <DoubleBounce></DoubleBounce>
         </div>
@@ -15,7 +15,7 @@
         </div>
         <div v-if="tableArr" class="table-body">
             <div class="table-row" v-for="row in tableArr" :key="row">
-                <div class="profile-img">
+                <div class="profile-img" :class="{'float-right img-margin-left' : $t('nav.home') === 'الرئيسية'}">
                     <img :src="BaseUrl + row.image_path" alt="" v-if="row.image_path">
                     <i class="fas fa fa-user-circle" v-if="row.image_path == null"></i>
                 </div>
@@ -24,8 +24,8 @@
                 <router-link :to="'/reservations/'+row.id">
                     <span class="see-more">{{ $t("more") }}</span>
                 </router-link>
-                <div class="table-btns">
-                    <button class="green-btn" @click="ConfirmReservation(row.id)">{{ $t("reservations.confirm") }}</button>
+                <div class="table-btns" :class="{'float-left' : $t('nav.home') === 'الرئيسية'}">
+                    <button :class="{'btn-margin-left' : $t('nav.home') === 'الرئيسية'}" class="green-btn" @click="ConfirmReservation(row.id)">{{ $t("reservations.confirm") }}</button>
                     <button class="red-btn" @click="openDeclinePopup(row.id)">{{ $t("reservations.decline") }}</button>
                 </div>
                 <hr>
@@ -179,5 +179,9 @@ export default class ReservationsTable extends Vue {
     right: 0;
     bottom: 0;
     background: rgba(0,0,0,0.5);
+}
+.btn-margin-left{
+    margin-left: 30px;
+    margin-right: 0px !important;
 }
 </style>

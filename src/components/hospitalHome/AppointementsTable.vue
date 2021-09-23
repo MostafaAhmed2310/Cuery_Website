@@ -1,5 +1,5 @@
 <template>
-    <div class="table-container">
+    <div class="table-container" :class="{'rtl' : $t('nav.home') === 'الرئيسية'}">
         <div class="table-title">
             <h4>{{ $t("hospital_home.nearest_appointements") }}</h4>
         </div>
@@ -9,7 +9,7 @@
         </div>
         <div  v-if="tableArr" class="table-body">
             <div class="table-row" v-for="row in tableArr" :key="row">
-                <div class="profile-img">
+                <div class="profile-img" :class="{'float-right img-margin-left' : $t('nav.home') === 'الرئيسية'}">
                     <img :src="BaseUrl+row.image_path" alt="" v-if="row.image_path">
                     <i class="fas fa fa-user-circle" v-if="row.image_path == null"></i>
                 </div>
@@ -18,7 +18,7 @@
                 <router-link :to="'/normal-appoinetment-details/'+row.id">
                     <span class="see-more">{{ $t("more") }}</span>
                 </router-link>
-                <div class="table-btns">
+                <div class="table-btns" :class="{'float-left' : $t('nav.home') === 'الرئيسية'}">
                     <router-link :to="'/confirmation/'+row.id">
                         <button class="navy-btn">{{ $t("hospital_home.patient_arrived") }}</button>
                     </router-link>

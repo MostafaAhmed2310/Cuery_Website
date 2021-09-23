@@ -1,5 +1,5 @@
 <template>
-    <div class="upgrade-panal-container">
+    <div class="upgrade-panal-container" :class="{'upgrade-ar' : $t('nav.home') === 'الرئيسية'}">
         <div class="upgrade-icon">
             <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 83.933 83.933">
                 <g id="upgrade_icon_" data-name="upgrade icon " transform="translate(0.001 0)">
@@ -69,5 +69,9 @@ export default class UpgradePanal extends Vue {
 }
 .upgrade-btn button:hover{
     opacity: 0.8;
+}
+.upgrade-ar{
+    direction: rtl;
+    line-height: 1.2;
 }
 </style>

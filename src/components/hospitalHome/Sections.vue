@@ -1,5 +1,5 @@
 <template>
-    <div class="sections-container">
+    <div class="sections-container" :class="{'rtl' : $t('nav.home') === 'الرئيسية'}">
         <div class="sections-title">
             <h2>{{ $t("sections.my_sections") }}</h2>
         </div>
@@ -21,8 +21,8 @@
                 </div>
                 <p>{{ section.section_title }}</p>
             </div>
-            <router-link to="/sections">
-                <span>{{ $t("more") }} <i class="fas fa fa-sort-up"></i></span>
+            <router-link to="/sections" :class="{'float-left' : $t('nav.home') === 'الرئيسية'}">
+                <span>{{ $t("more") }} <i :class="{'more-icon-ar' : $t('nav.home') === 'الرئيسية'}" class="fas fa fa-sort-up"></i></span>
             </router-link>
         </div>
     </div>
@@ -98,5 +98,8 @@ export default class Sections extends Vue {
 }
 .sections-body span i{
     transform: rotate(90deg);
+}
+.more-icon-ar{
+    transform: rotate(270deg) !important;
 }
 </style>
