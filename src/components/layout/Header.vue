@@ -4,17 +4,26 @@
             <div class="logo-body">
                 <img class="logo-img" src="@/assets/logo.png"/>
             </div>
-            <div class="locale-switcher">
-                    <select v-model="$i18n.locale">
+            <!-- <div class="locale-switcher">
+                <select v-model="$i18n.locale">
                     <option value="en">English</option>
                     <option value="ar">Arabic</option>
-                    </select>
-            </div>
+                </select>
+            </div> -->
             <ul class="nav-bar-list" v-if="auth_state == false">
                 <li><router-link to="/home" active-class="active">{{ $t("nav.home") }}</router-link></li>
                 <li><router-link to="/medical_team" active-class="active">{{ $t("nav.medical_team") }}</router-link></li>
                 <li>{{ $t("nav.about") }}</li>
+                <li class="global-li" @click="openStaticLang = !openStaticLang">
+                    <i class="fas fa fa-globe"></i>
+                </li>
                 <li class="login-btn"><router-link to="/login">{{ $t("nav.sign_in") }}</router-link></li>
+                <div class="locale-switcher-static" v-if="openStaticLang">
+                    <select v-model="$i18n.locale">
+                        <option value="en">English</option>
+                        <option value="ar">Arabic</option>
+                    </select>
+                </div>
             </ul>
             <ul class="nav-bar-list-hospital" v-if="auth_state == true">
                 <li><router-link to="/hospital_home" active-class="active">{{ $t("nav.home") }}</router-link></li>
@@ -26,7 +35,7 @@
                         <span>{{ $t("nav.profile") }}</span>
                     </router-link>
                 </li>
-                <li class="global-li">
+                <li class="global-li" @click="openAuthLang = !openAuthLang">
                     <i class="fas fa fa-globe"></i>
                 </li>
                 <li>
@@ -36,6 +45,12 @@
                     <i class="profile-icon fas fa fa-ellipsis-v"></i>
                     <span>{{ $t("nav.more") }}</span>
                 </li>
+                <div class="locale-switcher-auth" v-if="openAuthLang">
+                    <select v-model="$i18n.locale">
+                        <option value="en">English</option>
+                        <option value="ar">Arabic</option>
+                    </select>
+                </div>
             </ul>
         </div>
         <div class="more-menu" v-if="moreMenu" @click="moreMenu = !moreMenu">
@@ -65,6 +80,8 @@ import {clearAuthInfo} from '@/helpers/utils';
 export default class Header extends Vue {
     auth_state:Boolean = false;
     moreMenu:Boolean = false;
+    openStaticLang:Boolean = false;
+    openAuthLang:Boolean = false;
     logout(){
         clearAuthInfo()
         this.$router.push('/home');
@@ -165,5 +182,27 @@ ul li{
 }
 .more-menu a{
     color: var(--main-green);
+}
+.locale-switcher-auth{
+    position: absolute;
+    bottom: -10px;
+    right: 200px;
+}
+.locale-switcher-static{
+    position: absolute;
+    right: 170px;
+    bottom: -10px;
+}
+.locale-switcher-auth select,
+.locale-switcher-static select{
+    width: 100px;
+    height: 25px;
+    border-radius: 4px;
+    outline: none;
+    border: 1px solid var(--font-navy);
+}
+.locale-switcher-static select option,
+.locale-switcher-auth select option{
+    height: 30px;
 }
 </style>
