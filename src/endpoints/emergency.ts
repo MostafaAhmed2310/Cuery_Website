@@ -62,3 +62,9 @@ export async function acceptEmergencyReservation(id:any){
   if (res) return res.data.id
   else return false
 }
+export async function confirmCodeEmergency(id:any, data:any){
+  let res = await api
+  .post('/api/confirm_code/'+id, {'secret_code':data});
+  if (res) return res.data
+  else return false
+}

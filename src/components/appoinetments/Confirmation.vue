@@ -12,10 +12,10 @@
                 <span>{{ $t("appoinetments.enter_code") }}r</span>
             </div>
             <div class="numbers-panal">
-                <input type="number" v-model="num1" placeholder="-">
-                <input type="number" v-model="num2" placeholder="-">
-                <input type="number" v-model="num3" placeholder="-">
-                <input type="number" v-model="num4" placeholder="-">
+                <input type="number" v-model="num1" placeholder="-" maxlength="1" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" v-on:keyup="checkkey($event)">
+                <input type="number" v-model="num2" placeholder="-" maxlength="1" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" v-on:keyup="checkkey($event)">
+                <input type="number" v-model="num3" placeholder="-" maxlength="1" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" v-on:keyup="checkKey($event)">
+                <input type="number" v-model="num4" placeholder="-" maxlength="1" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" v-on:keyup="checkkey($event)">
             </div>
             <span class="err-msg" v-if="errorFlag" >{{ $t("appoinetments.wrong_code") }}</span>
             <div class="confirm-btn">
@@ -25,9 +25,10 @@
     </div>
 </template>
 
-<script lang="ts">
+<script>
 import { Component, Vue } from 'vue-property-decorator';
 import { confirmCode } from '@/endpoints/reservations';
+import { confirmCodeEmergency } from '@/endpoints/emergency';
 
 @Component({
     components: {
@@ -43,10 +44,25 @@ export default class Confirmation extends Vue {
     secret_code = '';
     resId =this.$route.params.id;
 
+    checkKey(e){
+        if(e.keyCode == 32 || e.keyCode == 8)
+        {
+            e.target.previousElementSibling.focus()
+        }else{
+            e.target.nextElementSibling.focus()
+        }        
+    }
     async confirmPatient(){
         try{
             this.secret_code = this.num1 + this.num2 + this.num3 + this.num4
-            let res  = await confirmCode(this.resId,this.secret_code);
+            var res = {}
+            if (this.$router.currentRoute.name  == "Confirmation") {
+                console.log("confirmation")
+                res  = await confirmCode(this.resId,this.secret_code);
+            }else if(this.$router.currentRoute.name == "Emergency-Confirmation"){
+                                console.log("emergency-confirmation")
+                res  = await confirmCodeEmergency(this.resId,this.secret_code);
+            }
             if(res.success == true ){
                 this.$router.push('/success_page/'+this.$route.params.id);
             }else{
@@ -59,6 +75,9 @@ export default class Confirmation extends Vue {
 
             }
         }
+    }
+    created(){
+        window.addEventListener('keyup', this.checkKey)
     }
 }
 </script>
