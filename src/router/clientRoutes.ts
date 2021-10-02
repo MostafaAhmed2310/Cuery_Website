@@ -183,6 +183,11 @@ const routes = [
                 component: Confirmation
             },
             {
+                path: '/emergency-confirmation/:id',
+                name: 'Emergency-Confirmation',
+                component: Confirmation
+            },
+            {
                 path: '/success_page/:id',
                 name: 'SuccessPage',
                 component: SuccessPage

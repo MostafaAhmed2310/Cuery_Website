@@ -37,7 +37,7 @@
         </div>
         <div class="block">
             <div class="reservation-btns">
-                <router-link :to="'/confirmation/'+ $route.params.id"><button class="arrived-btn">{{ $t("appoinetments.arrived") }}</button></router-link>
+                <router-link :to="'/emergency-confirmation/'+ $route.params.id"><button  class="arrived-btn">{{ $t("appoinetments.arrived") }}</button></router-link>
                 <button class="decline-btn" @click="declineemergency($route.params.id)">{{ $t("reservations.decline") }}</button>
             </div>
         </div>
