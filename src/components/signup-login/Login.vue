@@ -69,7 +69,15 @@ export default class Login extends Vue {
                 this.$router.push('/hospital_home');
                 window.location.reload();
             }catch(err) {
-                if(err == 'Error: Request failed with status code 401'){
+                console.log('rrrrrrrrrrrr', err.response);
+                if(err == 'Error: Request failed with status code 401' && err.response.data.status == 'Pending'){
+                    this.$fire({
+                        title: "401 - Pending",
+                        text: "Please wait to review your account and approve it",
+                        type: "warning",
+                        timer: 10000
+                    })
+                }else if(err == 'Error: Request failed with status code 401' && err.response.data.error == 'Invalid Credentials'){
                     this.$fire({
                         title: "401 - Unauthorized",
                         text: "Your authorization failed .. Please try refreshing the page and fill in the correct login details",

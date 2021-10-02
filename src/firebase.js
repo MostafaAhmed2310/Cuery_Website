@@ -26,6 +26,12 @@ class _Firebase {
             this.isMessagingSupported = false;
         }
     }
+
+    getDataFromRealtimeDatabase(userId){
+        var userId = userId;
+        var starCountRef = firebase.database().ref('notifications/users/'+userId+'/unseen_count');
+        return starCountRef;
+    }
   
     setReCAPTCHA(id) {
         this.recaptchaVerifier = new firebase.auth.RecaptchaVerifier(id, {

@@ -34,6 +34,7 @@
                 </li>
                 <li @click="openNotificationPopup()">
                     <i class="fas fa fa-bell"></i>
+                    <span v-if="unseenCount != 0" class="unseen-count">{{unseenCount}}</span>
                 </li>
                 <li @click="moreMenu = !moreMenu">
                     <i :class="{'margin-icon' : $t('nav.home') === 'الرئيسية'}" class="profile-icon fas fa fa-ellipsis-v"></i>
@@ -79,6 +80,7 @@ import { getAuthState } from '@/helpers/utils';
 import {clearAuthInfo} from '@/helpers/utils';
 import Notifications from '@/components/notifications/Notifications.vue';
 import vClickOutside from 'v-click-outside';
+import FirebaseFile from "@/firebase";
 
 @Component({
     components: {
@@ -96,6 +98,7 @@ export default class Header extends Vue {
     mainMenue = true;
     langMenu = false;
     notificationPopup = false;
+    unseenCount = '';
     externalClickOutNotifications(){
         this.notificationPopup = false;
     }
@@ -118,13 +121,25 @@ export default class Header extends Vue {
         this.moreMenu = false;
     }
     openNotificationPopup(){
+        this.resetCount();
         this.notificationPopup = !this.notificationPopup;
         if(this.notificationPopup){
             this.$refs.refetch.refetchNotificationList();
         }
     }
+    async resetCount(){
+        let res = await FirebaseFile.getDataFromRealtimeDatabase(56);
+        res.set(0);
+    }
     mounted() {
-        this.auth_state = getAuthState();   
+        this.auth_state = getAuthState();  
+    }
+    async created() {
+        let res = await FirebaseFile.getDataFromRealtimeDatabase(56);
+        res.on('value', (snapshot) => {
+            const data = snapshot.val();
+            this.unseenCount = data;
+        });
     }
   
 }
@@ -142,6 +157,9 @@ export default class Header extends Vue {
     overflow: hidden;
     clear: both;
     color: #fff;
+}
+.nav-bar-body i{
+    font-size: 20px;
 }
 .logo-body{
     float: left;
@@ -285,5 +303,20 @@ ul li{
     z-index: 9999;
     right: 130px;
     top: 65px;
+}
+.unseen-count{
+    width: 17px;
+    height: 17px;
+    display: inline-block;
+    background: var(--font-navy);
+    border-radius: 50%;
+    border: 1px solid #fff;
+    line-height: 1.4;
+    color: #fff;
+    font-size: 12px;
+    text-align: center;
+    position: absolute;
+    margin-left: -5px;
+    margin-top: 0px;
 }
 </style>
