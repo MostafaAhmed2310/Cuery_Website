@@ -27,20 +27,23 @@
     </div>
 </template>
 
-<script lang="ts">
+<script>
 import { Component, Vue } from 'vue-property-decorator';
 import {login} from '@/endpoints/auth';
+import FirebaseFile from "@/firebase";
+import {saveFcmToken} from '@/endpoints/notifications';
 @Component({
     components: {
         
     },
 })
 export default class Login extends Vue {
-    username:any = '';
-    password:any = '';
-    usernameMsg:Boolean = false;
-    passwordMsg:Boolean = false;
-    errorMsg:Boolean = false;
+    username = '';
+    password = '';
+    usernameMsg = false;
+    passwordMsg = false;
+    errorMsg = false;
+    role_id = 2;
     pushToSignup(){
         this.$router.push('/signup')
     }
@@ -59,17 +62,23 @@ export default class Login extends Vue {
         }
         if(this.usernameMsg == false && this.passwordMsg == false) {
             try {
-                await login(this.username,this.password)
-                this.$fire({
-                    title: "SUCCESS!",
-                    text: "WELCOME !",
-                    type: "success",
-                    timer: 2000
-                })
-                this.$router.push('/hospital_home')
-                window.location.reload()
+                await login(this.username,this.password, this.role_id);
+                await FirebaseFile.registerSW();
+                const tokenFCM = await FirebaseFile.getFCMToken();
+                await saveFcmToken({fcm_token: tokenFCM});
+                this.$router.push('/hospital_home');
+                window.location.reload();
             }catch(err) {
-                this.errorMsg = true
+                if(err == 'Error: Request failed with status code 401'){
+                    this.$fire({
+                        title: "401 - Unauthorized",
+                        text: "Your authorization failed .. Please try refreshing the page and fill in the correct login details",
+                        type: "warning",
+                        timer: 10000
+                    })
+                }else{
+                    this.errorMsg = true
+                }
             }
         }
     }

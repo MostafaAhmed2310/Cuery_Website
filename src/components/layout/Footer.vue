@@ -11,9 +11,13 @@
                 <span><i class="fab fa-twitter"></i></span>
             </div>
             <div class="footer-links">
-                <span>{{ $t("nav.about") }}</span>
-                <span>{{ $t("nav.medical_team") }}</span>
-                <span>{{ $t("footer.careers") }}</span>
+                <router-link to="/about_us">
+                    <span>{{ $t("nav.about") }}</span>
+                </router-link>
+                <router-link to="/medical_team">
+                    <span>{{ $t("nav.medical_team") }}</span>
+                </router-link>
+                <!-- <span>{{ $t("footer.careers") }}</span> -->
             </div>
             <div class="footer-help">
                 <p>{{ $t("footer.are_you_a_patient") }}</p>
@@ -21,10 +25,18 @@
             </div>
             <div class="footer-help">
                 <p>{{ $t("footer.need_help") }}</p>
-                <router-link to="/contact_us"><span> {{ $t("nav.contact_us") }}</span></router-link>
-                <span>{{ $t("footer.privacy_policy") }}</span>
-                <span>{{ $t("footer.terms") }}</span>
-                <span>{{ $t("footer.patients_privacy_policy") }}</span>
+                <router-link to="/contact_us">
+                    <span> {{ $t("nav.contact_us") }}</span>
+                </router-link>
+                <router-link to="/privacy">
+                    <span>{{ $t("footer.privacy_policy") }}</span>
+                </router-link>
+                <router-link to="/terms">
+                    <span>{{ $t("footer.terms") }}</span>
+                </router-link>
+                <router-link to="/patient_privacy">
+                    <span>{{ $t("footer.patients_privacy_policy") }}</span>
+                </router-link>
             </div>
             <div class="footer-apps">
                 <div>
@@ -106,7 +118,8 @@ export default class Footer extends Vue {
     cursor: pointer;
     text-decoration: underline;
 }
-.footer-help a{
+.footer-help a,
+.footer-links a{
     color: #fff;
 }
 .footer-apps{

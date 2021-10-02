@@ -32,3 +32,9 @@ export async function getNews(){
   if (res) return res.data
   else return false
 }
+export async function getStaticPages(){
+  let res = await api
+  .get('api/get_static_pages');
+  if (res) return res.data
+  else return false
+}

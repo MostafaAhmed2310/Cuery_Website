@@ -175,6 +175,14 @@ input[type=number] {
     width: 150px !important;
     height: 150px !important;
 }
+.input-field .multiselect{
+    border: 1.5px solid var(--main-green);
+    border-radius: var(--sm-radius);
+    width: 99%;
+}
+.input-field .multiselect__tags{
+    min-height: 45px;
+}
 // localization style
 
 .float-left{

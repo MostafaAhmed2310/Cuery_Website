@@ -4,16 +4,10 @@
             <div class="logo-body" :class="{'float-right margin-logo' : $t('nav.home') === 'الرئيسية'}">
                 <img class="logo-img" src="@/assets/logo.png"/>
             </div>
-            <!-- <div class="locale-switcher">
-                <select v-model="$i18n.locale">
-                    <option value="en">English</option>
-                    <option value="ar">Arabic</option>
-                </select>
-            </div> -->
             <ul class="nav-bar-list" v-if="auth_state == false" :class="{'float-left rtl margin-ul' : $t('nav.home') === 'الرئيسية'}">
                 <li><router-link to="/home" active-class="active">{{ $t("nav.home") }}</router-link></li>
                 <li><router-link to="/medical_team" active-class="active">{{ $t("nav.medical_team") }}</router-link></li>
-                <li>{{ $t("nav.about") }}</li>
+                <li><router-link to="/about_us" active-class="active">{{ $t("nav.about") }}</router-link></li>
                 <li class="global-li" @click="moreMenu = !moreMenu">
                     <i class="fas fa fa-globe"></i>
                 </li>
@@ -38,7 +32,7 @@
                 <li class="global-li" @click="moreMenu = !moreMenu">
                     <i class="fas fa fa-globe"></i>
                 </li>
-                <li>
+                <li @click="openNotificationPopup()">
                     <i class="fas fa fa-bell"></i>
                 </li>
                 <li @click="moreMenu = !moreMenu">
@@ -47,7 +41,7 @@
                 </li>
             </ul>
         </div>
-        <div :class="{'left-menu rtl' : $t('nav.home') === 'الرئيسية'}" class="more-menu" v-if="moreMenu">
+        <div :class="{'left-menu rtl' : $t('nav.home') === 'الرئيسية'}" class="more-menu" v-if="moreMenu" v-click-outside="externalClickOutMore">
             <div v-if="mainMenue">
                 <router-link to="/ratings" v-if="auth_state == true">
                     <span @click="moreMenu = !moreMenu">
@@ -73,25 +67,42 @@
                 </div>
             </div>
         </div>
+        <div class="notifications-popup" @click="notificationPopup = !notificationPopup" v-if="notificationPopup" v-click-outside="externalClickOutNotifications">
+            <Notifications ref="refetch"/>
+        </div>
     </div>
 </template>
 
-<script lang="ts">
+<script>
 import { Component, Vue } from 'vue-property-decorator';
 import { getAuthState } from '@/helpers/utils';
 import {clearAuthInfo} from '@/helpers/utils';
+import Notifications from '@/components/notifications/Notifications.vue';
+import vClickOutside from 'v-click-outside';
 
 @Component({
-  components: {
-  },
+    components: {
+        Notifications,
+    },
+    directives: {
+        clickOutside: vClickOutside.directive
+    },
 })
 export default class Header extends Vue {
-    auth_state:Boolean = false;
-    moreMenu:Boolean = false;
-    openStaticLang:Boolean = false;
-    openAuthLang:Boolean = false;
-    mainMenue:Boolean = true;
-    langMenu:Boolean = false;
+    auth_state = false;
+    moreMenu = false;
+    openStaticLang = false;
+    openAuthLang = false;
+    mainMenue = true;
+    langMenu = false;
+    notificationPopup = false;
+    externalClickOutNotifications(){
+        this.notificationPopup = false;
+    }
+    externalClickOutMore(){
+        this.moreMenu = false;
+        this.langMenu = false;
+    }
     logout(){
         clearAuthInfo()
         this.$router.push('/home');
@@ -105,6 +116,12 @@ export default class Header extends Vue {
         this.mainMenue = true;
         this.langMenu = false;
         this.moreMenu = false;
+    }
+    openNotificationPopup(){
+        this.notificationPopup = !this.notificationPopup;
+        if(this.notificationPopup){
+            this.$refs.refetch.refetchNotificationList();
+        }
     }
     mounted() {
         this.auth_state = getAuthState();   
@@ -257,5 +274,16 @@ ul li{
 .more-menu select option{
     font-size: 15px;
     cursor: pointer !important;
+}
+.notifications-popup{
+    width: 400px;
+    height: 400px;
+    position: fixed;
+    background: #fff;
+    border-radius: var(--md-radius);
+    border: 1px solid var(--main-green);
+    z-index: 9999;
+    right: 130px;
+    top: 65px;
 }
 </style>

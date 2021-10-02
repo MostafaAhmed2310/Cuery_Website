@@ -20,7 +20,18 @@
                         <input class="loadedFiles" @change="uploadFileFun($event)" type="file" accept="image/*">
                     </label>
                 </div>
+                <div class="profile-pic">
+                    <label>
+                        Upload Your License (image format)*
+                        <input class="loadedFiles" @change="uploadLicenceFun($event)" type="file" accept="image/*">
+                    </label>
+                    <span v-if="licenceMsg"> Please Upload Your License </span>
+                </div>
                 <form>
+                    <div class="input-field">
+                        <multiselect class="selectStyle" v-model="sp_type" :options="spTypesList" :searchable="true" label="type" track-by="type" :show-labels="false" placeholder="Select Your Type"></multiselect>
+                        <span v-if="typeMsg">  Please Select your type </span>
+                    </div>
                     <div class="input-field">
                         <input type="text" :placeholder='$t("sign_up.username_placeholder")' v-model="username" />
                         <span v-if="usernameMsg">  {{ $t("sign_up.username_required") }} </span>
@@ -131,11 +142,13 @@ import GoogleMap from "@/components/signup-login/GoogleMap.vue";
 import {signup} from "@/endpoints/user";
 import {login} from "@/endpoints/auth";
 import {DoubleBounce} from 'vue-loading-spinner';
-
+import {getSpTypes} from '@/endpoints/user';
+import Multiselect from 'vue-multiselect';
 @Component({
   components: {
     GoogleMap,
     DoubleBounce,
+    Multiselect
   },
 })
 export default class Signup extends Vue {
@@ -173,10 +186,21 @@ export default class Signup extends Vue {
   uploadFile = "";
   fileData = "";
   fileFile = "";
+  uploadLicence = "";
+  licenceData = "";
+  licenceFile = "";
   passType = 'password';
   c_passType = 'password';
   loaderFlag = false;
-
+  sp_type = '';
+  spTypesList = [];
+  typeMsg = false;
+  licenceMsg = false;
+  license_ext = '';
+  license_path = '';
+  async getTypes(){
+    this.spTypesList = await getSpTypes();
+  }
   pushToSignin() {
     this.$router.push("/login");
   }
@@ -220,7 +244,31 @@ export default class Signup extends Vue {
             this.fileFile = this.uploadFile.files[0];
         }
     }
+    uploadLicenceFun(){
+        this.uploadLicence = (event).target;
+        if (this.uploadLicence.files && this.uploadLicence.files[0]) {
+            var reader = new FileReader();
+            reader.onload = (e) => {
+                this.licenceData = (e.target).result;
+                this.license_ext = this.licenceData.split(";")[0].split("/")[1]
+                this.license_path = this.licenceData.split(",")[1]
+            }
+            reader.readAsDataURL(this.uploadLicence.files[0]);
+            this.licenceFile = this.uploadLicence.files[0];
+        }
+    }
   async signupFun(e ) {
+    console.log(this.licenceData);
+    if (this.sp_type == '' || this.sp_type == undefined || this.sp_type == null) {
+      this.typeMsg = true;
+    } else {
+      this.typeMsg = false;
+    }
+     if (this.licenceFile == '') {
+      this.licenceMsg = true;
+    } else {
+      this.licenceMsg = false;
+    }
     if (!this.username) {
       this.usernameMsg = true;
     } else {
@@ -287,7 +335,9 @@ export default class Signup extends Vue {
       this.machingMsg == false &&
       this.locationMsg == false &&
       this.privacyMsg == false &&
-      this.termsMsg == false
+      this.termsMsg == false && 
+      this.licenceMsg == false &&
+      this.typeMsg == false
     ){
       try {
         let data = {
@@ -304,21 +354,20 @@ export default class Signup extends Vue {
             role_id: 2,
             image_string: this.imagePath,
             ext: this.extension,
+            license: this.license_path,
+            license_ext: this.license_ext,
+            sp_type: this.sp_type.id
         };
         this.loaderFlag = true;
         await signup(data);
         this.loaderFlag = false;
         this.$fire({
             title: "SUCCESS!",
-            text: "WELCOME !",
+            text: "Your account created successfully .. please wait to review your account and approve it ",
             type: "success",
-            timer: 2000
+            timer: 10000
         })
-        let res = await login(this.email,this.password);
-        if(res){
-            this.$router.push('/hospital_home')
-            window.location.reload()
-        }
+        this.$router.push('/login');
         }catch (err) {
             console.log(err)
             this.loaderFlag = false;
@@ -370,7 +419,8 @@ export default class Signup extends Vue {
     }
     mounted() {
         this.hoverMethod();
-        this.scrollToTop();   
+        this.scrollToTop();
+        this.getTypes();   
     }
 }
 </script>
@@ -435,14 +485,15 @@ export default class Signup extends Vue {
     cursor: pointer;
     color: var(--main-green);
 }
-.input-field span {
+.input-field span,
+.profile-pic span {
   font-size: 12px;
   color: var(--alert-color);
 }
 .input-field input {
   width: 100%;
   height: 45px;
-  border-radius: var(--md-radius);
+  border-radius: var(--sm-radius);
   outline: none;
   border: 1.5px solid var(--main-green);
   padding: 0px 20px;

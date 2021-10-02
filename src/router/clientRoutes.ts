@@ -27,6 +27,7 @@ import EmergencySection from '@/components/emergency/EmergencySection.vue'
 import AddEmergencySections from '@/components/emergency/AddEmergencySections.vue'
 import EmergencySectionDetails from '@/components/emergency/EmergencySectionDetails.vue'
 import FinishAppoinetments from '@/components/appoinetments/FinishAppoinetments.vue'
+import StaticPages from '@/views/StaticPages.vue'
 const routes = [
     {
         path: '/',
@@ -67,6 +68,26 @@ const routes = [
         path: '/contact_us',
         name: 'contact_us',
         component: ContactUs
+    },
+    {
+        path: '/about_us',
+        name: 'about_us',
+        component: StaticPages
+    },
+    {
+        path: '/privacy',
+        name: 'privacy',
+        component: StaticPages
+    },
+    {
+        path: '/terms',
+        name: 'terms',
+        component: StaticPages
+    },
+    {
+        path: '/patient_privacy',
+        name: 'patientPrivacy',
+        component: StaticPages
     },
     {
         path: '/sections',

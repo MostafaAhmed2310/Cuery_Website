@@ -20,3 +20,10 @@ export async function editProfile(user_id:any, data:any){
     if (res) return res.data
     else return false
 }
+
+export async function getSpTypes(){
+    let res = await api
+    .get('api/get_sp_types/');
+    if (res) return res.data
+    else return false
+}
