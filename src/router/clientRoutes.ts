@@ -28,6 +28,8 @@ import AddEmergencySections from '@/components/emergency/AddEmergencySections.vu
 import EmergencySectionDetails from '@/components/emergency/EmergencySectionDetails.vue'
 import FinishAppoinetments from '@/components/appoinetments/FinishAppoinetments.vue'
 import StaticPages from '@/views/StaticPages.vue'
+import Support from '@/views/Support.vue'
+
 const routes = [
     {
         path: '/',
@@ -213,6 +215,11 @@ const routes = [
         path: '/add-emergency-section',
         name: 'AddEmergencySections',
         component: AddEmergencySections
+    },
+    {
+        path: '/support',
+        name: 'Support',
+        component: Support
     },
 ]
 

@@ -29,6 +29,12 @@
                         <span>{{ $t("nav.profile") }}</span>
                     </router-link>
                 </li>
+                <li>
+                    <router-link to="/support" active-class="active">
+                        <i :class="{'margin-icon' : $t('nav.home') === 'الرئيسية'}" class="profile-icon fas fa-headset"></i>
+                        <span>{{ $t("nav.support") }}</span>
+                    </router-link>
+                </li>
                 <li class="global-li" @click="moreMenu = !moreMenu">
                     <i class="fas fa fa-globe"></i>
                 </li>
@@ -190,7 +196,7 @@ export default class Header extends Vue {
 ul li{
     list-style: none;
     display: inline-block;
-    margin-right: 55px;
+    margin-right: 35px;
     cursor: pointer;
 }
 .nav-bar-list li a,

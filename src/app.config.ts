@@ -1,3 +1,3 @@
-export var baseUrl="http://178.62.19.101:8080/index.php/",
-BaseUrl="http://178.62.19.101:8080/", 
+export var baseUrl="http://137.184.108.244:8080/index.php/",
+BaseUrl="http://137.184.108.244:8080/", 
 headerConfigKeyName="cureyHeaderConfig"
