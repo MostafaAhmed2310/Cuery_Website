@@ -1,11 +1,11 @@
 <template>
-    <div class="decline-popup-container">
+    <div class="decline-popup-container" :class="{'rtl' : $t('nav.home') === 'الرئيسية'}">
         <div class="loader-container" v-if="loaderFlag">
             <DoubleBounce></DoubleBounce>
         </div>
         <div class="popup-header">
-            <h3>{{ $t("appoinetments.what_report") }}</h3>
-            <i @click="closeDecline()" class="fas fa fa-times"></i>
+            <h3 :class="{'float-right' : $t('nav.home') === 'الرئيسية'}">{{ $t("appoinetments.what_report") }}</h3>
+            <i :class="{'float-left' : $t('nav.home') === 'الرئيسية'}" @click="closeDecline()" class="fas fa fa-times"></i>
         </div>
         <div class="popup-body">
             <div class="reason-body">

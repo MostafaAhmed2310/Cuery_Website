@@ -82,6 +82,7 @@ export default class Sections extends Vue {
 }
 .section-item p{
     font-size: 10px;
+    line-height: 1;
 }
 .sections-body span{
     float: right;

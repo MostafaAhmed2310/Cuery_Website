@@ -5,11 +5,11 @@
         </div>
         <div class="appoinetments-item" v-for="item in emergencyItems" :key="item">
             <router-link :to="'/emergency-appoinetment-details/' + item.id">
-                <div class="profile-img">
+                <div :class="{'float-right margin-left' : $t('nav.home') === 'الرئيسية'}" class="profile-img">
                     <img :src="BaseUrl+item.image_path" alt="" v-if="item.image_path">
                     <i class="fas fa fa-user-circle" v-if="item.image_path == null"></i>
                 </div>
-                <div class="appoinetments-info">
+                <div :class="{'rtl' : $t('nav.home') === 'الرئيسية'}" class="appoinetments-info">
                     <h4>{{item.name}}</h4>
                     <span>{{item.service_title}}</span>
                 </div>
@@ -118,5 +118,8 @@ export default class AppoinetmentsEmergency extends Vue {
 }
 .appoinetments-btns button:hover{
     opacity: 0.8;
+}
+.margin-left{
+    margin-left: 15px;
 }
 </style>

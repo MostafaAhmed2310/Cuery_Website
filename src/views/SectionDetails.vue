@@ -5,25 +5,31 @@
         </div>
         <div class="sections-body">
             <div class="cover-img">
-                <img class="profile-cover" src="@/assets/images/profile-cover.png" alt="">
-                <h2>
+                <img :class="{'mirror-img' : $t('nav.home') === 'الرئيسية'}" class="profile-cover" src="@/assets/images/profile-cover.png" alt="">
+                <h2 :class="{'rtl pages-title-ar' : $t('nav.home') === 'الرئيسية'}" v-if="$t('nav.home') === 'Home'">
                     <router-link to="/sections">
-                        <i class="fas fa-chevron-left"></i> 
+                        <i :class="{'rotate-icon' : $t('nav.home') === 'الرئيسية'}" class="fas fa-chevron-left"></i> 
                     </router-link>
                     {{sectionTitle}}
                 </h2>
-                <img v-if="iconId == 1" src="@/assets/images/sectionIcons/blood.png" alt="" class="calendar">
-                <img v-if="iconId == 5" src="@/assets/images/sectionIcons/brain.png" alt="" class="calendar">
-                <img v-if="iconId == 2" src="@/assets/images/sectionIcons/cancer.png" alt="" class="calendar">
-                <img v-if="iconId == 3" src="@/assets/images/sectionIcons/cardiogram.png" alt="" class="calendar">
-                <img v-if="iconId == 6" src="@/assets/images/sectionIcons/eye.png" alt="" class="calendar">
-                <img v-if="iconId == 7 || iconId == 0" src="@/assets/images/sectionIcons/firstaid.png" alt="" class="calendar">
-                <img v-if="iconId == 8" src="@/assets/images/sectionIcons/lungs.png" alt="" class="calendar">
-                <img v-if="iconId == 10" src="@/assets/images/sectionIcons/rooms.png" alt="" class="calendar">
-                <img v-if="iconId == 9" src="@/assets/images/sectionIcons/stomach.png" alt="" class="calendar">
-                <img v-if="iconId == 11" src="@/assets/images/sectionIcons/teeth.png" alt="" class="calendar">
-                <img v-if="iconId == 12" src="@/assets/images/sectionIcons/women.png" alt="" class="calendar">
-                <img v-if="iconId == 4" src="@/assets/images/sectionIcons/x-ray.png" alt="" class="calendar">
+                <h2 :class="{'rtl pages-title-ar' : $t('nav.home') === 'الرئيسية'}" v-if="$t('nav.home') === 'الرئيسية'">
+                    <router-link to="/sections">
+                        <i :class="{'rotate-icon' : $t('nav.home') === 'الرئيسية'}" class="fas fa-chevron-left"></i> 
+                    </router-link>
+                    {{sectionTitleAr}}
+                </h2>
+                <img :class="{'left-icon-ar' : $t('nav.home') === 'الرئيسية'}" v-if="iconId == 1" src="@/assets/images/sectionIcons/blood.png" alt="" class="calendar">
+                <img :class="{'left-icon-ar' : $t('nav.home') === 'الرئيسية'}" v-if="iconId == 5" src="@/assets/images/sectionIcons/brain.png" alt="" class="calendar">
+                <img :class="{'left-icon-ar' : $t('nav.home') === 'الرئيسية'}" v-if="iconId == 2" src="@/assets/images/sectionIcons/cancer.png" alt="" class="calendar">
+                <img :class="{'left-icon-ar' : $t('nav.home') === 'الرئيسية'}" v-if="iconId == 3" src="@/assets/images/sectionIcons/cardiogram.png" alt="" class="calendar">
+                <img :class="{'left-icon-ar' : $t('nav.home') === 'الرئيسية'}" v-if="iconId == 6" src="@/assets/images/sectionIcons/eye.png" alt="" class="calendar">
+                <img :class="{'left-icon-ar' : $t('nav.home') === 'الرئيسية'}" v-if="iconId == 7 || iconId == 0" src="@/assets/images/sectionIcons/firstaid.png" alt="" class="calendar">
+                <img :class="{'left-icon-ar' : $t('nav.home') === 'الرئيسية'}" v-if="iconId == 8" src="@/assets/images/sectionIcons/lungs.png" alt="" class="calendar">
+                <img :class="{'left-icon-ar' : $t('nav.home') === 'الرئيسية'}" v-if="iconId == 10" src="@/assets/images/sectionIcons/rooms.png" alt="" class="calendar">
+                <img :class="{'left-icon-ar' : $t('nav.home') === 'الرئيسية'}" v-if="iconId == 9" src="@/assets/images/sectionIcons/stomach.png" alt="" class="calendar">
+                <img :class="{'left-icon-ar' : $t('nav.home') === 'الرئيسية'}" v-if="iconId == 11" src="@/assets/images/sectionIcons/teeth.png" alt="" class="calendar">
+                <img :class="{'left-icon-ar' : $t('nav.home') === 'الرئيسية'}" v-if="iconId == 12" src="@/assets/images/sectionIcons/women.png" alt="" class="calendar">
+                <img :class="{'left-icon-ar' : $t('nav.home') === 'الرئيسية'}" v-if="iconId == 4" src="@/assets/images/sectionIcons/x-ray.png" alt="" class="calendar">
             </div>
             <div class="sections-inputs-body">
                 <div class="right-side">
@@ -64,6 +70,7 @@ export default class SectionDetails extends Vue {
     days = [];
     sectionDetailsObj = {};
     sectionTitle = 'Section Name';
+    sectionTitleAr = 'اسم القسم'
     userSectionId = '';
     detailsObj = {};
     sectionId = '';
@@ -75,6 +82,7 @@ export default class SectionDetails extends Vue {
         this.loaderFlag = true;
         this.sectionDetailsObj = await getSectionDetails(this.$route.params.id);
         this.sectionTitle = this.sectionDetailsObj.details.section_title;
+        this.sectionTitleAr = this.sectionDetailsObj.details.section_title_ar;
         this.iconId = this.sectionDetailsObj.details.icon_id;
         this.userSectionId = this.sectionDetailsObj.details.id;
         this.sectionId = this.sectionDetailsObj.details.section_id;

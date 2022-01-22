@@ -5,15 +5,15 @@
         </div>
         <div class="sections-body">
             <div class="cover-img">
-                <img src="@/assets/images/profile-cover.png" alt="">
-                <h2>
+                <img :class="{'mirror-img' : $t('nav.home') === 'الرئيسية'}" src="@/assets/images/profile-cover.png" alt="">
+                <h2 :class="{'rtl pages-title-ar' : $t('nav.home') === 'الرئيسية'}">
                     <router-link to="/sections">
-                        <i class="fas fa-chevron-left"></i> 
+                        <i :class="{'rotate-icon' : $t('nav.home') === 'الرئيسية'}" class="fas fa-chevron-left"></i> 
                     </router-link>
                     {{ $t("sections.suggest_section") }}
                 </h2>
             </div>
-            <div class="sections-inputs-body">
+            <div :class="{'rtl' : $t('nav.home') === 'الرئيسية'}" class="sections-inputs-body">
                 <div class="input-body">
                     <input type="text" v-model="sectionEn" :placeholder='$t("sections.en_section_placeholder")'>
                     <span v-if="enSectionErr">{{ $t("sections.enter_en_section") }}n</span>
@@ -28,40 +28,40 @@
                 </div>
                 <div class="section-icons-body">
                     <h4> {{ $t("sections.select_icon") }} </h4>
-                    <div :class="'section-icon '+ activeBorder1" @click="addIcon(1)">
+                    <div :class="[{'float-right margin-left' : $t('nav.home') === 'الرئيسية'} , 'section-icon '+ activeBorder1]" @click="addIcon(1)">
                         <img src="@/assets/images/sectionIcons/blood.png" alt="">
                     </div>
-                    <div :class="'section-icon '+ activeBorder2" @click="addIcon(5)">
+                    <div :class="[{'float-right margin-left' : $t('nav.home') === 'الرئيسية'} , 'section-icon '+ activeBorder2]" @click="addIcon(5)">
                         <img src="@/assets/images/sectionIcons/brain.png" alt="">
                     </div>
-                    <div :class="'section-icon '+ activeBorder3" @click="addIcon(2)">
+                    <div :class="[{'float-right margin-left' : $t('nav.home') === 'الرئيسية'} , 'section-icon '+ activeBorder3]" @click="addIcon(2)">
                         <img src="@/assets/images/sectionIcons/cancer.png" alt="">
                     </div>
-                    <div :class="'section-icon '+ activeBorder4" @click="addIcon(3)">
+                    <div :class="[{'float-right margin-left' : $t('nav.home') === 'الرئيسية'} , 'section-icon '+ activeBorder4]" @click="addIcon(3)">
                         <img src="@/assets/images/sectionIcons/cardiogram.png" alt="">
                     </div>
-                    <div :class="'section-icon '+ activeBorder5" @click="addIcon(11)">
+                    <div :class="[{'float-right margin-left' : $t('nav.home') === 'الرئيسية'} , 'section-icon '+ activeBorder5]" @click="addIcon(11)">
                         <img src="@/assets/images/sectionIcons/teeth.png" alt="">
                     </div>
-                    <div :class="'section-icon '+ activeBorder6" @click="addIcon(6)">
+                    <div :class="[{'float-right margin-left' : $t('nav.home') === 'الرئيسية'} , 'section-icon '+ activeBorder6]" @click="addIcon(6)">
                         <img src="@/assets/images/sectionIcons/eye.png" alt="">
                     </div>
-                    <div :class="'section-icon '+ activeBorder7" @click="addIcon(0)">
+                    <div :class="[{'float-right margin-left' : $t('nav.home') === 'الرئيسية'} , 'section-icon '+ activeBorder7]" @click="addIcon(0)">
                         <img src="@/assets/images/sectionIcons/firstaid.png" alt="">
                     </div>
-                    <div :class="'section-icon '+ activeBorder8" @click="addIcon(8)">
+                    <div :class="[{'float-right margin-left' : $t('nav.home') === 'الرئيسية'} , 'section-icon '+ activeBorder8]" @click="addIcon(8)">
                         <img src="@/assets/images/sectionIcons/lungs.png" alt="">
                     </div>
-                    <div :class="'section-icon '+ activeBorder9" @click="addIcon(4)">
+                    <div :class="[{'float-right margin-left' : $t('nav.home') === 'الرئيسية'} , 'section-icon '+ activeBorder9]" @click="addIcon(4)">
                         <img src="@/assets/images/sectionIcons/x-ray.png" alt="">
                     </div>
-                    <div :class="'section-icon '+ activeBorder10" @click="addIcon(10)">
+                    <div :class="[{'float-right margin-left' : $t('nav.home') === 'الرئيسية'} , 'section-icon '+ activeBorder10]" @click="addIcon(10)">
                         <img src="@/assets/images/sectionIcons/rooms.png" alt="">
                     </div>
-                    <div :class="'section-icon '+ activeBorder11" @click="addIcon(12)">
+                    <div :class="[{'float-right margin-left' : $t('nav.home') === 'الرئيسية'} , 'section-icon '+ activeBorder11]" @click="addIcon(12)">
                         <img src="@/assets/images/sectionIcons/women.png" alt="">
                     </div>
-                    <div :class="'section-icon '+ activeBorder12" @click="addIcon(9)">
+                    <div :class="[{'float-right margin-left' : $t('nav.home') === 'الرئيسية'} , 'section-icon '+ activeBorder12]" @click="addIcon(9)">
                         <img src="@/assets/images/sectionIcons/stomach.png" alt="">
                     </div>
                     <span v-if="iconErr">{{ $t("sections.pls_select_icon") }}</span>
@@ -404,5 +404,9 @@ export default class SuggestSections extends Vue {
 }
 .active-border{
     border: 2px solid var(--font-navy) !important;
+}
+.margin-left{
+    margin-right: 0px !important;
+    margin-left: 20px;
 }
 </style>

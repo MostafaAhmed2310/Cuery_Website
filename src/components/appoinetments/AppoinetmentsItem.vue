@@ -6,13 +6,13 @@
         <div class="popup-overlay" v-if="declinePopup">
             <DeclinePopup @updateAppointmentList="updateAppointmentList" @closePopup="closePopup"/>
         </div>
-        <div class="reservation-item">
+        <div class="reservation-item" :class="{'rtl' : $t('nav.home') === 'الرئيسية'}">
             <div class="block">
-                <div class="profile-img">
+                <div :class="{'float-right margin-left' : $t('nav.home') === 'الرئيسية'}" class="profile-img">
                     <img :src="BaseUrl+reservationObj.image_path" alt="" v-if="reservationObj.image_path">
                     <i class="fas fa fa-user-circle" v-if="reservationObj.image_path == null"></i>
                 </div>
-                <div class="reservation-info">
+                <div :class="{'float-right' : $t('nav.home') === 'الرئيسية'}" class="reservation-info">
                     <h4>{{ reservationObj.name }}</h4>
                 </div>
             </div>
@@ -33,7 +33,7 @@
             </div>
         </div>
         <div class="block">
-            <div class="reservation-btns">
+            <div :class="{'float-left' : $t('nav.home') === 'الرئيسية'}" class="reservation-btns">
                 <router-link :to="'/confirmation/'+ $route.params.id"><button class="arrived-btn">{{ $t("appoinetments.arrived") }}</button></router-link>
                 <button @click="openDeclinePopup()" class="decline-btn">{{ $t("reservations.decline") }}</button>
             </div>
@@ -230,5 +230,9 @@ export default class AppoinetmentsItem extends Vue {
     right: 0;
     bottom: 0;
     background: rgba(0,0,0,0.5);
+}
+.margin-left{
+    margin-right: 0px !important;
+    margin-left: 15px;
 }
 </style>

@@ -4,7 +4,11 @@
             <DoubleBounce></DoubleBounce>
         </div>
         <div class="section-appointement-head">
-            <h4>
+            <h4 v-if="$t('nav.home') === 'الرئيسية'">
+                <i @click="closePanal()" class="fas fa-chevron-left"></i> 
+                {{ selectedSection.section_title_ar }}
+            </h4>
+            <h4 v-if="$t('nav.home') === 'Home'">
                 <i @click="closePanal()" class="fas fa-chevron-left"></i> 
                 {{ selectedSection.section_title }}
             </h4>

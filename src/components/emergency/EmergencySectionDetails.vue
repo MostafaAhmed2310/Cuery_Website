@@ -5,17 +5,23 @@
         </div>
         <div class="sections-body">
             <div class="cover-img">
-                <img class="profile-cover" src="@/assets/images/profile-cover.png" alt="">
-                <h2>
+                <img :class="{'mirror-img' : $t('nav.home') === 'الرئيسية'}" class="profile-cover" src="@/assets/images/profile-cover.png" alt="">
+                <h2 :class="{'rtl pages-title-ar' : $t('nav.home') === 'الرئيسية'}" v-if="$t('nav.home') === 'Home'">
                     <router-link to="/emergency-sections">
-                        <i class="fas fa-chevron-left"></i> 
+                        <i :class="{'rotate-icon' : $t('nav.home') === 'الرئيسية'}" class="fas fa-chevron-left"></i> 
                     </router-link>
                     {{sectionTitle}}
                 </h2>
-                <Energy v-if="iconId == 4" class="calendar"/>
-                <Ambulance v-if="iconId == 1" class="calendar"/>
-                <Oxygen v-if="iconId == 2" class="calendar"/>
-                <Visit v-if="iconId == 3" class="calendar"/>
+                <h2 :class="{'rtl pages-title-ar' : $t('nav.home') === 'الرئيسية'}" v-if="$t('nav.home') === 'الرئيسية'">
+                    <router-link to="/emergency-sections">
+                        <i :class="{'rotate-icon' : $t('nav.home') === 'الرئيسية'}" class="fas fa-chevron-left"></i> 
+                    </router-link>
+                    {{sectionTitleAr}}
+                </h2>
+                <Energy :class="{'left-icon-ar' : $t('nav.home') === 'الرئيسية'}" v-if="iconId == 4" class="calendar"/>
+                <Ambulance :class="{'left-icon-ar' : $t('nav.home') === 'الرئيسية'}" v-if="iconId == 1" class="calendar"/>
+                <Oxygen :class="{'left-icon-ar' : $t('nav.home') === 'الرئيسية'}" v-if="iconId == 2" class="calendar"/>
+                <Visit :class="{'left-icon-ar' : $t('nav.home') === 'الرئيسية'}" v-if="iconId == 3" class="calendar"/>
             </div>
             <div class="sections-inputs-body">
                 <div class="right-side">
@@ -64,6 +70,7 @@ export default class EmergencySectionDetails extends Vue {
     days = [];
     sectionDetailsObj = {};
     sectionTitle = 'Section Name';
+    sectionTitleAr = 'اسم القسم'
     userSectionId = '';
     detailsObj = {};
     sectionId = '';
@@ -75,6 +82,7 @@ export default class EmergencySectionDetails extends Vue {
         this.loaderFlag = true;
         this.sectionDetailsObj = await getServiceDetails(this.$route.params.id);
         this.sectionTitle = this.sectionDetailsObj.details.service_title;
+        this.sectionTitleAr = this.sectionDetailsObj.details.service_title_ar;
         this.iconId = this.sectionDetailsObj.details.icon_id;
         this.userSectionId = this.sectionDetailsObj.details.id;
         this.sectionId = this.sectionDetailsObj.details.service_id;

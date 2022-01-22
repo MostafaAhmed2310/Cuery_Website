@@ -4,7 +4,7 @@
             <div class="news-body">
                 <h3>{{item.title}}</h3>
                 <span>{{item.content}}</span>
-                <img v-if="item.image_path" :src="BaseUrl+item.image_path" alt="">
+                <img v-if="item.image_path" :src="BaseUrl+item.image_path" alt=" ">
                 <div v-if="item.image_path == null" class="img-placeholder"></div>
             </div>
         </div>
@@ -82,19 +82,25 @@ export default class News extends Vue {
 .img-placeholder{
     width: 35%;
     height: 100%;
-    background: var(--font-navy);
+    background: var(--active-green);
     position: absolute;
     left: 0;
     top: 0;
     bottom: 0;
+    background-image: url('../../assets/images/news_placeholder.png');
+    background-position: center;
+    background-size: cover;
 }
 .news-body img{
     width: 35%;
     height: 100%;
-    background: var(--font-navy);
+    background: var(--active-green);
     position: absolute;
     left: 0;
     top: 0;
     bottom: 0;
+    background-image: url('../../assets/images/news_placeholder.png');
+    background-position: center;
+    background-size: cover;
 }
 </style>

@@ -178,7 +178,10 @@
     "select_msg": "Select Your Message",
     "back_to_con": "Back To Conversation",
     "phone": "Phone Num. :",
-    "send_msg": "Send Your Message"
+    "send_msg": "Send Your Message",
+    "name": "Name",
+    "email": "Email",
+    "message": "Message"
   },
   "hospital_home": {
     "welcome": "Welcome Back",

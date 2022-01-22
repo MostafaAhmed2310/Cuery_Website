@@ -5,10 +5,10 @@
         </div>
         <div class="sections-body">
             <div class="cover-img">
-                <img src="@/assets/images/profile-cover.png" alt="">
-                <h2>
+                <img :class="{'mirror-img' : $t('nav.home') === 'الرئيسية'}" src="@/assets/images/profile-cover.png" alt="">
+                <h2 :class="{'rtl pages-title-ar' : $t('nav.home') === 'الرئيسية'}">
                     <router-link to="/sections">
-                        <i class="fas fa-chevron-left"></i> 
+                        <i :class="{'rotate-icon' : $t('nav.home') === 'الرئيسية'}" class="fas fa-chevron-left"></i> 
                     </router-link>
                     {{ $t("sections.add_new") }}
                 </h2>
@@ -18,7 +18,8 @@
                     <img src="@/assets/images/section-img.png" alt="">
                 </div>
                 <div class="left-side">
-                    <multiselect v-model="selectedSection" :options="sections" label="section_title" :close-on-select="true" track-by="section_title" :searchable="true"  :show-labels="false" :placeholder='$t("sections.select_section")'></multiselect>
+                    <multiselect v-if="$t('nav.home') === 'Home'" v-model="selectedSection" :options="sections" label="section_title" :close-on-select="true" track-by="section_title" :searchable="true"  :show-labels="false" :placeholder='$t("sections.select_section")'></multiselect>
+                    <multiselect v-if="$t('nav.home') === 'الرئيسية'" v-model="selectedSection" :options="sections" label="section_title_ar" :close-on-select="true" track-by="section_title_ar" :searchable="true"  :show-labels="false" :placeholder='$t("sections.select_section")'></multiselect>
                     <div class="add-section-btn">
                         <button @click="openSectionPanal()"><i class="fas fa-plus-circle"></i> {{ $t("sections.add_section") }}</button>
                     </div>

@@ -1,5 +1,5 @@
 <template>
-    <div class="confirmation-code-container">
+    <div class="confirmation-code-container" :class="{'rtl' : $t('nav.home') === 'الرئيسية'}">
         <div class="confirmation-code-body">
             <div class="card-title">
                 <i class="fas fa fa-check"></i>

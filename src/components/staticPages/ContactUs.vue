@@ -3,26 +3,26 @@
         <div class="loader-container" v-if="loaderFlag">
             <DoubleBounce></DoubleBounce>
         </div>
-        <div class="contact-body">
-            <div class="contact-img">
+        <div class="contact-body" :class="{'rtl' : $t('nav.home') === 'الرئيسية'}">
+            <div class="contact-img" :class="{'float-left' : $t('nav.home') === 'الرئيسية'}">
                 <img src="@/assets/images/contact-img.png" alt="" />
             </div>
-            <div class="contact-form">
+            <div class="contact-form" :class="{'float-right' : $t('nav.home') === 'الرئيسية'}">
                 <h2>{{ $t("contact_us.contact_us") }}</h2>
                 <h3>{{ $t("contact_us.get_in_touch") }}</h3>
                 <p>{{ $t("contact_us.always_within_your_reach") }}</p>
                 <form>
                     <div class="input-field">
-                        <input type="text" placeholder="Name" v-model="name"/>
+                        <input type="text" :placeholder="$t('messages.name')" v-model="name"/>
                         <span v-if="nameErr">Please enter your name</span>
                     </div>
                     <div class="input-field">
-                        <input type="text" placeholder="Email" v-model="email"/>
+                        <input type="text" :placeholder="$t('messages.email')" v-model="email"/>
                         <span v-if="emailErr">Please enter your email</span>
                         <span v-if="emailFormat">Please check email format</span>
                     </div>
                     <div class="input-field-message">
-                        <textarea placeholder="Message" v-model="msg"></textarea>
+                        <textarea :placeholder="$t('messages.message')" v-model="msg"></textarea>
                         <span v-if="msgErr">Please enter your message</span>
                     </div>
                     <div class="contact-btn">

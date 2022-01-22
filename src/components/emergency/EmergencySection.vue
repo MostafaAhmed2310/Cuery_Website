@@ -5,14 +5,14 @@
         </div>
         <div class="sections-body">
             <div class="cover-img">
-                <img src="@/assets/images/profile-cover.png" alt="">
-                <h2>
+                <img :class="{'mirror-img' : $t('nav.home') === 'الرئيسية'}" src="@/assets/images/profile-cover.png" alt="">
+                <h2 :class="{'rtl pages-title-ar' : $t('nav.home') === 'الرئيسية'}">
                     <router-link to="/emergency">
-                        <i class="fas fa-chevron-left"></i> 
+                        <i :class="{'rotate-icon' : $t('nav.home') === 'الرئيسية'}" class="fas fa-chevron-left"></i> 
                     </router-link>
                     {{ $t("appoinetments.emergency") }}
                 </h2>
-                <div class="section-btns">
+                <div class="section-btns" :class="{'actions-btns-ar' : $t('nav.home') === 'الرئيسية'}">
                     <router-link to="/add-emergency-section">
                         <button class="add-section"><i class="fas fa-plus-circle"></i>{{ $t("sections.add_new") }}</button>
                     </router-link>
@@ -32,7 +32,8 @@
                                     <Oxygen v-if="emergency.icon_id == 2"/>
                                     <Visit v-if="emergency.icon_id == 3"/>
                                 </div>
-                                <span>{{emergency.service_title}}</span>
+                                <span v-if="$t('nav.home') === 'Home'">{{emergency.service_title}}</span>
+                                <span v-if="$t('nav.home') === 'الرئيسية'">{{emergency.service_title_ar}}</span>
                             </div>
                         </router-link>
                     </div>

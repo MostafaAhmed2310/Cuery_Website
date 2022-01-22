@@ -6,9 +6,9 @@
         <div class="popup-overlay" v-if="declinePopup">
             <DeclinePopup @updateReservationsList="updateReservationsList" @closePopup="closePopup" ref="updateId"/>
         </div>
-        <div class="reservatios-item" v-for="reservation in reservationsList" :key="reservation">
+        <div :class="{'rtl' : $t('nav.home') === 'الرئيسية'}" class="reservatios-item" v-for="reservation in reservationsList" :key="reservation">
             <router-link :to="'/reservations/' + reservation.id" @click="updateDetails()">
-                <div class="profile-img">
+                <div :class="{'float-right margin-left' : $t('nav.home') === 'الرئيسية'}" class="profile-img">
                     <img :src="BaseUrl + reservation.image_path" alt="" v-if="reservation.image_path">
                     <i class="fas fa fa-user-circle" v-if="reservation.image_path == null"></i>
                 </div>
@@ -160,5 +160,8 @@ export default class ReservationsList extends Vue {
     right: 0;
     bottom: 0;
     background: rgba(0,0,0,0.5);
+}
+.margin-left{
+    margin-left: 15px;
 }
 </style>

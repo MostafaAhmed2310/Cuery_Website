@@ -3,13 +3,13 @@
         <div class="loader-container" v-if="loaderFlag">
             <DoubleBounce></DoubleBounce>
         </div>
-        <div class="reservation-item">
+        <div class="reservation-item" :class="{'rtl' : $t('nav.home') === 'الرئيسية'}">
             <div class="block">
-                <div class="profile-img">
+                <div :class="{'float-right margin-left' : $t('nav.home') === 'الرئيسية'}" class="profile-img">
                     <img :src="BaseUrl+reservationObj.image_path" alt="" v-if="reservationObj.image_path">
                     <i class="fas fa fa-user-circle" v-if="reservationObj.image_path == null"></i>
                 </div>
-                <div class="reservation-info">
+                <div :class="{'float-right' : $t('nav.home') === 'الرئيسية'}" class="reservation-info">
                     <h4>{{ reservationObj.name }}</h4>
                 </div>
             </div>
@@ -36,7 +36,7 @@
             </div>
         </div>
         <div class="block">
-            <div class="reservation-btns">
+            <div :class="{'float-left' : $t('nav.home') === 'الرئيسية'}" class="reservation-btns">
                 <router-link :to="'/emergency-confirmation/'+ $route.params.id"><button  class="arrived-btn">{{ $t("appoinetments.arrived") }}</button></router-link>
                 <button class="decline-btn" @click="declineemergency($route.params.id)">{{ $t("reservations.decline") }}</button>
             </div>
@@ -227,5 +227,9 @@ export default class AppoinetmentsItemEmergency extends Vue {
 .emergency-block{
     background: rgba(241, 250, 245, 1);
     margin-top: 20px;
+}
+.margin-left{
+    margin-right: 0px !important;
+    margin-left: 20px;
 }
 </style>

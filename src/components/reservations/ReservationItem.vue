@@ -6,13 +6,13 @@
         <div class="popup-overlay" v-if="declinePopup">
             <DeclinePopup @updateReservationsList="updateReservationsList" @closePopup="closePopup"/>
         </div>
-        <div class="reservation-item">
+        <div class="reservation-item" :class="{'rtl' : $t('nav.home') === 'الرئيسية'}">
             <div class="block">
-                <div class="profile-img">
+                <div :class="{'float-right margin-left' : $t('nav.home') === 'الرئيسية'}" class="profile-img">
                     <img :src="BaseUrl + reservationObj.image_path" alt="" v-if="reservationObj.image_path">
                     <i class="fas fa fa-user-circle" v-if="reservationObj.image_path == null"></i>
                 </div>
-                <div class="reservation-info">
+                <div :class="{'float-right' : $t('nav.home') === 'الرئيسية'}" class="reservation-info">
                     <h4>{{ reservationObj.name }}</h4>
                 </div>
             </div>
@@ -32,12 +32,12 @@
                 </div>
             </div>
         </div>
-        <div class="block">
+        <div :class="{'rtl' : $t('nav.home') === 'الرئيسية'}" class="block">
             <h5>{{ $t("reservations.limit_your_time") }}</h5>
             <h6>{{ $t("reservations.from") }} <span>{{ reservationObj.start_time }}:00</span> {{ $t("reservations.to") }} <span>{{ reservationObj.end_time }}:00 </span></h6>
         </div>
         <div class="block">
-            <div class="reservation-btns">
+            <div :class="{'float-left' : $t('nav.home') === 'الرئيسية'}" class="reservation-btns">
                 <button @click="confirmReservation(reservationObj.id)">{{ $t("reservations.confirm") }}</button>
                 <button @click="openDeclinePopup()">{{ $t("reservations.decline") }}</button>
             </div>
@@ -228,5 +228,9 @@ export default class ReservationItem extends Vue {
     right: 0;
     bottom: 0;
     background: rgba(0,0,0,0.5);
+}
+.margin-left{
+    margin-left: 15px;
+    margin-right: 0px !important;
 }
 </style>

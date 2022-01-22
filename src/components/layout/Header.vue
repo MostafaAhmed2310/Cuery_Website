@@ -74,7 +74,7 @@
                 </div>
             </div>
         </div>
-        <div class="notifications-popup" @click="notificationPopup = !notificationPopup" v-if="notificationPopup" v-click-outside="externalClickOutNotifications">
+        <div :class="{'notifications-rtl' : $t('nav.home') === 'الرئيسية'}" class="notifications-popup" @click="notificationPopup = !notificationPopup" v-if="notificationPopup" v-click-outside="externalClickOutNotifications">
             <Notifications ref="refetch"/>
         </div>
     </div>
@@ -324,5 +324,9 @@ ul li{
     position: absolute;
     margin-left: -5px;
     margin-top: 0px;
+}
+.notifications-rtl{
+    left: 130px;
+    right: initial !important;
 }
 </style>

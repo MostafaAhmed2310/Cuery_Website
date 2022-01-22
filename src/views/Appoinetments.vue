@@ -5,17 +5,17 @@
         </div>
         <div class="reservations-body">
             <div class="cover-img">
-                <img src="@/assets/images/profile-cover.png" alt="">
-                <h2>
+                <img :class="{'mirror-img' : $t('nav.home') === 'الرئيسية'}" src="@/assets/images/profile-cover.png" alt="">
+                <h2 :class="{'rtl pages-title-ar' : $t('nav.home') === 'الرئيسية'}">
                     <router-link to="/hospital_home">
-                        <i class="fas fa-chevron-left"></i> 
+                        <i :class="{'rotate-icon' : $t('nav.home') === 'الرئيسية'}" class="fas fa-chevron-left"></i> 
                     </router-link>
                     {{ $t("appoinetments.title") }}
                 </h2>
-                <AppoinetmentsSVG class="calendar"/>
+                <AppoinetmentsSVG :class="{'left-icon-ar' : $t('nav.home') === 'الرئيسية'}" class="calendar"/>
             </div>
             <div class="reservations-inputs-body">
-                <div class="reservations-panal">
+                <div class="reservations-panal" :class="{'float-right pages-panal' : $t('nav.home') === 'الرئيسية'}">
                     <div class="appoinetments-tabs">
                         <span @click="openGeneral()" :class="activeTabGeneral">{{ $t("appoinetments.general") }}</span>
                         <span @click="openEmergency()" :class="activeTabEmergency">{{ $t("appoinetments.emergency") }}</span>
@@ -26,7 +26,7 @@
                 <div class="placeholder-body" v-if="placeholderFlag">
                     <PagePlaceholder/>
                 </div>
-                <div class="reservation-body">
+                <div class="reservation-body" :class="{'float-right' : $t('nav.home') === 'الرئيسية'}">
                     <router-view @updateEmergencyAppointment="updateEmergencyAppointment" @updateAppointmentList="updateAppointmentList"></router-view>
                 </div>
             </div>
