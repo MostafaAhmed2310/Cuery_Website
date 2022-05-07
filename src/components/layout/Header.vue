@@ -67,7 +67,7 @@
             </div>
             <div v-if="langMenu">
                 <div>
-                    <select v-model="$i18n.locale" @change="goToDefaultMenu()">
+                    <select v-model="$i18n.locale" @change="goToDefaultMenu($event.target.value)">
                         <option value="en">English</option>
                         <option value="ar">Arabic</option>
                     </select>
@@ -121,10 +121,11 @@ export default class Header extends Vue {
         this.mainMenue = false;
         this.langMenu = true;
     }
-    goToDefaultMenu(){
+    goToDefaultMenu(lang){
         this.mainMenue = true;
         this.langMenu = false;
         this.moreMenu = false;
+        localStorage.setItem("locale", lang);
     }
     openNotificationPopup(){
         this.resetCount();

@@ -244,5 +244,11 @@ export default Vue.extend({
         };
     },
 
+    mounted() {
+        if(!localStorage.getItem("locale")){
+            localStorage.setItem("locale", 'en');
+        }
+    }
+
 });
 </script>

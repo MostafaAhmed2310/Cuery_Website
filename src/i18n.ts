@@ -8,4 +8,4 @@ export const messages = {
   [Locales.AR]: ar
 };
 
-export const defaultLocale = Locales.EN;
+export const defaultLocale = localStorage.getItem("locale");
