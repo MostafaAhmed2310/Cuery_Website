@@ -35,7 +35,7 @@
                 </div>
             </div>
         </div>
-        <div class="block">
+        <div class="block" v-if="reservationObj.is_request_finished === 'n'">
             <div :class="{'float-left' : $t('nav.home') === 'الرئيسية'}" class="reservation-btns">
                 <router-link :to="'/emergency-confirmation/'+ $route.params.id"><button  class="arrived-btn">{{ $t("appoinetments.arrived") }}</button></router-link>
                 <button class="decline-btn" @click="declineemergency($route.params.id)">{{ $t("reservations.decline") }}</button>

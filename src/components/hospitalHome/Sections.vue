@@ -21,8 +21,11 @@
                 </div>
                 <p>{{ section.section_title }}</p>
             </div>
-            <router-link to="/sections" :class="{'float-left' : $t('nav.home') === 'الرئيسية'}">
+            <router-link v-if="sectionsList.length !== 0" to="/sections" :class="{'float-left' : $t('nav.home') === 'الرئيسية'}">
                 <span>{{ $t("more") }} <i :class="{'more-icon-ar' : $t('nav.home') === 'الرئيسية'}" class="fas fa fa-sort-up"></i></span>
+            </router-link>
+            <router-link v-if="sectionsList.length === 0" to="/sections" :class="{'float-left' : $t('nav.home') === 'الرئيسية'}">
+                <span class="empty-section-link">{{ $t("sections.emptySections") }} <i :class="{'more-icon-ar' : $t('nav.home') === 'الرئيسية'}" class="fas fa fa-sort-up"></i></span>
             </router-link>
         </div>
     </div>
@@ -102,5 +105,8 @@ export default class Sections extends Vue {
 }
 .more-icon-ar{
     transform: rotate(270deg) !important;
+}
+.empty-section-link{
+    margin-top: 0px !important;
 }
 </style>

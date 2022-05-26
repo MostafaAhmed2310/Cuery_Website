@@ -39,16 +39,16 @@ export default class StaticPages extends Vue {
         let res = await getStaticPages();             
         if(this.$router.currentRoute.name == 'about_us'){
             this.pageContent = res[0].body;
-            this.pageTitle = 'About Us';
+            (<any>this.pageTitle) = this.$t('nav.about');
         }else if(this.$router.currentRoute.name == 'privacy'){
-                this.pageContent = res[1].body;
-                this.pageTitle = 'Privacy Policy';
+            this.pageContent = res[1].body;
+            (<any>this.pageTitle) = this.$t('footer.privacy_policy');
         }else if(this.$router.currentRoute.name == 'terms'){
             this.pageContent = res[2].body;
-            this.pageTitle = 'Terms Of Us';
+            (<any>this.pageTitle) = this.$t('footer.terms');
         }else if(this.$router.currentRoute.name == 'patientPrivacy'){
             this.pageContent = res[3].body;
-            this.pageTitle = 'Patients Privacy Policy';
+            (<any>this.pageTitle) = this.$t('footer.patients_privacy_policy');
         }
     }
     scrollToTop(){

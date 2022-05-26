@@ -3,9 +3,7 @@
         <div class="success-page-body">
             <h4>{{ $t("appoinetments.success") }}</h4>
             <p>{{ $t("appoinetments.success_msg") }}</p>
-            <router-link :to="'/finish-appoinetments/'+ $route.params.id">
-                <button>{{ $t("appoinetments.continue") }}</button>
-            </router-link>
+            <button @click="finishAppointments($route.params.id)">{{ $t("appoinetments.continue") }}</button>
         </div>
     </div>
 </template>
@@ -19,7 +17,13 @@ import { Component, Vue } from 'vue-property-decorator';
     },
 })
 export default class SuccessPage extends Vue {
-
+    finishAppointments(id:any) {
+        if(this.$router.currentRoute.name == 'EmergencySuccessPage'){
+            this.$router.push("/finish-emergency-appoinetments/" + id);
+        }else{
+            this.$router.push("/finish-appoinetments/" + id);
+        }
+    }
 }
 </script>
 

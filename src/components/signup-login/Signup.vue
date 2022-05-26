@@ -22,15 +22,15 @@
                 </div>
                 <div class="profile-pic">
                     <label>
-                        Upload Your License (image format)*
+                       {{ $t("sign_up.upload_license") }}
                         <input class="loadedFiles" @change="uploadLicenceFun($event)" type="file" accept="image/*">
                     </label>
-                    <span v-if="licenceMsg"> Please Upload Your License </span>
+                    <span v-if="licenceMsg"> {{ $t("Validation.required_field") }} </span>
                 </div>
                 <form>
                     <div class="input-field">
-                        <multiselect class="selectStyle" v-model="sp_type" :options="spTypesList" :searchable="true" label="type" track-by="type" :show-labels="false" placeholder="Select Your Type"></multiselect>
-                        <span v-if="typeMsg">  Please Select your type </span>
+                        <multiselect class="selectStyle" v-model="sp_type" :options="spTypesList" :searchable="true" label="type" track-by="type" :show-labels="false" :placeholder="$t('sign_up.select_type')"></multiselect>
+                        <span v-if="typeMsg">  {{ $t("Validation.required_field") }} </span>
                     </div>
                     <div class="input-field">
                         <input type="text" :placeholder='$t("sign_up.username_placeholder")' v-model="username" />
@@ -119,7 +119,7 @@
                         </div>
                         <div>
                             <input type="checkbox" name="terms" id="" v-model="terms" />
-                            <label for="terms"><span>{{ $t("sign_up.accept") }}</span>T{{ $t("sign_up.terms") }}</label>
+                            <label for="terms"><span>{{ $t("sign_up.accept") }}</span>{{ $t("sign_up.terms") }}</label>
                             <span class="check-empty" v-if="termsMsg">{{ $t("sign_up.accept_terms") }}</span>
                         </div>
                     </div>
@@ -409,9 +409,9 @@ export default class Signup extends Vue {
   }
     hoverMethod(){
         if(!this.num1){
-            return 'Add another number';
+            return this.$t('sign_up.add_number');
         }else{
-            return 'Remove number';
+            return this.$t('sign_up.remove_number');
         }
     }
     scrollToTop(){
@@ -609,6 +609,7 @@ export default class Signup extends Vue {
     top: 7px;
     padding-left: 35px;
     padding-top: 8px;
+    line-height: 1.2;
 }
 .circle{
     width: 30px;

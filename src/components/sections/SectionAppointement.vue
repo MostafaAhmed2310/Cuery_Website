@@ -42,25 +42,25 @@
                 <h5>{{ $t("sections.time") }}</h5>
                 <div class="from-time">
                     <span class="time-label">{{ $t("sections.from") }}</span>
-                    <vue-timepicker @change="getFromTime" format="hh:mm A" :placeholder='$t("sections.from")' v-model="FromTime"></vue-timepicker>
-                    <div class="filter-bar">
+                    <vue-timepicker @change="getFromTime" format="HH:mm" :placeholder='$t("sections.from")' v-model="FromTime"></vue-timepicker>
+                    <!-- <div class="filter-bar">
                         <div class="filter-btns">
                             <span @click="selectAmFrom()">{{ $t("sections.am") }}</span>
                             <span @click="selectPmFrom()">{{ $t("sections.pm") }}</span>
                             <span :class="'toggle-active '+toggleToPmFrom"></span>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
                 <div class="to-time">
                     <span class="time-label">{{ $t("sections.to") }}</span>
-                    <vue-timepicker @change="getToTime" format="hh:mm A" :placeholder='$t("sections.to")' v-model="ToTime"></vue-timepicker>
-                    <div class="filter-bar">
+                    <vue-timepicker @change="getToTime" format="HH:mm" :placeholder='$t("sections.to")' v-model="ToTime"></vue-timepicker>
+                    <!-- <div class="filter-bar">
                         <div class="filter-btns">
                             <span @click="selectAmTo()">{{ $t("sections.am") }}</span>
                             <span @click="selectPmTo()">{{ $t("sections.pm") }}</span>
                             <span :class="'toggle-active '+toggleToPmTo"></span>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
             </div>
             <div class="price-container">
@@ -95,8 +95,8 @@ export default class SectionAppointement extends Vue {
     userSectionId = '';
     daysList = [];
     price = '';
-    FromTime = {};
-    ToTime = {};
+    FromTime = '';
+    ToTime = '';
     activeDay1 = '';
     activeDay2 = '';
     activeDay3 = '';
@@ -188,29 +188,29 @@ export default class SectionAppointement extends Vue {
         }
         this.slidePanal = 'open-slide-animate';
     }
-    getFromTime(){
-        var amOrPm = this.FromTime.A
-        if (amOrPm == 'PM'){
-            this.selectPmFrom()
-        }else if (amOrPm == 'AM'){
-            this.selectAmFrom()
-        }
-    }
-    getToTime(){
-        var amOrPm = this.ToTime.A
-        if (amOrPm == 'PM'){
-            this.selectPmTo()
-        }else if (amOrPm == 'AM'){
-            this.selectAmTo()
-        }
-    }
+    // getFromTime(){
+    //     var amOrPm = this.FromTime.A
+    //     if (amOrPm == 'PM'){
+    //         this.selectPmFrom()
+    //     }else if (amOrPm == 'AM'){
+    //         this.selectAmFrom()
+    //     }
+    // }
+    // getToTime(){
+    //     var amOrPm = this.ToTime.A
+    //     if (amOrPm == 'PM'){
+    //         this.selectPmTo()
+    //     }else if (amOrPm == 'AM'){
+    //         this.selectAmTo()
+    //     }
+    // }
     closePanal(){
         this.slidePanal = '';
     }
     async addDetails(){
         let detailsObj = {
-            from:this.FromTime.hh +':'+ this.FromTime.mm +' '+ this.FromTime.A,
-            to:this.ToTime.hh +':'+ this.ToTime.mm +' '+ this.ToTime.A,
+            from:this.FromTime,
+            to:this.ToTime,
             charge:this.price,
             days_array:this.daysList
         }
@@ -228,16 +228,8 @@ export default class SectionAppointement extends Vue {
             this.addActiveToDays(day);
         };
         this.price = this.selectedSection.charge;
-        this.FromTime = {
-            hh: this.selectedSection.from.slice(0,2),
-            mm: this.selectedSection.from.slice(3,5),
-            A: "AM"
-        }
-        this.ToTime = {
-            hh: this.selectedSection.to.slice(0,2),
-            mm: this.selectedSection.to.slice(3,5),
-            A: "PM"
-        }
+        this.FromTime = this.selectedSection.from
+        this.ToTime = this.selectedSection.to
     }
 }
 </script>

@@ -14,22 +14,38 @@
                 </div>
             </div>
             <div class="block">
-                <h5><i class="fas fa fa-plus-square"></i>{{ reservationObj.section_title }}</h5>
+                <h5><i class="fas fa fa-plus-square"></i>{{ reservationObj.section_title || reservationObj.service_title }}</h5>
                 <h5><i class="phone-icon fas fa fa-phone"></i>{{ reservationObj.phone }}</h5>
-                <h5><i class="fas fa-map-marker-alt"></i>15 Albert Al Awal . Smouha , Alexandria</h5>
+                <h5><i class="fas fa-map-marker-alt"></i>{{reservationObj.address}}</h5>
             </div>
-            <div class="block">
+            <div class="block" v-if="$router.currentRoute.name != 'FinishEmergencyAppoinetments'">
                 <div class="left-btn">
                     <button>{{ reservationObj.Day }}</button>
                     <span>{{ $t("appoinetments.req_time") }}</span>
                     <span>{{ reservationObj.reservation_date }} , {{ reservationObj.start_time }}:00</span>
                 </div>
                 <div class="right-btn">
-                    <span>200</span><span>{{ $t("sections.egp") }}</span>
+                    <span>{{reservationObj.charge}}</span><span>{{ $t("sections.egp") }}</span>
+                </div>
+            </div>
+            <div class="block" v-if="$router.currentRoute.name == 'FinishEmergencyAppoinetments'">
+                <div class="left-btn">
+                    <button>{{ reservationObj.Day }}</button>
+                    <span>{{ $t("appoinetments.req_time") }}</span>
+                    <span>At {{ reservationObj.call_time }}</span>
+                </div>
+            </div>
+            <div class="block emergency-block" v-if="$router.currentRoute.name == 'FinishEmergencyAppoinetments'">
+                <div class="left-btn" style="line-height:0;">
+                    <h6>{{reservationObj.service_title}}</h6>
+                    <h5>{{ $t("appoinetments.max_time") }} : {{reservationObj.waiting_time_in_mins}}</h5>
+                </div>
+                <div class="right-btn" style="line-height:3.5;">
+                    <span>{{ reservationObj.charge }}</span><span>{{ $t("sections.egp") }}</span>
                 </div>
             </div>
         </div>
-        <div class="block">
+        <div class="block" style="padding:0;">
             <div class="reservation-btns">
                 <button @click="finishRequest()" class="arrived-btn">{{ $t("appoinetments.service_done") }}</button>
             </div>
@@ -39,9 +55,9 @@
 
 <script>
 import { Component, Vue, Watch } from 'vue-property-decorator';
-import { getReservation } from '@/endpoints/reservations';
+import { getReservation, getEmergencyReservation } from '@/endpoints/reservations';
 import {DoubleBounce} from 'vue-loading-spinner';
-import {finishAppoinetment} from '@/endpoints/appoinetments';
+import {finishAppoinetment, finishEmergencyAppoinetment} from '@/endpoints/appoinetments';
 @Component({
     components: {
         DoubleBounce
@@ -59,14 +75,23 @@ export default class FinishAppoinetments extends Vue {
     }
     async getReservation(resId){
         this.loaderFlag = true;
-        this.reservationObj = await getReservation(resId);
+        if(this.$router.currentRoute.name == 'FinishEmergencyAppoinetments'){
+            this.reservationObj = await getEmergencyReservation(resId);
+        }else{
+            this.reservationObj = await getReservation(resId);
+        }
         this.loaderFlag = false;
     }
     async finishRequest(){
         this.loaderFlag = true;
-        let res = await finishAppoinetment(this.$route.params.id);
+        var response;
+        if(this.$router.currentRoute.name == 'FinishEmergencyAppoinetments'){
+            response = await finishEmergencyAppoinetment(this.$route.params.id);
+        }else{
+            response = await finishAppoinetment(this.$route.params.id);
+        }
         this.loaderFlag = false;
-        if(res){
+        if(response){
             this.$fire({
                 title: "SUCCESS!",
                 text: "Service is done successfully",
@@ -86,7 +111,7 @@ export default class FinishAppoinetments extends Vue {
 <style scoped>
 .reservation-item{
     background: #fff;
-    padding: 30px;
+    padding: 30px 0px;
     border-radius: var(--md-radius);
     box-shadow: 0px 1px 2px 0px #ddd;
     overflow: hidden;
@@ -117,6 +142,7 @@ export default class FinishAppoinetments extends Vue {
     display: block;
     clear: both;
     overflow: hidden;
+    padding: 0px 30px;
 }
 .block h5{
     color: var(--font-navy);
@@ -209,5 +235,9 @@ export default class FinishAppoinetments extends Vue {
 }
 .phone-icon{
     transform: rotate(90deg);
+}
+.emergency-block{
+    background: rgba(241, 250, 245, 1);
+    margin-top: 20px;
 }
 </style>

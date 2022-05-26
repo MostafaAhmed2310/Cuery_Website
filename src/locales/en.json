@@ -65,7 +65,11 @@
     "for_num_placeholder": "Fourth Number Phone (Optional)",
     "fifth_num_placeholder": "Fifth Number Phone (Optional)",
     "password_placeholder": "Password",
-    "confirm_password_placeholder": "Confirm Password"
+    "confirm_password_placeholder": "Confirm Password",
+    "upload_license" : "Upload Your License (image format)*",
+    "add_number": "Add another number",
+    "remove_number": "Remove number",
+    "select_type": "Select Your Type"
   },
   "map": {
     "current_loc": "Current Location",
@@ -126,7 +130,8 @@
     "mins": "Mins",
     "date": "Date",
     "egp": "EGP",
-    "save": "Save"
+    "save": "Save",
+    "emptySections": "There are no sections Add new sections"
   },
   "appoinetments": {
     "title": "Appoinetments",
@@ -195,5 +200,16 @@
     "patient_arrived": "Patient Arrived",
     "no_appointements_found": "No Appointements found",
     "nearest_appointements": "Nearest Appointements"
+  },
+  "Support": {
+    "need_some_help": "Need Some Help ?",
+    "complaints": "Complaints",
+    "inquiries": "Inquiries",
+    "feedback": "Feedback",
+    "get_help": "Get Help",
+    "input_placeholder": "What are you having trouble with ?"
+  },
+  "Validation":{
+    "required_field": "This field is required"
   }
 }

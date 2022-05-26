@@ -87,6 +87,7 @@ import {clearAuthInfo} from '@/helpers/utils';
 import Notifications from '@/components/notifications/Notifications.vue';
 import vClickOutside from 'v-click-outside';
 import FirebaseFile from "@/firebase";
+import { getUserInfo } from "@/endpoints/user";
 
 @Component({
     components: {
@@ -105,6 +106,8 @@ export default class Header extends Vue {
     langMenu = false;
     notificationPopup = false;
     unseenCount = '';
+    currentUser = {};
+
     externalClickOutNotifications(){
         this.notificationPopup = false;
     }
@@ -135,14 +138,15 @@ export default class Header extends Vue {
         }
     }
     async resetCount(){
-        let res = await FirebaseFile.getDataFromRealtimeDatabase(56);
+        let res = await FirebaseFile.getDataFromRealtimeDatabase(this.currentUser.id);
         res.set(0);
     }
     mounted() {
-        this.auth_state = getAuthState();  
+        this.auth_state = getAuthState(); 
     }
     async created() {
-        let res = await FirebaseFile.getDataFromRealtimeDatabase(56);
+        this.currentUser = await getUserInfo(); 
+        let res = await FirebaseFile.getDataFromRealtimeDatabase(this.currentUser.id);
         res.on('value', (snapshot) => {
             const data = snapshot.val();
             this.unseenCount = data;

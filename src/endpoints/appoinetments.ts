@@ -24,3 +24,9 @@ export async function getNearestAppointment(){
   if (res) return res.data
   else return false
 }
+export async function finishEmergencyAppoinetment(id:any){
+    let res = await api
+    .put('api/finish_request/'+id);
+    if (res) return res.data
+    else return false
+}

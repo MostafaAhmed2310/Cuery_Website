@@ -113,7 +113,6 @@ export default class Sections extends Vue {
 .sections-inputs-body{
     width: 85%;
     margin: auto;
-    overflow: hidden;
     margin-top: 20px;
 }
 .right-side{

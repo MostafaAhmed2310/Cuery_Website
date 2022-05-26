@@ -33,8 +33,7 @@ import Support from '@/views/Support.vue'
 const routes = [
     {
         path: '/',
-        name: 'StaticHome',
-        component: StaticHome
+        redirect: localStorage.getItem("cureyHeaderConfig") ? '/hospital_home' : '/home'
     },
     {
         path: '/home',
@@ -195,6 +194,11 @@ const routes = [
                 component: SuccessPage
             },
             {
+                path: '/emergency_success_page/:id',
+                name: 'EmergencySuccessPage',
+                component: SuccessPage
+            },
+            {
                 path: '/normal-appoinetment-details/:id',
                 name: 'normalDetails',
                 component: AppoinetmentsItem
@@ -207,6 +211,11 @@ const routes = [
             {
                 path: '/finish-appoinetments/:id',
                 name: 'FinishAppoinetments',
+                component: FinishAppoinetments
+            },
+            {
+                path: '/finish-emergency-appoinetments/:id',
+                name: 'FinishEmergencyAppoinetments',
                 component: FinishAppoinetments
             },
         ]

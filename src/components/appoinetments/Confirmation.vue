@@ -57,14 +57,17 @@ export default class Confirmation extends Vue {
             this.secret_code = this.num1 + this.num2 + this.num3 + this.num4
             var res = {}
             if (this.$router.currentRoute.name  == "Confirmation") {
-                console.log("confirmation")
                 res  = await confirmCode(this.resId,this.secret_code);
             }else if(this.$router.currentRoute.name == "Emergency-Confirmation"){
-                                console.log("emergency-confirmation")
                 res  = await confirmCodeEmergency(this.resId,this.secret_code);
             }
-            if(res.success == true ){
+            if(res.success == true &&  this.$router.currentRoute.name  == "Confirmation"){
                 this.$router.push('/success_page/'+this.$route.params.id);
+            }else{
+                this.errorFlag = true
+            }
+            if(res.success == true &&  this.$router.currentRoute.name == "Emergency-Confirmation"){
+                this.$router.push('/emergency_success_page/'+this.$route.params.id);
             }else{
                 this.errorFlag = true
             }

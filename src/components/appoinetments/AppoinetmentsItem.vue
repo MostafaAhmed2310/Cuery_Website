@@ -32,7 +32,7 @@
                 </div>
             </div>
         </div>
-        <div class="block">
+        <div class="block" v-if="reservationObj.is_request_finished === 'n'">
             <div :class="{'float-left' : $t('nav.home') === 'الرئيسية'}" class="reservation-btns">
                 <router-link :to="'/confirmation/'+ $route.params.id"><button class="arrived-btn">{{ $t("appoinetments.arrived") }}</button></router-link>
                 <button @click="openDeclinePopup()" class="decline-btn">{{ $t("reservations.decline") }}</button>

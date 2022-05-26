@@ -65,7 +65,11 @@
     "for_num_placeholder": "رقم الهاتف الرابع (اختياري)",
     "fifth_num_placeholder": "رقم الهاتف الخامس (اختياري)",
     "password_placeholder": "كلمة المرور",
-    "confirm_password_placeholder": "تأكيد كلمة المرور"
+    "confirm_password_placeholder": "تأكيد كلمة المرور",
+    "upload_license" : "حمل الترخيص ( بصيغة صورة ) ",
+    "add_number": "أضف رقم أخر",
+    "remove_number": "مسح الرقم",
+    "select_type": "أختر النوع"
   },
   "map": {
     "current_loc": "الموقع الحالي",
@@ -126,7 +130,8 @@
     "mins": "دقيقة",
     "date": "التاريخ",
     "egp": "جنيه مصري",
-    "save": "حفظ"
+    "save": "حفظ",
+    "emptySections": "لا توجد أقسام أضف الأقسام الجديدة"
   },
   "appoinetments": {
     "title": "المواعيد",
@@ -195,5 +200,16 @@
     "patient_arrived": "وصل المريض",
     "no_appointements_found": "لم يتم العثور على مواعيد",
     "nearest_appointements": "أقرب المواعيد"
+  },
+  "Support": {
+    "need_some_help": "بحاجة لبعض المساعدة ؟",
+    "complaints": "الشكاوي",
+    "inquiries": "الاستفسارات",
+    "feedback": "ردود الفعل",
+    "get_help": "احصل علي المساعدة",
+    "input_placeholder": "ما هي المشكلة ؟"
+  },
+  "Validation":{
+    "required_field": "هذا الحقل مطلوب"
   }
 }

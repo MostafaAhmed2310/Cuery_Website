@@ -9,11 +9,13 @@
                 <p>{{ $t("login.have_not_account") }} <span @click="pushToSignup()">{{ $t("login.sign_up") }} </span></p>
                 <form>
                     <div class="input-field">
-                        <input type="text" placeholder="User Name" v-model="username">
+                        <input type="text" :placeholder='$t("sign_up.username_placeholder")' v-model="username">
                         <span v-if="usernameMsg">{{ $t("login.enter_username") }}</span>
                     </div>
                     <div class="input-field">
-                        <input type="password" placeholder="Password" v-model="password">
+                        <input :type="passType" :placeholder='$t("sign_up.password_placeholder")' v-model="password">
+                        <i class="fas fa fa-eye" @click="showPassword()" v-if="passType == 'password' && password"></i>
+                        <i class="fas fa fa-eye-slash" @click="hidePassword()" v-if="passType == 'text' && password"></i>
                         <span v-if="passwordMsg">{{ $t("login.enter_password") }}</span>
                         <span v-if="errorMsg"> {{ $t("login.wrong_data") }}</span>
                     </div>
@@ -44,6 +46,8 @@ export default class Login extends Vue {
     passwordMsg = false;
     errorMsg = false;
     role_id = 2;
+    passType = 'password';
+
     pushToSignup(){
         this.$router.push('/signup')
     }
@@ -92,6 +96,13 @@ export default class Login extends Vue {
     }
     scrollToTop(){
         window.scrollTo({top: 0, behavior: 'smooth'});
+    }
+    showPassword(){
+        this.passType = 'text'
+    }
+
+    hidePassword(){
+        this.passType = 'password'
     }
     mounted() {
         this.scrollToTop();
@@ -147,6 +158,7 @@ export default class Login extends Vue {
 }
 .input-field{
     height: 70px;
+    position: relative;
 }
 .input-field span{
     font-size: 12px;
@@ -188,5 +200,14 @@ export default class Login extends Vue {
 .login-form .forget-password:hover{
     opacity: 0.8;
     transition: 0.7s;
+}
+.fa-eye,
+.fa-eye-slash{
+    position: absolute;
+    right: 15px;
+    top: 15px;
+    font-size: 14px;
+    color: var(--active-green);
+    cursor: pointer;
 }
 </style>

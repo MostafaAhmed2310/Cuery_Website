@@ -5,11 +5,11 @@
         </div>
         <div class="profile-body">
             <div class="cover-img">
-                <img src="@/assets/images/profile-cover.png" alt="">
-                <h2>{{ $t("profile.profile") }}</h2>
+                <img :class="{'mirror-img' : $t('nav.home') === 'الرئيسية'}" src="@/assets/images/profile-cover.png" alt="">
+                <h2 :class="{'rtl pages-title-ar' : $t('nav.home') === 'الرئيسية'}">{{ $t("profile.profile") }}</h2>
             </div>
             <div class="profile-inputs-body">
-                <div class="profile-img-panal">
+                <div class="profile-img-panal" :class="{'float-right' : $t('nav.home') === 'الرئيسية'}">
                     <div class="profile-img">
                         <i v-if="(!profileObj.image_path || profileObj.image_path.charAt(profileObj.image_path.length-1) == '.') && !fileData" class="fas fa fa-user-circle"></i>
                         <img v-if="profileObj.image_path && !fileData" :src="BaseUrl + profileObj.image_path" alt="">
@@ -20,7 +20,7 @@
                         <input class="loadedFiles" @change="uploadFileFun($event)" type="file" accept="image/*">
                     </label>
                 </div>
-                <div class="inputs-container">
+                <div class="inputs-container" :class="{'rtl' : $t('nav.home') === 'الرئيسية'}">
                     <form>
                         <div class="input-field">
                             <input type="text" :placeholder='$t("sign_up.username_placeholder")' v-model="username">

@@ -126,7 +126,7 @@ export default class Appoinetments extends Vue {
     width: 30%;
     float: left;
     background: rgba(241, 250, 245, 1);
-    height: 100vh;
+    height: 110vh;
     padding-top: 10%;
     margin-top: 6%;
     margin-right: 5%;
@@ -139,7 +139,7 @@ export default class Appoinetments extends Vue {
 .reservation-body{
     width: 65%;
     float: left;
-    height: 110vh;
+    height: 120vh;
     padding: 20% 50px 0px 50px;
     background: rgba(249, 253, 251, 1);
 }

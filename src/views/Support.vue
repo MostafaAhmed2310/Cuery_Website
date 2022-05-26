@@ -4,26 +4,26 @@
             <DoubleBounce></DoubleBounce>
         </div>
         <div class="support-body">
-            <h1>Need Some Help ?</h1>
+            <h1>{{$t("Support.need_some_help")}}</h1>
             <div class="support-types">
                 <div :class="'type-body '+ activeBorder1" @click="getSubject('Complaints')">
                     <span class="red"><i class="far fa-question-circle"></i></span>
-                    <p>Complaints</p>
+                    <p>{{$t("Support.complaints")}}</p>
                 </div>
                 <div :class="'type-body '+ activeBorder2" @click="getSubject('Inquiries')">
                     <span class="yellow"><i class="far fa-comment-dots"></i></span>
-                    <p>Inquiries</p>
+                    <p>{{$t("Support.inquiries")}}</p>
                 </div>
                 <div :class="'type-body '+ activeBorder3" @click="getSubject('FeedBack')">
                     <span class="green"><i class="far fa-file-alt"></i></span>
-                    <p>FeedBack</p>
+                    <p>{{$t("Support.feedback")}}</p>
                 </div>
-                <p class="alert-msg" v-if="categoryErr">Please Select Category</p>
+                <p class="alert-msg" v-if="categoryErr">{{$t("Validation.required_field")}}</p>
             </div>
             <div class="support-input">
-                <textarea class="input" placeholder="What are you having trouble with ?" v-model="ticketMessage"></textarea>
-                <button @click="sendMessage()">Get Help</button>
-                <p class="alert-msg" v-if="messageErr">Please Fill This Input</p>
+                <textarea class="input" :placeholder="$t('Support.input_placeholder')" v-model="ticketMessage"></textarea>
+                <button @click="sendMessage()">{{$t("Support.get_help")}}</button>
+                <p class="alert-msg" v-if="messageErr">{{$t("Validation.required_field")}}</p>
             </div>
         </div>
         <div class="chat-body" v-if="chatBody">
@@ -149,6 +149,7 @@ export default class Support extends Vue {
     resize: none;
     padding: 20px;
     font-size: 17px;
+    line-height: 1;
 }
 .support-input button{
     position: absolute;
@@ -161,6 +162,7 @@ export default class Support extends Vue {
     border: none;
     background: var(--main-green);
     color: #fff;
+    line-height: 1;
 }
 .support-input button:hover{
     opacity: 0.8;
