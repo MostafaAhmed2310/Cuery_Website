@@ -1,3 +1,3 @@
-export var baseUrl="http://128.199.36.173/",
-BaseUrl="http://128.199.36.173/", 
+export var baseUrl="http://178.62.90.213/",
+BaseUrl="http://178.62.90.213/", 
 headerConfigKeyName="cureyHeaderConfig"
