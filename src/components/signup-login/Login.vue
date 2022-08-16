@@ -32,8 +32,6 @@
 <script>
 import { Component, Vue } from 'vue-property-decorator';
 import {login} from '@/endpoints/auth';
-import FirebaseFile from "@/firebase";
-import {saveFcmToken} from '@/endpoints/notifications';
 @Component({
     components: {
         
@@ -67,9 +65,6 @@ export default class Login extends Vue {
         if(this.usernameMsg == false && this.passwordMsg == false) {
             try {
                 await login(this.username,this.password, this.role_id);
-                await FirebaseFile.registerSW();
-                const tokenFCM = await FirebaseFile.getFCMToken();
-                await saveFcmToken({fcm_token: tokenFCM});
                 this.$router.push('/hospital_home');
                 window.location.reload();
             }catch(err) {

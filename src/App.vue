@@ -231,7 +231,10 @@ input[type=number] {
 
 <script>
 import Vue from "vue";
-import ChoosedView from "@/views/ChoosedView.vue"
+import ChoosedView from "@/views/ChoosedView.vue";
+import FirebaseFile from "@/firebase";
+import {saveFcmToken} from '@/endpoints/notifications';
+
 export default Vue.extend({
     name: "app",
 
@@ -244,7 +247,10 @@ export default Vue.extend({
         };
     },
 
-    mounted() {
+    async mounted() {
+        await FirebaseFile.registerSW();
+        const tokenFCM = await FirebaseFile.getFCMToken();
+        await saveFcmToken({fcm_token: tokenFCM});
         if(!localStorage.getItem("locale")){
             localStorage.setItem("locale", 'en');
         }
