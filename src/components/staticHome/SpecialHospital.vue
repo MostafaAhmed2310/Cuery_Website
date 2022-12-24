@@ -5,14 +5,14 @@
             <div class="hospital-info">
                 <h2>{{highestHospital.name}}</h2>
                 <p v-if="highestHospital.description">{{highestHospital.description}}</p>
-                <p v-if="!highestHospital.description">et ipsum! Quisquam similique deserunt minus exercitationem delectus?Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium magni, architecto temporibus adipisci distinctio, quae labore doloremque fugiat necessitatibus tempore illo. Autem, et ipsum! Quisquam similique deserunt minus exercitationem delectus?Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium magni, architecto temporibus adipisci distinctio, quae labore doloremque fugiat necessitatibus tempore illo. Autem, et ipsum! Quisquam similique deserunt minus exercitationem delectus?</p>
+                <p v-if="!highestHospital.description">{{$t("medical_team.special_hospital")}}</p>
                 <router-link to="/medical_team">
                     <button>{{ $t("more") }}</button>
                 </router-link>
             </div>
             <div class="hospital-img">
-                <img v-if="highestHospital.image_path" :src="BaseUrl + highestHospital.image_path" alt="Image">
-                <i class="fas fa fa-user-circle"  v-if="highestHospital.image_path == null"></i>
+                <img v-if="highestHospital.image_path" :src="BaseUrl + highestHospital.image_path" alt=" " onerror="this.style.display='none'">
+                <!-- <i class="fas fa fa-user-circle"  v-if="highestHospital.image_path == null"></i> -->
                 <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="150.4" viewBox="0 0 547.369 150.4">
                     <path id="path_vector_" data-name="path vector " d="M36.2,150.52H583.256S589.73,85.095,544,83.045,411.761,94.7,341.732,78.98,258.937.806,171.045.123,36.2,150.52,36.2,150.52Z" transform="translate(-36.201 -0.12)" fill="#43c079"/>
                 </svg>
@@ -33,16 +33,22 @@ import {BaseUrl} from '@/app.config';
     },
 })
 export default class SpecialHospital extends Vue {
-   highestHospital={}
-   BaseUrl:any = BaseUrl
-
-   async getMedicalTeam(){
+    highestHospital={}
+    BaseUrl:any = BaseUrl
+    default_avatar = 'https://secure.gravatar.com/avatar?d=wavatar';
+    async getMedicalTeam(){
         this.highestHospital = await gethighestHospital();
-    }
-
+    };
     mounted(){
-        this.getMedicalTeam()
-    }
+        this.getMedicalTeam();
+        window.addEventListener("load", event => {
+            var image = document.querySelector('img');
+            var isLoaded = (<any>image).complete && (<any>image).naturalHeight !== 0;
+            if (!isLoaded) {
+                (<any>image).src = this.default_avatar;
+            }
+        });
+    };
 }
 </script>
 
@@ -100,6 +106,11 @@ export default class SpecialHospital extends Vue {
     margin-right: 65px;
     border-radius: var(--md-radius);
     position: relative;
+    background-image: url('../../assets/images/team.png');
+}
+.hospital-img img{
+    width: 100%;
+    height: 100%;
 }
 .hospital-img svg{
     position: absolute;

@@ -16,7 +16,8 @@
     "view_your_rate": "View Your Rate",
     "sign_out": "Sign Out",
     "lang": "Language",
-    "support": "Support"
+    "support": "Support",
+    "my_wallet": "My Wallet"
   },
   "footer": {
       "careers": "Careers",
@@ -92,7 +93,9 @@
     "title": "Medical Team",
     "hospitals": "Hospitals We Works With",
     "all": "All of these are part of our entity ..",
-    "join_us": "Join us now ."
+    "join_us": "Join us now .",
+    "special_hospital": "It is one of the most important joint hospitals with us in terms of organization and provision of distinguished service, according to the evaluation of our users",
+    "section_placeholder": "This section is available to many hospitals that work with us now, and it works with high efficiency and is considered one of the best"
   },
   "sections": {
     "add_new": "Add New Section",

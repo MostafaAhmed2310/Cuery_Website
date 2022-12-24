@@ -6,31 +6,32 @@
                 <div v-if="service1">
                     <h2>{{ sectionsList[0].section_title}}</h2>
                     <p v-if="sectionsList[0].section_description">{{ sectionsList[0].section_description}}</p>
-                    <p v-if="!sectionsList[0].section_description">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Neque voluptatum beatae inventore iste odio labore soluta maiores ducimus perferendis modi</p>
+                    <p v-if="!sectionsList[0].section_description">{{ $t("medical_team.section_placeholder")}}</p>
                 </div>
                 <div v-if="service2">
                     <h2>{{ sectionsList[1].section_title}}</h2>
                     <p v-if="sectionsList[1].section_description">{{ sectionsList[0].section_description}}</p>
-                    <p v-if="!sectionsList[1].section_description">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Neque voluptatum beatae inventore iste odio labore soluta maiores ducimus perferendis modi</p>                </div>
+                    <p v-if="!sectionsList[1].section_description">{{ $t("medical_team.section_placeholder")}}</p>                
+                </div>
                 <div v-if="service3">
                     <h2>{{ sectionsList[2].section_title}}</h2>
                     <p v-if="sectionsList[2].section_description">{{ sectionsList[0].section_description}}</p>
-                    <p v-if="!sectionsList[2].section_description">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Neque voluptatum beatae inventore iste odio labore soluta maiores ducimus perferendis modi</p>
+                    <p v-if="!sectionsList[2].section_description">{{ $t("medical_team.section_placeholder")}}</p>
                 </div>
                 <div v-if="service4">
                     <h2>{{ sectionsList[3].section_title}}</h2>
                     <p v-if="sectionsList[3].section_description">{{ sectionsList[0].section_description}}</p>
-                    <p v-if="!sectionsList[3].section_description">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Neque voluptatum beatae inventore iste odio labore soluta maiores ducimus perferendis modi</p>
+                    <p v-if="!sectionsList[3].section_description">{{ $t("medical_team.section_placeholder")}}</p>
                 </div>
                 <div v-if="service5">
                     <h2>{{ sectionsList[4].section_title}}</h2>
                     <p v-if="sectionsList[4].section_description">{{ sectionsList[0].section_description}}</p>
-                    <p v-if="!sectionsList[4].section_description">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Neque voluptatum beatae inventore iste odio labore soluta maiores ducimus perferendis modi</p>
+                    <p v-if="!sectionsList[4].section_description">{{ $t("medical_team.section_placeholder")}}</p>
                 </div>
                 <div v-if="service6">
                     <h2>{{ sectionsList[5].section_title}}</h2>
                     <p v-if="sectionsList[5].section_description">{{ sectionsList[0].section_description}}</p>
-                    <p v-if="!sectionsList[5].section_description">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Neque voluptatum beatae inventore iste odio labore soluta maiores ducimus perferendis modi</p>
+                    <p v-if="!sectionsList[5].section_description">{{ $t("medical_team.section_placeholder")}}</p>
                 </div>
                 <div class="arrow-btns">
                     <span @click="leftAction()"><i class="fas fa fa-sort-up"></i></span>
@@ -40,32 +41,93 @@
             <div class="cards-body">
                 <div class="cards-line">
                     <div :class="'card-item '+ heartActive" @click="toggleServices(1)">
-                        <img src="@/assets/images/services/cardiogram.png" alt="" v-if="originalCardiogram">
-                        <img src="@/assets/images/services/active/cardiogram.png" alt="" v-if="activeCardiogram">
+                        <img v-if="sectionsList[0].icon_id && sectionsList[0].icon_id == 1" src="@/assets/images/sectionIcons/blood.png" alt="">
+                        <img v-if="sectionsList[0].icon_id && sectionsList[0].icon_id == 5" src="@/assets/images/sectionIcons/brain.png" alt="">
+                        <img v-if="sectionsList[0].icon_id && sectionsList[0].icon_id == 2" src="@/assets/images/sectionIcons/cancer.png" alt="">
+                        <img v-if="sectionsList[0].icon_id && sectionsList[0].icon_id == 3" src="@/assets/images/sectionIcons/cardiogram.png" alt="">
+                        <img v-if="sectionsList[0].icon_id && sectionsList[0].icon_id == 6" src="@/assets/images/sectionIcons/eye.png" alt="">
+                        <img v-if="sectionsList[0].icon_id && sectionsList[0].icon_id == 7 || sectionsList[0].icon_id && sectionsList[0].icon_id == 0" src="@/assets/images/sectionIcons/firstaid.png" alt="">
+                        <img v-if="sectionsList[0].icon_id && sectionsList[0].icon_id == 8" src="@/assets/images/sectionIcons/lungs.png" alt="">
+                        <img v-if="sectionsList[0].icon_id && sectionsList[0].icon_id == 10" src="@/assets/images/sectionIcons/rooms.png" alt="">
+                        <img v-if="sectionsList[0].icon_id && sectionsList[0].icon_id == 9" src="@/assets/images/sectionIcons/stomach.png" alt="">
+                        <img v-if="sectionsList[0].icon_id && sectionsList[0].icon_id == 11" src="@/assets/images/sectionIcons/teeth.png" alt="">
+                        <img v-if="sectionsList[0].icon_id && sectionsList[0].icon_id == 12" src="@/assets/images/sectionIcons/women.png" alt="">
+                        <img v-if="sectionsList[0].icon_id && sectionsList[0].icon_id == 4" src="@/assets/images/sectionIcons/x-ray.png" alt="">
+                        <!-- <img src="@/assets/images/services/active/cardiogram.png" alt="" v-if="activeCardiogram"> -->
                     </div>
                     <div :class="'card-item '+ cancerActive" @click="toggleServices(4)">
-                        <img src="@/assets/images/services/cancer.png" alt="" v-if="originalCancer">
-                        <img src="@/assets/images/services/active/cancer.png" alt="" v-if="activeCancer">
+                        <img v-if="sectionsList[3].icon_id == 1" src="@/assets/images/sectionIcons/blood.png" alt="">
+                        <img v-if="sectionsList[3].icon_id == 5" src="@/assets/images/sectionIcons/brain.png" alt="">
+                        <img v-if="sectionsList[3].icon_id == 2" src="@/assets/images/sectionIcons/cancer.png" alt="">
+                        <img v-if="sectionsList[3].icon_id == 3" src="@/assets/images/sectionIcons/cardiogram.png" alt="">
+                        <img v-if="sectionsList[3].icon_id == 6" src="@/assets/images/sectionIcons/eye.png" alt="">
+                        <img v-if="sectionsList[3].icon_id == 7 || sectionsList[3].icon_id == 0" src="@/assets/images/sectionIcons/firstaid.png" alt="">
+                        <img v-if="sectionsList[3].icon_id == 8" src="@/assets/images/sectionIcons/lungs.png" alt="">
+                        <img v-if="sectionsList[3].icon_id == 10" src="@/assets/images/sectionIcons/rooms.png" alt="">
+                        <img v-if="sectionsList[3].icon_id == 9" src="@/assets/images/sectionIcons/stomach.png" alt="">
+                        <img v-if="sectionsList[3].icon_id == 11" src="@/assets/images/sectionIcons/teeth.png" alt="">
+                        <img v-if="sectionsList[3].icon_id == 12" src="@/assets/images/sectionIcons/women.png" alt="">
+                        <img v-if="sectionsList[3].icon_id == 4" src="@/assets/images/sectionIcons/x-ray.png" alt="">
                     </div>
                 </div>
                 <div class="cards-line">
                     <div :class="'card-item '+ roomActive" @click="toggleServices(2)">
-                        <img src="@/assets/images/services/rooms.png" alt="" v-if="originalRooms">
-                        <img src="@/assets/images/services/active/rooms.png" alt="" v-if="activeRooms">
+                        <img v-if="sectionsList[1].icon_id == 1" src="@/assets/images/sectionIcons/blood.png" alt="">
+                        <img v-if="sectionsList[1].icon_id == 5" src="@/assets/images/sectionIcons/brain.png" alt="">
+                        <img v-if="sectionsList[1].icon_id == 2" src="@/assets/images/sectionIcons/cancer.png" alt="">
+                        <img v-if="sectionsList[1].icon_id == 3" src="@/assets/images/sectionIcons/cardiogram.png" alt="">
+                        <img v-if="sectionsList[1].icon_id == 6" src="@/assets/images/sectionIcons/eye.png" alt="">
+                        <img v-if="sectionsList[1].icon_id == 7 || sectionsList[1].icon_id == 0" src="@/assets/images/sectionIcons/firstaid.png" alt="">
+                        <img v-if="sectionsList[1].icon_id == 8" src="@/assets/images/sectionIcons/lungs.png" alt="">
+                        <img v-if="sectionsList[1].icon_id == 10" src="@/assets/images/sectionIcons/rooms.png" alt="">
+                        <img v-if="sectionsList[1].icon_id == 9" src="@/assets/images/sectionIcons/stomach.png" alt="">
+                        <img v-if="sectionsList[1].icon_id == 11" src="@/assets/images/sectionIcons/teeth.png" alt="">
+                        <img v-if="sectionsList[1].icon_id == 12" src="@/assets/images/sectionIcons/women.png" alt="">
+                        <img v-if="sectionsList[1].icon_id == 4" src="@/assets/images/sectionIcons/x-ray.png" alt="">
                     </div>
                     <div :class="'card-item '+ xrayActive" @click="toggleServices(5)">
-                        <img src="@/assets/images/services/x-ray.png" alt="" v-if="originalXray">
-                        <img src="@/assets/images/services/active/x-ray.png" alt="" v-if="activeXray">
+                        <img v-if="sectionsList[4].icon_id == 1" src="@/assets/images/sectionIcons/blood.png" alt="">
+                        <img v-if="sectionsList[4].icon_id == 5" src="@/assets/images/sectionIcons/brain.png" alt="">
+                        <img v-if="sectionsList[4].icon_id == 2" src="@/assets/images/sectionIcons/cancer.png" alt="">
+                        <img v-if="sectionsList[4].icon_id == 3" src="@/assets/images/sectionIcons/cardiogram.png" alt="">
+                        <img v-if="sectionsList[4].icon_id == 6" src="@/assets/images/sectionIcons/eye.png" alt="">
+                        <img v-if="sectionsList[4].icon_id == 7 || sectionsList[4].icon_id == 0" src="@/assets/images/sectionIcons/firstaid.png" alt="">
+                        <img v-if="sectionsList[4].icon_id == 8" src="@/assets/images/sectionIcons/lungs.png" alt="">
+                        <img v-if="sectionsList[4].icon_id == 10" src="@/assets/images/sectionIcons/rooms.png" alt="">
+                        <img v-if="sectionsList[4].icon_id == 9" src="@/assets/images/sectionIcons/stomach.png" alt="">
+                        <img v-if="sectionsList[4].icon_id == 11" src="@/assets/images/sectionIcons/teeth.png" alt="">
+                        <img v-if="sectionsList[4].icon_id == 12" src="@/assets/images/sectionIcons/women.png" alt="">
+                        <img v-if="sectionsList[4].icon_id == 4" src="@/assets/images/sectionIcons/x-ray.png" alt="">
                     </div>
                 </div>
                 <div class="cards-line">
                     <div :class="'card-item '+ brainActive" @click="toggleServices(3)">
-                        <img src="@/assets/images/services/brain.png" alt="" v-if="originalBrain">
-                        <img src="@/assets/images/services/active/brain.png" alt="" v-if="activeBrain">
+                        <img v-if="sectionsList[2].icon_id == 1" src="@/assets/images/sectionIcons/blood.png" alt="">
+                        <img v-if="sectionsList[2].icon_id == 5" src="@/assets/images/sectionIcons/brain.png" alt="">
+                        <img v-if="sectionsList[2].icon_id == 2" src="@/assets/images/sectionIcons/cancer.png" alt="">
+                        <img v-if="sectionsList[2].icon_id == 3" src="@/assets/images/sectionIcons/cardiogram.png" alt="">
+                        <img v-if="sectionsList[2].icon_id == 6" src="@/assets/images/sectionIcons/eye.png" alt="">
+                        <img v-if="sectionsList[2].icon_id == 7 || sectionsList[2].icon_id == 0" src="@/assets/images/sectionIcons/firstaid.png" alt="">
+                        <img v-if="sectionsList[2].icon_id == 8" src="@/assets/images/sectionIcons/lungs.png" alt="">
+                        <img v-if="sectionsList[2].icon_id == 10" src="@/assets/images/sectionIcons/rooms.png" alt="">
+                        <img v-if="sectionsList[2].icon_id == 9" src="@/assets/images/sectionIcons/stomach.png" alt="">
+                        <img v-if="sectionsList[2].icon_id == 11" src="@/assets/images/sectionIcons/teeth.png" alt="">
+                        <img v-if="sectionsList[2].icon_id == 12" src="@/assets/images/sectionIcons/women.png" alt="">
+                        <img v-if="sectionsList[2].icon_id == 4" src="@/assets/images/sectionIcons/x-ray.png" alt="">
                     </div>
                     <div :class="'card-item '+ bloodActive" @click="toggleServices(6)">
-                        <img src="@/assets/images/services/blood.png" alt="" v-if="originalBlood">
-                        <img src="@/assets/images/services/active/blood.png" alt="" v-if="activeBlood">
+                        <img v-if="sectionsList[5].icon_id == 1" src="@/assets/images/sectionIcons/blood.png" alt="">
+                        <img v-if="sectionsList[5].icon_id == 5" src="@/assets/images/sectionIcons/brain.png" alt="">
+                        <img v-if="sectionsList[5].icon_id == 2" src="@/assets/images/sectionIcons/cancer.png" alt="">
+                        <img v-if="sectionsList[5].icon_id == 3" src="@/assets/images/sectionIcons/cardiogram.png" alt="">
+                        <img v-if="sectionsList[5].icon_id == 6" src="@/assets/images/sectionIcons/eye.png" alt="">
+                        <img v-if="sectionsList[5].icon_id == 7 || sectionsList[5].icon_id == 0" src="@/assets/images/sectionIcons/firstaid.png" alt="">
+                        <img v-if="sectionsList[5].icon_id == 8" src="@/assets/images/sectionIcons/lungs.png" alt="">
+                        <img v-if="sectionsList[5].icon_id == 10" src="@/assets/images/sectionIcons/rooms.png" alt="">
+                        <img v-if="sectionsList[5].icon_id == 9" src="@/assets/images/sectionIcons/stomach.png" alt="">
+                        <img v-if="sectionsList[5].icon_id == 11" src="@/assets/images/sectionIcons/teeth.png" alt="">
+                        <img v-if="sectionsList[5].icon_id == 12" src="@/assets/images/sectionIcons/women.png" alt="">
+                        <img v-if="sectionsList[5].icon_id == 4" src="@/assets/images/sectionIcons/x-ray.png" alt="">
                     </div>
                 </div>
             </div>
@@ -370,7 +432,7 @@ export default class Services extends Vue {
     margin: auto;
     display: block;
 }
-.cards-line:nth-of-type(1) .card-item:nth-of-type(1) img{
+/* .cards-line:nth-of-type(1) .card-item:nth-of-type(1) img{
     margin-top: 15px;
 }
 .cards-line:nth-of-type(2) .card-item:nth-of-type(1) img{
@@ -378,7 +440,7 @@ export default class Services extends Vue {
 }
 .cards-line:nth-of-type(1) .card-item:nth-of-type(2) img{
     width: 60%;
-}
+} */
 .cards-line{
     float: left;
     overflow: hidden;
@@ -426,7 +488,8 @@ export default class Services extends Vue {
     right: 15px;
 }
 .active{
-    background: var(--main-green);
+    border: 1px solid var(--main-green);
+    /* background: var(--main-green); */
     transition: 0.8s;
 }
 </style>

@@ -29,6 +29,7 @@ import EmergencySectionDetails from '@/components/emergency/EmergencySectionDeta
 import FinishAppoinetments from '@/components/appoinetments/FinishAppoinetments.vue'
 import StaticPages from '@/views/StaticPages.vue'
 import Support from '@/views/Support.vue'
+import MyWallet from '@/views/MyWallet.vue'
 
 const routes = [
     {
@@ -229,6 +230,11 @@ const routes = [
         path: '/support',
         name: 'Support',
         component: Support
+    },
+    {
+        path: '/my_wallet',
+        name: 'MyWallet',
+        component: MyWallet
     },
 ]
 

@@ -50,6 +50,12 @@
         </div>
         <div :class="{'left-menu rtl' : $t('nav.home') === 'الرئيسية'}" class="more-menu" v-if="moreMenu" v-click-outside="externalClickOutMore">
             <div v-if="mainMenue">
+                <router-link to="/my_wallet" v-if="auth_state == true">
+                    <span @click="moreMenu = !moreMenu">
+                        <i class="fa-solid fa fa-money-bill"></i>
+                        {{ $t("nav.my_wallet") }}
+                    </span>
+                </router-link>
                 <router-link to="/ratings" v-if="auth_state == true">
                     <span @click="moreMenu = !moreMenu">
                         <i class="fas fa fa-star"></i>

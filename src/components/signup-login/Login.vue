@@ -4,7 +4,7 @@
             <div class="login-img">
                 <img src="@/assets/images/login/login-img.png" alt="">
             </div>
-            <div class="login-form">
+            <div class="login-form" v-if="formStep === 1">
                 <h2>{{ $t("nav.sign_in") }}</h2>
                 <p>{{ $t("login.have_not_account") }} <span @click="pushToSignup()">{{ $t("login.sign_up") }} </span></p>
                 <form>
@@ -22,7 +22,51 @@
                     <div class="login-btn">
                         <button type="button" @click="loginFun()">{{ $t("login.sign_in") }} </button>
                     </div>
-                    <span class="forget-password">{{ $t("login.forget_password") }}</span>
+                    <span @click="formStep = 2" class="forget-password">{{ $t("login.forget_password") }}</span>
+                </form>
+            </div>
+            <div class="login-form" v-if="formStep === 2">
+                <h2>{{ $t("Forget Password") }}</h2>
+                <p>{{ $t("Please fill your email to reset password") }}</p>
+                <form>
+                    <div class="input-field">
+                        <input type="text" :placeholder='$t("sign_up.username_placeholder")' v-model="email">
+                        <span v-if="usernameMsg">{{ $t("login.enter_username") }}</span>
+                    </div>
+                    <div class="login-btn">
+                        <button :disabled="email == ''" type="button" @click="getTokenToResetPassword()">{{ $t("Continue") }} </button>
+                    </div>
+                    <div class="login-btn-back" @click="formStep = 1">
+                        <button type="button">{{ $t("Back") }} </button>
+                    </div>
+                </form>
+            </div>
+            <div class="login-form" v-if="formStep === 3">
+                <h2>{{ $t("Forget Password") }}</h2>
+                <p>{{ $t("Please fill your email to reset password") }}</p>
+                <form>
+                    <div class="input-field">
+                        <input type="text" :placeholder='$t("Token")' v-model="token">
+                        <span v-if="usernameMsg">{{ $t("login.enter_username") }}</span>
+                    </div>
+                    <div class="input-field">
+                        <input :type="forgetPassType" :placeholder='$t("sign_up.password_placeholder")' v-model="forgetPassword">
+                        <i class="fas fa fa-eye" @click="forgetPassType = 'text'" v-if="forgetPassType == 'password' && forgetPassword"></i>
+                        <i class="fas fa fa-eye-slash" @click="forgetPassType = 'password'" v-if="forgetPassType == 'text' && forgetPassword"></i>
+                        <span v-if="forgetPassMsg">{{ $t("login.enter_password") }}</span>
+                    </div>
+                    <div class="input-field">
+                        <input :type="forgetC_PassType" :placeholder='$t("sign_up.password_placeholder")' v-model="confirmPassword">
+                        <i class="fas fa fa-eye" @click="forgetC_PassType = 'text'" v-if="forgetC_PassType == 'password' && confirmPassword"></i>
+                        <i class="fas fa fa-eye-slash" @click="forgetC_PassType = 'password'" v-if="forgetC_PassType == 'text' && confirmPassword"></i>
+                        <span v-if="confirmPassMsg">{{ $t("login.enter_password") }}</span>
+                    </div>
+                    <div class="login-btn">
+                        <button @click="verifyNewPassword()" type="button">{{ $t("Reset Password") }} </button>
+                    </div>
+                    <div class="login-btn-back" @click="formStep = 2">
+                        <button type="button">{{ $t("Back") }} </button>
+                    </div>
                 </form>
             </div>
         </div>
@@ -32,23 +76,34 @@
 <script>
 import { Component, Vue } from 'vue-property-decorator';
 import {login} from '@/endpoints/auth';
+import { sendEmail, resetPassword } from "@/endpoints/resetPassword";
+
 @Component({
     components: {
         
     },
 })
 export default class Login extends Vue {
-    username = '';
+    email = '';
     password = '';
+    forgetPassword = '';
+    confirmPassword = '';
     usernameMsg = false;
     passwordMsg = false;
     errorMsg = false;
     role_id = 2;
     passType = 'password';
+    formStep = 1;
+    forgetPassType = 'password';
+    forgetC_PassType = 'password';
+    forgetPassMsg = false;
+    confirmPassMsg = false;
+    token = '';
 
     pushToSignup(){
         this.$router.push('/signup')
     }
+
     async loginFun(){
         if(this.username == ''){
             this.usernameMsg = true
@@ -89,9 +144,11 @@ export default class Login extends Vue {
             }
         }
     }
+
     scrollToTop(){
         window.scrollTo({top: 0, behavior: 'smooth'});
     }
+
     showPassword(){
         this.passType = 'text'
     }
@@ -99,6 +156,46 @@ export default class Login extends Vue {
     hidePassword(){
         this.passType = 'password'
     }
+
+    async getTokenToResetPassword(){
+        try{
+            const res = await sendEmail({email: this.email});
+            console.log("res", res);
+            if(res.status == 200){
+                this.formStep = 3;
+            }
+        }catch(err){
+            this.$fire({
+                title: "Error",
+                text: err.response.data.message,
+                type: "warning",
+                timer: 10000
+            })
+        }
+    }
+
+    async verifyNewPassword(){
+        try{
+            const data = {
+                token: this.token,
+                password: this.password,
+                password_confirm: this.confirmPassword
+            }
+            const res = await resetPassword(data);
+            if(res.status == 200){
+                this.formStep = 1;
+            }
+        }catch(err){
+            this.$fire({
+                title: "Error",
+                text: err.response.data.message,
+                type: "warning",
+                timer: 10000
+            })
+        }
+        
+    }
+
     mounted() {
         this.scrollToTop();
     }
@@ -204,5 +301,15 @@ export default class Login extends Vue {
     font-size: 14px;
     color: var(--active-green);
     cursor: pointer;
+}
+.login-btn-back button{
+    width: 100%;
+    outline: none;
+    cursor: pointer;
+    border: 1.5px solid var(--main-green);
+    background: #fff;
+    color: var(--main-green);
+    height: 45px;
+    border-radius: var(--md-radius);
 }
 </style>

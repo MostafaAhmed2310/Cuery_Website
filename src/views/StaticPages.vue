@@ -12,7 +12,7 @@
                 <img class="logo" src="@/assets/logo-final.png" alt="">
             </div>
             <div class="static-page-body">
-                <div v-html="pageContent"></div>
+                <div v-html="modifyUrl(pageContent)"></div>
             </div>
         </div>
     </div>
@@ -31,6 +31,16 @@ export default class StaticPages extends Vue {
     pageContent = '';
     pageTitle = '';
     @Watch('$route', { immediate: true, deep: true })
+
+    modifyUrl(url:any) {
+        let endpoint = url;
+        endpoint = endpoint.replace('oembed', 'iframe style="width:100%;height:600px;border:0;"');
+        endpoint = endpoint.replace('url', 'src');
+        endpoint = endpoint.replace('watch?v=', 'embed/');
+        endpoint = endpoint.replace('oembed', 'iframe');
+        return endpoint;
+    };
+
     onUrlChange() {
         this.getOldData();
         this.scrollToTop();
